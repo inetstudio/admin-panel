@@ -1,0 +1,17 @@
+{
+    "name": "inet-studio/admin-panel",
+    "description": "Package for admin panel",
+    "homepage": "https://github.com/inetstudio/admin-panel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Konstantin Bukin",
+            "email": "bukin@inetstudio.ru"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "InetStudio\\AdminPanel\\": "src/"
+      }
+    }
+}
