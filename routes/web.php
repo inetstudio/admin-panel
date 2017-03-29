@@ -1,9 +1,17 @@
 <?php
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Back', 'middleware' => 'auth'],function () {
-    Route::get('/', 'IndexController@getIndex');
+Route::group(['middleware' => 'web', 'prefix' => 'back'], function () {
 
-    Route::get('login', 'Auth\AuthController@showLoginForm');
-    Route::post('login', 'Auth\AuthController@login');
-    Route::get('logout', 'Auth\AuthController@logout');
+    Route::group(['namespace' => 'InetStudio\AdminPanel\Controllers\Auth'], function () {
+        Route::get('login', 'LoginController@showLoginForm')->name('admin.login.form');
+        Route::post('login', 'LoginController@login')->name('admin.login');
+
+        Route::group(['middleware' => 'admin.auth'], function() {
+            Route::post('logout', 'LoginController@logout')->name('admin.logout');
+        });
+    });
+
+    Route::group(['middleware' => 'admin.auth', 'namespace' => 'InetStudio\AdminPanel\Controllers'], function () {
+        Route::get('/', 'PagesController@showIndexPage');
+    });
 });

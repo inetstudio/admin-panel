@@ -22,12 +22,12 @@
                 <div>
                     <h1 class="logo-name"><i class="fa fa-user-o"></i></h1>
                 </div>
-                <form class="m-t" role="form" action="{{ url('/login') }}" method="post">
+                <form class="m-t" role="form" action="{{ url(route('admin.login')) }}" method="post">
                     {{ csrf_field() }}
-                    <div class="form-group @if($errors->has('email')) has-error @endif">
+                    <div class="form-group @if(isset($errors) and $errors->has('email')) has-error @endif">
                         <input type="text" name="name" class="form-control" placeholder="Логин" required="">
                     </div>
-                    <div class="form-group @if($errors->has('password')) has-error @endif">
+                    <div class="form-group @if(isset($errors) and $errors->has('password')) has-error @endif">
                         <input type="password" name="password" class="form-control" placeholder="Пароль" required="">
                     </div>
                     <div class="form-group">

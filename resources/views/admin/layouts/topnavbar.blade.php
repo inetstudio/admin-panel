@@ -5,10 +5,10 @@
         </div>
         <ul class="nav navbar-top-links navbar-right">
             <li>
-                <a href="{{ url('/logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a href="{{ url(route('admin.logout')) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fa fa-sign-out"></i> Выйти
                 </a>
-                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                <form id="logout-form" action="{{ url(route('admin.logout')) }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                 </form>
             </li>
