@@ -22,19 +22,19 @@
         <div id="wrapper">
 
             <!-- Navigation -->
-            @include('admin::layouts.navigation')
+            @include('admin::includes.navigation')
 
             <!-- Page wraper -->
             <div id="page-wrapper" class="gray-bg">
 
                 <!-- Page wrapper -->
-                @include('admin::layouts.topnavbar')
+                @include('admin::includes.topnavbar')
 
                 <!-- Main view  -->
                 @yield('content')
 
                 <!-- Footer -->
-                @include('admin::layouts.footer')
+                @include('admin::includes.footer')
 
             </div>
             <!-- End page wrapper-->
