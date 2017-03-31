@@ -44,9 +44,11 @@ class AdminPanelServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register('Collective\Html\HtmlServiceProvider');
+        $this->app->register('Laravelista\Ekko\EkkoServiceProvider');
 
         $loader = AliasLoader::getInstance();
         $loader->alias('Form', 'Collective\Html\FormFacade');
         $loader->alias('Html', 'Collective\Html\HtmlFacade');
+        $loader->alias('Ekko', 'Laravelista\Ekko\Facades\Ekko');
     }
 }
