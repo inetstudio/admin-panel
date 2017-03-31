@@ -9,6 +9,9 @@
             "email": "bukin@inetstudio.ru"
         }
     ],
+    "require": {
+        "laravelcollective/html" : "^5.4.1"
+    },
     "autoload": {
       "psr-4": {
         "InetStudio\\AdminPanel\\": "src/"

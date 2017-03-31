@@ -2,9 +2,10 @@
 
 namespace InetStudio\AdminPanel;
 
+use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use \Illuminate\Routing\Router;
+use Illuminate\Routing\Router;
 
 class AdminPanelServiceProvider extends ServiceProvider
 {
@@ -42,6 +43,10 @@ class AdminPanelServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register('Collective\Html\HtmlServiceProvider');
 
+        $loader = AliasLoader::getInstance();
+        $loader->alias('Form', 'Collective\Html\FormFacade');
+        $loader->alias('Html', 'Collective\Html\HtmlFacade');
     }
 }
