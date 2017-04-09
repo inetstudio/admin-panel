@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "laravelcollective/html" : "^5.4.1",
+        "laravelcollective/html" : "^5.4",
         "laravelista/ekko": "^1.3"
     },
     "autoload": {

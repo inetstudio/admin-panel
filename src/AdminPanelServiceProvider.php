@@ -2,10 +2,11 @@
 
 namespace InetStudio\AdminPanel;
 
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
+use Collective\Html\FormFacade;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
 
 class AdminPanelServiceProvider extends ServiceProvider
 {
@@ -34,6 +35,9 @@ class AdminPanelServiceProvider extends ServiceProvider
 
             return $result;
         });
+
+        Form::component('string', 'admin::forms.fields.string', ['name', 'value', 'attributes']);
+        Form::component('wysiwyg', 'admin::forms.fields.wysiwyg', ['name', 'value', 'attributes']);
     }
 
     /**
