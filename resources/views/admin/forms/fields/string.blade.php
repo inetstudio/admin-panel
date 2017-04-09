@@ -1,19 +1,13 @@
 @php
     $errName = str_replace(['[', ']'], ['.', ''], $name);
-
-    if ($errors->has($errName)) {
-        $error = implode(', ', $errors->get($errName));
-        $class = 'error-field';
-    } else {
-        $error = '';
-        $class = '';
-    }
 @endphp
 
 <div class="form-group @if ($errors->has($errName)){!! "has-error" !!}@endif">
-    {!! Form::label($name, $attributes['label'], ['class' => $class]) !!}
+    @if (isset($attributes['label']['title']))
+        {!! Form::label($name, $attributes['label']['title'], ['class' => (isset($attributes['label']['class'])) ? $attributes['label']['class'] : '']) !!}
+    @endif
     <div class="col-sm-10">
-        {!! Form::text($name, $value, $attributes) !!}
+        {!! Form::text($name, $value, (isset($attributes['field'])) ? $attributes['field'] : []) !!}
         @foreach ($errors->get($errName) as $message)
             <span class="help-block m-b-none">{{ $message }}</span>
         @endforeach
