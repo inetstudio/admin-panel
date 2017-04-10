@@ -37,6 +37,7 @@ class AdminPanelServiceProvider extends ServiceProvider
 
         \Form::component('string', 'admin::forms.fields.string', ['name', 'value', 'attributes']);
         \Form::component('wysiwyg', 'admin::forms.fields.wysiwyg', ['name', 'value', 'attributes']);
+        \Form::component('dropdown', 'admin::forms.fields.dropdown', ['name', 'value', 'attributes']);
 
         \Form::component('info', 'admin::forms.blocks.info', ['name' => null, 'value' => null, 'attributes' => null]);
         \Form::component('buttons', 'admin::forms.blocks.buttons', ['name', 'value', 'attributes']);
