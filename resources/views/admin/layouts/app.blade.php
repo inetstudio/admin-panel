@@ -13,8 +13,7 @@
         <link href="{!! asset('admin/css/animate.css') !!}" rel="stylesheet">
         <link href="{!! asset('admin/css/style.css') !!}" rel="stylesheet">
 
-        @section('styles')
-        @show
+        @yield('styles')
     </head>
     <body>
 
@@ -55,8 +54,7 @@
         <script src="{!! asset('admin/js/inspinia.js') !!}"></script>
         <script src="{!! asset('admin/js/plugins/pace/pace.min.js') !!}"></script>
 
-        @section('scripts')
-        @show
+        @yield('scripts')
 
     </body>
 </html>

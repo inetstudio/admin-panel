@@ -11,6 +11,6 @@ Route::group(['middleware' => 'web', 'prefix' => 'back'], function () {
     });
 
     Route::group(['middleware' => 'admin.auth', 'namespace' => 'InetStudio\AdminPanel\Controllers'], function () {
-        Route::get('/', 'PagesController@showIndexPage');
+        Route::get('/', 'PagesController@showIndexPage')->name('back');
     });
 });
