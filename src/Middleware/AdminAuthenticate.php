@@ -13,6 +13,8 @@ class AdminAuthenticate
             return $next($request);
         }
 
+        Auth::logout();
+
         return redirect(route('admin.login.form'));
     }
 }
