@@ -36,6 +36,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         });
 
         \Form::component('string', 'admin::forms.fields.string', ['name', 'value', 'attributes']);
+        \Form::component('datepicker', 'admin::forms.fields.datepicker', ['name', 'value', 'attributes']);
         \Form::component('wysiwyg', 'admin::forms.fields.wysiwyg', ['name', 'value', 'attributes']);
         \Form::component('dropdown', 'admin::forms.fields.dropdown', ['name', 'value', 'attributes']);
 
