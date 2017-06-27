@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "laravelcollective/html" : "^5.4",
+        "santigarcor/laratrust": "3.2.*",
+        "laravelcollective/html": "^5.4",
         "laravelista/ekko": "^1.3"
     },
     "autoload": {

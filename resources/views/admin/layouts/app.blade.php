@@ -15,6 +15,9 @@
         <link href="{!! asset('admin/css/animate.css') !!}" rel="stylesheet">
         <link href="{!! asset('admin/css/style.css') !!}" rel="stylesheet">
 
+        <!-- Sweet Alert -->
+        <link href="{!! asset('admin/css/plugins/sweetalert/sweetalert.css') !!}" rel="stylesheet">
+
         @yield('styles')
     </head>
     <body>
@@ -56,7 +59,13 @@
         <script src="{!! asset('admin/js/inspinia.js') !!}"></script>
         <script src="{!! asset('admin/js/plugins/pace/pace.min.js') !!}"></script>
 
+        <!-- Sweet alert -->
+        <script src="{!! asset('admin/js/plugins/sweetalert/sweetalert.min.js') !!}"></script>
+
         @yield('scripts')
+
+        <!-- CUSTOM SCRIPTS -->
+        <script src="{!! asset('admin/js/custom.js') !!}"></script>
 
     </body>
 </html>

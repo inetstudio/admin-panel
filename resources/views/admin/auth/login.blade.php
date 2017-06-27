@@ -22,7 +22,7 @@
                 <div>
                     <h1 class="logo-name"><i class="fa fa-user-o"></i></h1>
                 </div>
-                <form class="m-t" role="form" action="{{ url(route('admin.login')) }}" method="post">
+                <form class="m-t" role="form" action="{{ url(route('back.login')) }}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group @if(isset($errors) and $errors->has('email')) has-error @endif">
                         <input type="text" name="name" class="form-control" placeholder="Логин" required="">

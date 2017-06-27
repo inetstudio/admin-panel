@@ -9,12 +9,12 @@ class AdminAuthenticate
 {
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::user() && Auth::user()->name == 'admin') {
+        if (Auth::user() && Auth::user()->hasRole('admin')) {
             return $next($request);
         }
 
         Auth::logout();
 
-        return redirect(route('admin.login.form'));
+        return redirect(route('back.login.form'));
     }
 }
