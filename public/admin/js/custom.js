@@ -19,7 +19,44 @@ $(document).ready(function() {
     }
 
     if ($('.select2').length > 0) {
-        $('.select2').select2();
+        $.each($('.select2'), function () {
+            var $this = $(this);
+            if ($this.attr('data-source')) {
+                var url = $this.attr('data-source');
+
+                $('.select2').select2({
+                    language: "ru",
+                    ajax: {
+                        url: url,
+                        method: 'POST',
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (params) {
+                            return {
+                                q: params.term,
+                                _token: $('meta[name="csrf-token"]').attr('content')
+                            };
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: $.map(data.items, function (item) {
+                                    return {
+                                        text: item.name,
+                                        id: item.id
+                                    }
+                                })
+                            };
+                        },
+                        cache: true
+                    },
+                    minimumInputLength: 3
+                });
+            } else {
+                $('.select2').select2({
+                    language: "ru"
+                });
+            }
+        });
     }
 
     if ($('.i-checks').length > 0) {
@@ -37,6 +74,29 @@ $(document).ready(function() {
             autoclose: true,
             language: 'ru',
             format: 'yyyy-mm-dd'
+        });
+    }
+
+    if ($('.slugify').length > 0) {
+        $('.slugify').on('change', function () {
+            var $this = $(this);
+            var val = $this.val(),
+                url = $this.attr('data-slug-url'),
+                target = $this.attr('data-slug-target');
+
+            $.ajax({
+                url: url,
+                method: 'POST',
+                data: {
+                    name: val,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+
         });
     }
 
