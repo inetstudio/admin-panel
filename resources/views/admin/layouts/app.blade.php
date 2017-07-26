@@ -18,7 +18,13 @@
         <!-- Sweet Alert -->
         <link href="{!! asset('admin/css/plugins/sweetalert/sweetalert.css') !!}" rel="stylesheet">
 
+        <!-- Toastr -->
+        <link href="{!! asset('admin/css/plugins/toastr/toastr.min.css') !!}" rel="stylesheet">
+
         @yield('styles')
+
+        <!-- CUSTOM STYLES -->
+        <link href="{!! asset('admin/css/custom.css') !!}" rel="stylesheet">
     </head>
     <body>
 
@@ -62,8 +68,14 @@
         <!-- Sweet alert -->
         <script src="{!! asset('admin/js/plugins/sweetalert/sweetalert.min.js') !!}"></script>
 
+        <!-- Toastr -->
+        <script src="{!! asset('admin/js/plugins/toastr/toastr.min.js') !!}"></script>
+
         <!-- Lazy Load XT -->
         <script src="{!! asset('admin/js/plugins/lazyloadxt/jquery.lazyloadxt.min.js') !!}"></script>
+
+        <!-- Holder -->
+        <script src="{!! asset('admin/js/plugins/holder/holder.js') !!}"></script>
 
         @yield('scripts')
 
