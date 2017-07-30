@@ -75,7 +75,7 @@
         <script src="{!! asset('admin/js/plugins/lazyloadxt/jquery.lazyloadxt.min.js') !!}"></script>
 
         <!-- Holder -->
-        <script src="{!! asset('admin/js/plugins/holder/holder.js') !!}"></script>
+        <script src="{!! asset('admin/js/plugins/holder/holder.min.js') !!}"></script>
 
         @yield('scripts')
 
