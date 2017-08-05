@@ -151,7 +151,11 @@ $(document).ready(function() {
                 var fileReader = new FileReader(),
                     $input = $(this),
                     files = this.files,
-                    preview = $('#'+$input.attr('data-target')+' img'),
+                    field = $input.attr('data-field'),
+                    base64 = $('#'+field+'_base64'),
+                    preview = $('#'+field+'_preview img'),
+                    cropButtons = $('#'+field+'_crop_buttons'),
+                    additionalFields = $('#'+field+'_additional'),
                     crop = $('#crop_image'),
                     crop_preview = $('#crop_preview'),
                     file;
@@ -166,6 +170,7 @@ $(document).ready(function() {
                     fileReader.readAsDataURL(file);
                     fileReader.onload = function (e) {
                         preview.attr('src', e.target.result);
+                        base64.val(e.target.result);
                         crop.attr('src', e.target.result);
                         crop_preview.attr('src', e.target.result);
                         if (preview.hasClass('placeholder')) {
@@ -174,6 +179,10 @@ $(document).ready(function() {
 
                         $input.closest('.form-group').find('.start-cropper').removeClass('btn-primary').addClass('btn-default');
                         $input.closest('.form-group').find('.crop-data').val('');
+                        cropButtons.slideDown();
+                        additionalFields.slideDown();
+
+                        $input.val('');
                     };
                 } else {
                     swal({
@@ -235,11 +244,21 @@ $(document).ready(function() {
             height: 500,
             menubar: false,
             plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
+                'advlist autolink lists link charmap print preview anchor',
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table contextmenu paste code'
             ],
-            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image'
+            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link'
+        });
+    }
+
+    if ($('.tinymce-simple').length > 0) {
+        tinymce.init({
+            selector: '.tinymce-simple',
+            height: 300,
+            menubar: false,
+            toolbar: false,
+            statusbar: false
         });
     }
 
@@ -291,14 +310,11 @@ $(document).ready(function() {
         });
     }
 
-    if ($('.datepicker').length > 0) {
-        $('.datepicker').datepicker({
-            todayBtn: 'linked',
-            keyboardNavigation: false,
-            forceParse: false,
-            autoclose: true,
-            language: 'ru',
-            format: 'yyyy-mm-dd'
+    if ($('.datetimepicker').length > 0) {
+        $.datetimepicker.setLocale('ru');
+
+        $('.datetimepicker').datetimepicker({
+            format:'d.m.Y H:i'
         });
     }
 

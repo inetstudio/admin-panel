@@ -1,27 +1,29 @@
 @php
-    $parseName = str_replace(['[', ']'], ['.', ''], $name);
+    $transformName = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $name);
 @endphp
 
-<div class="form-group @if ($errors->has($parseName)){!! "has-error" !!}@endif">
+<div class="form-group @if ($errors->has($transformName)){!! "has-error" !!}@endif">
+
     @if (isset($attributes['label']['title']))
-        {!! Form::label($name, $attributes['label']['title'], ['class' => (isset($attributes['label']['class'])) ? $attributes['label']['class'] : '']) !!}
+        {!! Form::label($name, $attributes['label']['title'], (isset($attributes['label']['options'])) ? $attributes['label']['options'] : ['class' => 'col-sm-2 control-label']) !!}
     @endif
+
     <div class="col-sm-10">
         @foreach ($attributes['checks'] as $check)
             @php
                 $checked = false;
-                if (old($parseName) and in_array($check['value'], old($parseName))) {
-                    $checked = true;
-                } elseif (! old($parseName) and in_array($check['value'], (array)$value)) {
+                if (in_array($check['value'], (array) $value)) {
                     $checked = true;
                 }
             @endphp
-            <div class="i-checks"><label> {!! Form::checkbox($name.'[]', $check['value'], $checked) !!} {{ isset($check['label']) ? $check['label'] : '' }} </label></div>
+
+            <div class="i-checks"><label> {!! Form::checkbox($name, $check['value'], $checked, (isset($check['options'])) ? $check['options'] : []) !!} {{ isset($check['label']) ? $check['label'] : '' }} </label></div>
         @endforeach
 
-        @foreach ($errors->get($parseName) as $message)
+        @foreach ($errors->get($transformName) as $message)
             <span class="help-block m-b-none">{{ $message }}</span>
         @endforeach
+
     </div>
 </div>
 

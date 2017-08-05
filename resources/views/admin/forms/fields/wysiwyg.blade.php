@@ -1,16 +1,21 @@
 @php
-    $errName = str_replace(['[', ']'], ['.', ''], $name);
+    $transformName = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $name);
 @endphp
 
-<div class="form-group @if ($errors->has($errName)){!! "has-error" !!}@endif">
+<div class="form-group @if ($errors->has($transformName)){!! "has-error" !!}@endif">
+
     @if (isset($attributes['label']['title']))
-        {!! Form::label($name, $attributes['label']['title'], ['class' => (isset($attributes['label']['class'])) ? $attributes['label']['class'] : '']) !!}
+        {!! Form::label($name, $attributes['label']['title'], (isset($attributes['label']['options'])) ? $attributes['label']['options'] : ['class' => 'col-sm-2 control-label']) !!}
     @endif
+
     <div class="col-sm-10">
+
         {!! Form::textarea($name, $value, (isset($attributes['field'])) ? $attributes['field'] : []) !!}
-        @foreach ($errors->get($errName) as $message)
+
+        @foreach ($errors->get($transformName) as $message)
             <span class="help-block m-b-none">{{ $message }}</span>
         @endforeach
+
     </div>
 </div>
 
