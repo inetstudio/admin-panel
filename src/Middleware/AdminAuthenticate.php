@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminAuthenticate
 {
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
         if (Auth::user() && Auth::user()->hasRole('admin')) {
             return $next($request);

@@ -104,11 +104,11 @@ class PermissionsController extends Controller
 
         if (empty($item)) {
             abort(404);
+        } else {
+            return view('admin::pages.acl.permissions.form', [
+                'item' => $item,
+            ]);
         }
-
-        return view('admin::pages.acl.permissions.form', [
-            'item' => $item,
-        ]);
     }
 
     /**
@@ -146,7 +146,7 @@ class PermissionsController extends Controller
 
         $item->name = trim(strip_tags($request->get('name')));
         $item->display_name = trim(strip_tags($request->get('display_name')));
-        $item->description = trim(strip_tags($request->get('description')));
+        $item->description = $request->get('description');
 
         $item->save();
 
@@ -194,6 +194,8 @@ class PermissionsController extends Controller
     public function getSuggestions(Request $request)
     {
         $search = $request->get('q');
+        $data = [];
+
         $data['items'] = Permission::select(['id', 'display_name as name'])->where('display_name', 'LIKE', '%'.$search.'%')->get()->toArray();
 
         return response()->json($data);

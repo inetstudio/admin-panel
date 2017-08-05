@@ -104,11 +104,11 @@ class RolesController extends Controller
 
         if (empty($item)) {
             abort(404);
+        } else {
+            return view('admin::pages.acl.roles.form', [
+                'item' => $item,
+            ]);
         }
-
-        return view('admin::pages.acl.roles.form', [
-            'item' => $item,
-        ]);
     }
 
     /**
@@ -146,7 +146,7 @@ class RolesController extends Controller
 
         $item->name = trim(strip_tags($request->get('name')));
         $item->display_name = trim(strip_tags($request->get('display_name')));
-        $item->description = trim(strip_tags($request->get('description')));
+        $item->description = $request->get('description');
         $item->save();
 
         $item->syncPermissions($request->get('permissions_id'));
@@ -195,6 +195,8 @@ class RolesController extends Controller
     public function getSuggestions(Request $request)
     {
         $search = $request->get('q');
+        $data = [];
+
         $data['items'] = Role::select(['id', 'display_name as name'])->where('display_name', 'LIKE', '%'.$search.'%')->get()->toArray();
 
         return response()->json($data);

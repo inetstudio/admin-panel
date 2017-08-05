@@ -104,11 +104,11 @@ class UsersController extends Controller
 
         if (empty($item)) {
             abort(404);
+        } else {
+            return view('admin::pages.acl.users.form', [
+                'item' => $item,
+            ]);
         }
-
-        return view('admin::pages.acl.users.form', [
-            'item' => $item,
-        ]);
     }
 
     /**
@@ -144,16 +144,13 @@ class UsersController extends Controller
             $item = new User();
         }
 
-        $params = [
-            'name' => trim(strip_tags($request->get('name'))),
-            'email' => trim(strip_tags($request->get('email'))),
-        ];
+        $item->name = trim(strip_tags($request->get('name')));
+        $item->email = trim(strip_tags($request->get('email')));
 
         if ($request->has('password')) {
-            $params['password'] = bcrypt(trim($request->get('password')));
+            $item->password = bcrypt(trim($request->get('password')));
         }
 
-        $item->fill($params);
         $item->save();
 
         $item->syncRoles($request->get('roles_id'));
@@ -203,6 +200,8 @@ class UsersController extends Controller
     public function getSuggestions(Request $request)
     {
         $search = $request->get('q');
+        $data = [];
+
         $data['items'] = User::select(['id', 'name'])
             ->where('name', 'LIKE', '%'.$search.'%')
             ->orWhere('email', 'LIKE', '%'.$search.'%')
