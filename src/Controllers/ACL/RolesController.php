@@ -3,22 +3,66 @@
 namespace InetStudio\AdminPanel\Controllers\ACL;
 
 use App\Role;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use InetStudio\AdminPanel\Requests\ACL\SaveRoleRequest;
+use InetStudio\AdminPanel\Transformers\RoleTransformer;
 
 class RolesController extends Controller
 {
     /**
      * Список ролей.
      *
+     * @param Datatables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Datatables $dataTable)
     {
-        return view('admin::pages.acl.roles.index', [
-            'items' => Role::get(),
+        $table = $dataTable->getHtmlBuilder();
+
+        $table->columns([
+            ['data' => 'id', 'name' => 'id', 'title' => 'ID', 'orderable' => true],
+            ['data' => 'display_name', 'name' => 'display_name', 'title' => 'Название'],
+            ['data' => 'name', 'name' => 'name', 'title' => 'Алиас'],
+            ['data' => 'description', 'name' => 'description', 'title' => 'Описание'],
+            ['data' => 'actions', 'name' => 'actions', 'title' => 'Действия', 'orderable' => false, 'searchable' => false],
         ]);
+
+        $table->ajax([
+            'url' => route('back.acl.roles.data'),
+            'type' => 'POST',
+            'data' => 'function(data) { data._token = $(\'meta[name="csrf-token"]\').attr(\'content\'); }',
+        ]);
+
+        $table->parameters([
+            'paging' => true,
+            'pagingType' => 'full_numbers',
+            'searching' => true,
+            'info' => false,
+            'searchDelay' => 350,
+            'language' => [
+                'url' => asset('admin/js/plugins/datatables/locales/russian.json'),
+            ],
+        ]);
+
+        return view('admin::pages.acl.roles.index', compact('table'));
+    }
+
+    /**
+     * Datatables serverside.
+     *
+     * @return mixed
+     */
+    public function data()
+    {
+        $items = Role::query();
+
+        return Datatables::of($items)
+            ->setTransformer(new RoleTransformer)
+            ->escapeColumns(['actions'])
+            ->make();
     }
 
     /**
@@ -140,5 +184,19 @@ class RolesController extends Controller
         return response()->json([
             'success' => true,
         ]);
+    }
+
+    /**
+     * Возвращаем роли для поля.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSuggestions(Request $request)
+    {
+        $search = $request->get('q');
+        $data['items'] = Role::select(['id', 'display_name as name'])->where('display_name', 'LIKE', '%'.$search.'%')->get()->toArray();
+
+        return response()->json($data);
     }
 }

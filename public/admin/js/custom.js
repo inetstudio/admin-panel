@@ -268,7 +268,7 @@ $(document).ready(function() {
             if ($this.attr('data-source')) {
                 var url = $this.attr('data-source');
 
-                $('.select2').select2({
+                $(this).select2({
                     language: "ru",
                     ajax: {
                         url: url,
@@ -296,7 +296,7 @@ $(document).ready(function() {
                     minimumInputLength: 3
                 });
             } else {
-                $('.select2').select2({
+                $(this).select2({
                     language: "ru"
                 });
             }

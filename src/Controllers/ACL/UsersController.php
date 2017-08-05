@@ -3,22 +3,66 @@
 namespace InetStudio\AdminPanel\Controllers\ACL;
 
 use App\User;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use InetStudio\AdminPanel\Requests\ACL\SaveUserRequest;
+use InetStudio\AdminPanel\Transformers\UserTransformer;
 
 class UsersController extends Controller
 {
     /**
      * Список сайтов с отзывами.
      *
+     * @param Datatables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Datatables $dataTable)
     {
-        return view('admin::pages.acl.users.index', [
-            'items' => User::get(),
+        $table = $dataTable->getHtmlBuilder();
+
+        $table->columns([
+            ['data' => 'id', 'name' => 'id', 'title' => 'ID', 'orderable' => true],
+            ['data' => 'name', 'name' => 'name', 'title' => 'Имя'],
+            ['data' => 'email', 'name' => 'email', 'title' => 'Email'],
+            ['data' => 'roles', 'name' => 'roles.display_name', 'title' => 'Роли'],
+            ['data' => 'actions', 'name' => 'actions', 'title' => 'Действия', 'orderable' => false, 'searchable' => false],
         ]);
+
+        $table->ajax([
+            'url' => route('back.acl.users.data'),
+            'type' => 'POST',
+            'data' => 'function(data) { data._token = $(\'meta[name="csrf-token"]\').attr(\'content\'); }',
+        ]);
+
+        $table->parameters([
+            'paging' => true,
+            'pagingType' => 'full_numbers',
+            'searching' => true,
+            'info' => false,
+            'searchDelay' => 350,
+            'language' => [
+                'url' => asset('admin/js/plugins/datatables/locales/russian.json'),
+            ],
+        ]);
+
+        return view('admin::pages.acl.users.index', compact('table'));
+    }
+
+    /**
+     * Datatables serverside.
+     *
+     * @return mixed
+     */
+    public function data()
+    {
+        $items = User::with('roles');
+
+        return Datatables::of($items)
+            ->setTransformer(new UserTransformer)
+            ->escapeColumns(['actions'])
+            ->make();
     }
 
     /**
@@ -148,5 +192,22 @@ class UsersController extends Controller
         return response()->json([
             'success' => true,
         ]);
+    }
+
+    /**
+     * Возвращаем пользователей для поля.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSuggestions(Request $request)
+    {
+        $search = $request->get('q');
+        $data['items'] = User::select(['id', 'name'])
+            ->where('name', 'LIKE', '%'.$search.'%')
+            ->orWhere('email', 'LIKE', '%'.$search.'%')
+            ->get()->toArray();
+
+        return response()->json($data);
     }
 }

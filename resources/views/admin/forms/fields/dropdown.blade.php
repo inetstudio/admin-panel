@@ -16,7 +16,7 @@
 
         Input::merge(array($transformName => $correctValues));
         Input::flash();
-    } elseif (! $oldValues) {
+    } elseif ($errors->count() > 0 && ! $oldValues) {
         $attributes['options'] = [];
         $value = [];
     }

@@ -58,27 +58,18 @@
                             {!! Form::string('name', $item->name, [
                                 'label' => [
                                     'title' => 'Имя',
-                                    'class' => 'col-sm-2 control-label',
-                                ],
-                                'field' => [
-                                    'class' => 'form-control',
                                 ],
                             ]) !!}
 
                             {!! Form::string('email', $item->email, [
                                 'label' => [
                                     'title' => 'Email',
-                                    'class' => 'col-sm-2 control-label',
-                                ],
-                                'field' => [
-                                    'class' => 'form-control',
                                 ],
                             ]) !!}
 
                             {!! Form::passwords('password', '', [
                                 'label' => [
                                     'title' => 'Пароль',
-                                    'class' => 'col-sm-2 control-label',
                                 ],
                                 'fields' => [
                                     [
@@ -94,32 +85,32 @@
 
                             <p>Доступ</p>
 
-                            {!! Form::dropdown('roles_id[]', $item->roles->pluck('id')->toArray(), [
+                            {!! Form::dropdown('roles_id[]', $item->roles()->pluck('id')->toArray(), [
                                 'label' => [
                                     'title' => 'Роли',
-                                    'class' => 'col-sm-2 control-label',
                                 ],
                                 'field' => [
                                     'class' => 'select2 form-control',
                                     'data-placeholder' => 'Выберите роли',
                                     'style' => 'width: 100%',
-                                    'multiple' => 'multiple'
+                                    'multiple' => 'multiple',
+                                    'data-source' => route('back.acl.roles.getSuggestions'),
                                 ],
-                                'options' => \App\Role::select('id', 'display_name')->pluck('display_name', 'id')->toArray(),
+                                'options' => (old('roles_id')) ? \App\Role::whereIn('id', old('roles_id'))->pluck('display_name', 'id')->toArray() : $item->roles()->pluck('display_name', 'id')->toArray(),
                             ]) !!}
 
-                            {!! Form::dropdown('permissions_id[]', $item->permissions->pluck('id')->toArray(), [
+                            {!! Form::dropdown('permissions_id[]', $item->permissions()->pluck('id')->toArray(), [
                                 'label' => [
                                     'title' => 'Права',
-                                    'class' => 'col-sm-2 control-label',
                                 ],
                                 'field' => [
                                     'class' => 'select2 form-control',
                                     'data-placeholder' => 'Выберите права',
                                     'style' => 'width: 100%',
-                                    'multiple' => 'multiple'
+                                    'multiple' => 'multiple',
+                                    'data-source' => route('back.acl.permissions.getSuggestions'),
                                 ],
-                                'options' => \App\Permission::select('id', 'display_name')->pluck('display_name', 'id')->toArray(),
+                                'options' => (old('permissions_id')) ? \App\Permission::whereIn('id', old('permissions_id'))->pluck('display_name', 'id')->toArray() : $item->permissions()->pluck('display_name', 'id')->toArray(),
                             ]) !!}
 
                             {!! Form::buttons('', '', ['back' => 'back.acl.users.index']) !!}

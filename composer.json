@@ -4,15 +4,18 @@
     "homepage": "https://github.com/inetstudio/admin-panel",
     "license": "MIT",
     "authors": [
-        {
-            "name": "Konstantin Bukin",
-            "email": "bukin@inetstudio.ru"
-        }
+      {
+        "name": "Konstantin Bukin",
+        "email": "bukin@inetstudio.ru"
+      }
     ],
     "require": {
-        "santigarcor/laratrust": "3.2.*",
-        "laravelcollective/html": "^5.4",
-        "laravelista/ekko": "^1.3"
+      "laravelcollective/html": "^5.4",
+      "laravelista/ekko": "^1.3",
+      "league/fractal": "^0.16.0",
+      "santigarcor/laratrust": "3.2.*",
+      "yajra/laravel-datatables-oracle": "^7.9",
+      "yajra/laravel-datatables-html": "^2.0"
     },
     "autoload": {
       "psr-4": {

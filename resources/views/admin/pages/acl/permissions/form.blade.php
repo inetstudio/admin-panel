@@ -53,20 +53,12 @@
                         {!! Form::string('display_name', $item->display_name, [
                             'label' => [
                                 'title' => 'Название',
-                                'class' => 'col-sm-2 control-label',
-                            ],
-                            'field' => [
-                                'class' => 'form-control',
                             ],
                         ]) !!}
 
                         {!! Form::string('name', $item->name, [
                             'label' => [
                                 'title' => 'Алиас',
-                                'class' => 'col-sm-2 control-label',
-                            ],
-                            'field' => [
-                                'class' => 'form-control',
                             ],
                         ]) !!}
 

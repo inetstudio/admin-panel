@@ -58,20 +58,12 @@
                             {!! Form::string('display_name', $item->display_name, [
                                 'label' => [
                                     'title' => 'Название',
-                                    'class' => 'col-sm-2 control-label',
-                                ],
-                                'field' => [
-                                    'class' => 'form-control',
                                 ],
                             ]) !!}
 
                             {!! Form::string('name', $item->name, [
                                 'label' => [
                                     'title' => 'Алиас',
-                                    'class' => 'col-sm-2 control-label',
-                                ],
-                                'field' => [
-                                    'class' => 'form-control',
                                 ],
                             ]) !!}
 
@@ -87,18 +79,18 @@
 
                             <p>Доступ</p>
 
-                            {!! Form::dropdown('permissions_id[]', $item->permissions->pluck('id')->toArray(), [
+                            {!! Form::dropdown('permissions_id[]', $item->permissions()->pluck('id')->toArray(), [
                                 'label' => [
                                     'title' => 'Права',
-                                    'class' => 'col-sm-2 control-label',
                                 ],
                                 'field' => [
                                     'class' => 'select2 form-control',
                                     'data-placeholder' => 'Выберите права',
                                     'style' => 'width: 100%',
-                                    'multiple' => 'multiple'
+                                    'multiple' => 'multiple',
+                                    'data-source' => route('back.acl.permissions.getSuggestions'),
                                 ],
-                                'options' => \App\Permission::select('id', 'display_name')->pluck('display_name', 'id')->toArray(),
+                                'options' => (old('permissions_id')) ? \App\Permission::whereIn('id', old('permissions_id'))->pluck('display_name', 'id')->toArray() : $item->permissions()->pluck('display_name', 'id')->toArray(),
                             ]) !!}
 
                             {!! Form::buttons('', '', ['back' => 'back.acl.roles.index']) !!}
@@ -115,6 +107,7 @@
 @section('scripts')
     <!-- SELECT2 -->
     <script src="{!! asset('admin/js/plugins/select2/select2.full.min.js') !!}"></script>
+    <script src="{!! asset('admin/js/plugins/select2/i18n/ru.js') !!}"></script>
 
     <!-- TINYMCE -->
     <script src="{!! asset('admin/js/plugins/tinymce/tinymce.min.js') !!}"></script>
