@@ -2,8 +2,8 @@
 
 namespace InetStudio\AdminPanel\Commands;
 
-use App\User;
 use App\Role;
+use App\User;
 use Illuminate\Console\Command;
 
 class CreateAdminCommand extends Command
