@@ -16,19 +16,19 @@ Route::group(['middleware' => 'web', 'prefix' => 'back'], function () {
                 Route::post('roles/suggestions', 'RolesController@getSuggestions')->name('back.acl.roles.getSuggestions');
                 Route::any('roles/data', 'RolesController@data')->name('back.acl.roles.data');
                 Route::resource('roles', 'RolesController', ['except' => [
-                    'show'
+                    'show',
                 ], 'as' => 'back.acl']);
 
                 Route::post('permissions/suggestions', 'PermissionsController@getSuggestions')->name('back.acl.permissions.getSuggestions');
                 Route::any('permissions/data', 'PermissionsController@data')->name('back.acl.permissions.data');
                 Route::resource('permissions', 'PermissionsController', ['except' => [
-                    'show'
+                    'show',
                 ], 'as' => 'back.acl']);
 
                 Route::post('users/suggestions', 'UsersController@getSuggestions')->name('back.acl.users.getSuggestions');
                 Route::any('users/data', 'UsersController@data')->name('back.acl.users.data');
                 Route::resource('users', 'UsersController', ['except' => [
-                    'show'
+                    'show',
                 ], 'as' => 'back.acl']);
             });
 

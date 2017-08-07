@@ -21,7 +21,7 @@ class SetupCommand extends Command
     protected $description = 'Setup admin panel';
 
     /**
-     * Commands to call with their description
+     * Commands to call with their description.
      *
      * @var array
      */
