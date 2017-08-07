@@ -28,6 +28,10 @@
                         'id' => $name.'_base64',
                     ]) !!}
 
+                    {!! Form::hidden($name.'[filename]', '', [
+                        'id' => $name.'_filename',
+                    ]) !!}
+
                     Загрузить изображение
                 </label><br/>
 

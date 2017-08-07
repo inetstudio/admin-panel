@@ -69,6 +69,8 @@ class AdminPanelServiceProvider extends ServiceProvider
         $this->app->register('Laratrust\LaratrustServiceProvider');
         $this->app->register('Collective\Html\HtmlServiceProvider');
         $this->app->register('Laravelista\Ekko\EkkoServiceProvider');
+        $this->app->register('Yajra\Datatables\HtmlServiceProvider');
+        $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
 
         $loader = AliasLoader::getInstance();
         $loader->alias('Laratrust', 'Laratrust\LaratrustFacade');

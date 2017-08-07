@@ -153,6 +153,7 @@ $(document).ready(function() {
                     files = this.files,
                     field = $input.attr('data-field'),
                     base64 = $('#'+field+'_base64'),
+                    filename = $('#'+field+'_filename'),
                     preview = $('#'+field+'_preview img'),
                     cropButtons = $('#'+field+'_crop_buttons'),
                     additionalFields = $('#'+field+'_additional'),
@@ -171,6 +172,7 @@ $(document).ready(function() {
                     fileReader.onload = function (e) {
                         preview.attr('src', e.target.result);
                         base64.val(e.target.result);
+                        filename.val(file.name);
                         crop.attr('src', e.target.result);
                         crop_preview.attr('src', e.target.result);
                         if (preview.hasClass('placeholder')) {
@@ -235,6 +237,71 @@ $(document).ready(function() {
                     });
                 }
             })
+        });
+    }
+
+    if ($('.nested-list').length > 0) {
+        $('.nested-list').each(function() {
+            var orderURL = $(this).attr('data-order-url');
+
+            $(this).nestable({
+                group: 1
+            }).on('change', function (e) {
+                var list = e.length ? e : $(e.target);
+
+                var data = {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    data: window.JSON.stringify(list.nestable('serialize'))
+                };
+
+                $.ajax({
+                    'url': orderURL,
+                    'type': 'POST',
+                    'data': data,
+                    'dataType': 'json',
+                    'success': function(data) {
+                        if (data.success) {
+                            toastr.success('', 'Порядок изменен', toastrOptions);
+                        } else {
+                            toastr.error('', 'При изменении порядка произошла ошибка', toastrOptions);
+                        }
+                    },
+                    'error': function(){
+                        toastr.error('', 'При изменении порядка произошла ошибка', toastrOptions);
+                    }
+                });
+            });
+        });
+    }
+
+    if ($('.jstree-list').length > 0) {
+        $('.jstree-list').each(function() {
+            var list = $(this),
+                targetField = list.attr('data-target');
+
+            var options = {
+                'core': {
+                    'check_callback': true,
+                    'multiple': (list.attr('data-multiple') == 'true')
+                },
+                'plugins': ['types', 'checkbox'],
+                'types': {
+                    'default' : {
+                        'icon' : 'fa fa-folder'
+                    }
+                },
+                'checkbox': {
+                    'three_state': false,
+                    'cascade': list.attr('data-cascade')
+                }
+            }
+
+            $(this).jstree(options).on('changed.jstree', function (e, data) {
+                var ids = list.jstree('get_selected').map(function (id) {
+                    return id.split('_')[1];
+                });
+                $('input[name='+targetField+']').val(ids);
+            });
         });
     }
 
