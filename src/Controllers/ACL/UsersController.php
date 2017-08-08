@@ -22,21 +22,51 @@ class UsersController extends Controller
     {
         $table = $dataTable->getHtmlBuilder();
 
-        $table->columns([
+        $table->columns($this->getColumns());
+        $table->ajax($this->getAjaxOptions());
+        $table->parameters($this->getTableParameters());
+
+        return view('admin::pages.acl.users.index', compact('table'));
+    }
+
+    /**
+     * Свойства колонок datatables.
+     *
+     * @return array
+     */
+    private function getColumns()
+    {
+        return [
             ['data' => 'id', 'name' => 'id', 'title' => 'ID', 'orderable' => true],
             ['data' => 'name', 'name' => 'name', 'title' => 'Имя'],
             ['data' => 'email', 'name' => 'email', 'title' => 'Email'],
             ['data' => 'roles', 'name' => 'roles.display_name', 'title' => 'Роли'],
             ['data' => 'actions', 'name' => 'actions', 'title' => 'Действия', 'orderable' => false, 'searchable' => false],
-        ]);
+        ];
+    }
 
-        $table->ajax([
+    /**
+     * Свойства ajax datatables.
+     *
+     * @return array
+     */
+    private function getAjaxOptions()
+    {
+        return [
             'url' => route('back.acl.users.data'),
             'type' => 'POST',
             'data' => 'function(data) { data._token = $(\'meta[name="csrf-token"]\').attr(\'content\'); }',
-        ]);
+        ];
+    }
 
-        $table->parameters([
+    /**
+     * Свойства datatables.
+     *
+     * @return array
+     */
+    private function getTableParameters()
+    {
+        return [
             'paging' => true,
             'pagingType' => 'full_numbers',
             'searching' => true,
@@ -45,9 +75,7 @@ class UsersController extends Controller
             'language' => [
                 'url' => asset('admin/js/plugins/datatables/locales/russian.json'),
             ],
-        ]);
-
-        return view('admin::pages.acl.users.index', compact('table'));
+        ];
     }
 
     /**
@@ -61,7 +89,7 @@ class UsersController extends Controller
 
         return Datatables::of($items)
             ->setTransformer(new UserTransformer)
-            ->escapeColumns(['actions'])
+            ->escapeColumns(['roles', 'actions'])
             ->make();
     }
 
@@ -96,18 +124,12 @@ class UsersController extends Controller
      */
     public function edit($id = null)
     {
-        if (! is_null($id) && $id > 0) {
-            $item = User::where('id', '=', $id)->first();
-        } else {
-            abort(404);
-        }
-
-        if (empty($item)) {
-            abort(404);
-        } else {
+        if (! is_null($id) && $id > 0 && $item = User::find($id)) {
             return view('admin::pages.acl.users.form', [
                 'item' => $item,
             ]);
+        } else {
+            abort(404);
         }
     }
 
@@ -126,37 +148,29 @@ class UsersController extends Controller
     /**
      * Сохранение пользователя.
      *
-     * @param $request
+     * @param SaveUserRequest $request
      * @param null $id
      * @return \Illuminate\Http\RedirectResponse
      */
     private function save($request, $id = null)
     {
-        if (! is_null($id) && $id > 0) {
-            $edit = true;
-            $item = User::where('id', '=', $id)->first();
-
-            if (empty($item)) {
-                abort(404);
-            }
+        if (! is_null($id) && $id > 0 && $item = User::find($id)) {
+            $action = 'отредактирован';
         } else {
-            $edit = false;
+            $action = 'создан';
             $item = new User();
         }
 
         $item->name = trim(strip_tags($request->get('name')));
         $item->email = trim(strip_tags($request->get('email')));
-
         if ($request->has('password')) {
             $item->password = bcrypt(trim($request->get('password')));
         }
-
         $item->save();
 
         $item->syncRoles($request->get('roles_id'));
         $item->syncPermissions($request->get('permissions_id'));
 
-        $action = ($edit) ? 'отредактирован' : 'создан';
         Session::flash('success', 'Пользователь «'.$item->name.'» успешно '.$action);
 
         return redirect()->to(route('back.acl.users.edit', $item->fresh()->id));
@@ -170,25 +184,17 @@ class UsersController extends Controller
      */
     public function destroy($id = null)
     {
-        if (! is_null($id) && $id > 0) {
-            $item = User::where('id', '=', $id)->first();
+        if (! is_null($id) && $id > 0 && $item = User::find($id)) {
+            $item->delete();
+
+            return response()->json([
+                'success' => true,
+            ]);
         } else {
             return response()->json([
                 'success' => false,
             ]);
         }
-
-        if (empty($item)) {
-            return response()->json([
-                'success' => false,
-            ]);
-        }
-
-        $item->delete();
-
-        return response()->json([
-            'success' => true,
-        ]);
     }
 
     /**

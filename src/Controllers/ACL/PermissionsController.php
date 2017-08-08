@@ -22,21 +22,51 @@ class PermissionsController extends Controller
     {
         $table = $dataTable->getHtmlBuilder();
 
-        $table->columns([
+        $table->columns($this->getColumns());
+        $table->ajax($this->getAjaxOptions());
+        $table->parameters($this->getTableParameters());
+
+        return view('admin::pages.acl.permissions.index', compact('table'));
+    }
+
+    /**
+     * Свойства колонок datatables.
+     *
+     * @return array
+     */
+    private function getColumns()
+    {
+        return [
             ['data' => 'id', 'name' => 'id', 'title' => 'ID', 'orderable' => true],
             ['data' => 'display_name', 'name' => 'display_name', 'title' => 'Название'],
             ['data' => 'name', 'name' => 'name', 'title' => 'Алиас'],
             ['data' => 'description', 'name' => 'description', 'title' => 'Описание'],
             ['data' => 'actions', 'name' => 'actions', 'title' => 'Действия', 'orderable' => false, 'searchable' => false],
-        ]);
+        ];
+    }
 
-        $table->ajax([
+    /**
+     * Свойства ajax datatables.
+     *
+     * @return array
+     */
+    private function getAjaxOptions()
+    {
+        return [
             'url' => route('back.acl.permissions.data'),
             'type' => 'POST',
             'data' => 'function(data) { data._token = $(\'meta[name="csrf-token"]\').attr(\'content\'); }',
-        ]);
+        ];
+    }
 
-        $table->parameters([
+    /**
+     * Свойства datatables.
+     *
+     * @return array
+     */
+    private function getTableParameters()
+    {
+        return [
             'paging' => true,
             'pagingType' => 'full_numbers',
             'searching' => true,
@@ -45,9 +75,7 @@ class PermissionsController extends Controller
             'language' => [
                 'url' => asset('admin/js/plugins/datatables/locales/russian.json'),
             ],
-        ]);
-
-        return view('admin::pages.acl.permissions.index', compact('table'));
+        ];
     }
 
     /**
@@ -96,18 +124,12 @@ class PermissionsController extends Controller
      */
     public function edit($id = null)
     {
-        if (! is_null($id) && $id > 0) {
-            $item = Permission::where('id', '=', $id)->first();
-        } else {
-            abort(404);
-        }
-
-        if (empty($item)) {
-            abort(404);
-        } else {
+        if (! is_null($id) && $id > 0 && $item = Permission::find($id)) {
             return view('admin::pages.acl.permissions.form', [
                 'item' => $item,
             ]);
+        } else {
+            abort(404);
         }
     }
 
@@ -126,31 +148,24 @@ class PermissionsController extends Controller
     /**
      * Сохранение права.
      *
-     * @param $request
+     * @param SavePermissionRequest $request
      * @param null $id
      * @return \Illuminate\Http\RedirectResponse
      */
     private function save($request, $id = null)
     {
-        if (! is_null($id) && $id > 0) {
-            $edit = true;
-            $item = Permission::where('id', '=', $id)->first();
-
-            if (empty($item)) {
-                abort(404);
-            }
+        if (! is_null($id) && $id > 0 && $item = Permission::find($id)) {
+            $action = 'отредактировано';
         } else {
-            $edit = false;
+            $action = 'создано';
             $item = new Permission();
         }
 
         $item->name = trim(strip_tags($request->get('name')));
         $item->display_name = trim(strip_tags($request->get('display_name')));
         $item->description = $request->get('description');
-
         $item->save();
 
-        $action = ($edit) ? 'отредактировано' : 'создано';
         Session::flash('success', 'Право «'.$item->display_name.'» успешно '.$action);
 
         return redirect()->to(route('back.acl.permissions.edit', $item->fresh()->id));
@@ -164,25 +179,17 @@ class PermissionsController extends Controller
      */
     public function destroy($id = null)
     {
-        if (! is_null($id) && $id > 0) {
-            $item = Permission::where('id', '=', $id)->first();
+        if (! is_null($id) && $id > 0 && $item = Permission::find($id)) {
+            $item->delete();
+
+            return response()->json([
+                'success' => true,
+            ]);
         } else {
             return response()->json([
                 'success' => false,
             ]);
         }
-
-        if (empty($item)) {
-            return response()->json([
-                'success' => false,
-            ]);
-        }
-
-        $item->delete();
-
-        return response()->json([
-            'success' => true,
-        ]);
     }
 
     /**

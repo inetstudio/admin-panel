@@ -22,21 +22,51 @@ class RolesController extends Controller
     {
         $table = $dataTable->getHtmlBuilder();
 
-        $table->columns([
+        $table->columns($this->getColumns());
+        $table->ajax($this->getAjaxOptions());
+        $table->parameters($this->getTableParameters());
+
+        return view('admin::pages.acl.roles.index', compact('table'));
+    }
+
+    /**
+     * Свойства колонок datatables.
+     *
+     * @return array
+     */
+    private function getColumns()
+    {
+        return [
             ['data' => 'id', 'name' => 'id', 'title' => 'ID', 'orderable' => true],
             ['data' => 'display_name', 'name' => 'display_name', 'title' => 'Название'],
             ['data' => 'name', 'name' => 'name', 'title' => 'Алиас'],
             ['data' => 'description', 'name' => 'description', 'title' => 'Описание'],
             ['data' => 'actions', 'name' => 'actions', 'title' => 'Действия', 'orderable' => false, 'searchable' => false],
-        ]);
+        ];
+    }
 
-        $table->ajax([
+    /**
+     * Свойства ajax datatables.
+     *
+     * @return array
+     */
+    private function getAjaxOptions()
+    {
+        return [
             'url' => route('back.acl.roles.data'),
             'type' => 'POST',
             'data' => 'function(data) { data._token = $(\'meta[name="csrf-token"]\').attr(\'content\'); }',
-        ]);
+        ];
+    }
 
-        $table->parameters([
+    /**
+     * Свойства datatables.
+     *
+     * @return array
+     */
+    private function getTableParameters()
+    {
+        return [
             'paging' => true,
             'pagingType' => 'full_numbers',
             'searching' => true,
@@ -45,9 +75,7 @@ class RolesController extends Controller
             'language' => [
                 'url' => asset('admin/js/plugins/datatables/locales/russian.json'),
             ],
-        ]);
-
-        return view('admin::pages.acl.roles.index', compact('table'));
+        ];
     }
 
     /**
@@ -96,18 +124,12 @@ class RolesController extends Controller
      */
     public function edit($id = null)
     {
-        if (! is_null($id) && $id > 0) {
-            $item = Role::where('id', '=', $id)->first();
-        } else {
-            abort(404);
-        }
-
-        if (empty($item)) {
-            abort(404);
-        } else {
+        if (! is_null($id) && $id > 0 && $item = Role::find($id)) {
             return view('admin::pages.acl.roles.form', [
                 'item' => $item,
             ]);
+        } else {
+            abort(404);
         }
     }
 
@@ -126,21 +148,16 @@ class RolesController extends Controller
     /**
      * Сохранение роли.
      *
-     * @param $request
+     * @param SaveRoleRequest $request
      * @param null $id
      * @return \Illuminate\Http\RedirectResponse
      */
     private function save($request, $id = null)
     {
-        if (! is_null($id) && $id > 0) {
-            $edit = true;
-            $item = Role::where('id', '=', $id)->first();
-
-            if (empty($item)) {
-                abort(404);
-            }
+        if (! is_null($id) && $id > 0 && $item = Role::find($id)) {
+            $action = 'отредактирована';
         } else {
-            $edit = false;
+            $action = 'создана';
             $item = new Role();
         }
 
@@ -151,7 +168,6 @@ class RolesController extends Controller
 
         $item->syncPermissions($request->get('permissions_id'));
 
-        $action = ($edit) ? 'отредактирована' : 'создана';
         Session::flash('success', 'Роль «'.$item->display_name.'» успешно '.$action);
 
         return redirect()->to(route('back.acl.roles.edit', $item->fresh()->id));
@@ -165,25 +181,17 @@ class RolesController extends Controller
      */
     public function destroy($id = null)
     {
-        if (! is_null($id) && $id > 0) {
-            $item = Role::where('id', '=', $id)->first();
+        if (! is_null($id) && $id > 0 && $item = Role::find($id)) {
+            $item->delete();
+
+            return response()->json([
+                'success' => true,
+            ]);
         } else {
             return response()->json([
                 'success' => false,
             ]);
         }
-
-        if (empty($item)) {
-            return response()->json([
-                'success' => false,
-            ]);
-        }
-
-        $item->delete();
-
-        return response()->json([
-            'success' => true,
-        ]);
     }
 
     /**
