@@ -38,7 +38,7 @@
         <div class="col-md-6">
             <div class="btn-group">
                 <a href="#" class="btn btn-success upload-btn" data-target="{{ route('back.upload') }}" data-field="{{ $name }}">
-                    <i class="fa fa-upload"></i>
+                    <i class="fa fa-upload m-r-xs"></i>Загрузить изображение
 
                     {!! Form::hidden($name.'[temppath]', '', [
                         'id' => $name.'_temppath',
@@ -51,8 +51,6 @@
                     {!! Form::hidden($name.'[filename]', '', [
                         'id' => $name.'_filename',
                     ]) !!}
-
-                    Загрузить изображение
                 </a><br/>
 
                 <div id="{{ $name }}_crop_buttons" style="@if (! isset($value) and ! old($name.'.temppath')) display:none @endif">
