@@ -19,24 +19,99 @@ var toastrOptions = {
 
 $(document).ready(function() {
 
+    if ($('.upload-btn').length > 0) {
+        $('.upload-btn').each(function() {
+            var $input = $(this),
+                url = $input.attr('data-target'),
+                field = $input.attr('data-field'),
+                name = field+'[file]',
+                progressbar = $('#'+field+'_progress').children(),
+                filename = $('#'+field+'_filename'),
+                tempname = $('#'+field+'_tempname'),
+                temppath = $('#'+field+'_temppath'),
+                preview = $('#'+field+'_preview img'),
+                cropButtons = $('#'+field+'_crop_buttons'),
+                additionalFields = $('#'+field+'_additional'),
+                crop = $('#crop_image'),
+                crop_preview = $('#crop_preview');
+
+            var uploader = new plupload.Uploader({
+                browse_button: this,
+                url: url,
+                filters: {
+                    mime_types : "image/*"
+                },
+                chunk_size: '500kb',
+                multi_selection: false,
+                file_data_name: name,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                multipart_params: {
+                    fieldName: name
+                }
+            });
+
+            uploader.init();
+
+            uploader.bind('FilesAdded', function(up, files) {
+                $('#'+field+'_preview').closest('.ibox-content').toggleClass('sk-loading');
+                progressbar.parent().slideDown();
+                up.start();
+            });
+
+            uploader.bind('UploadProgress', function(up, file) {
+                progressbar.width(file.percent + '%');
+                progressbar.attr('aria-valuenow', file.percent);
+            });
+
+            uploader.bind('FileUploaded', function(up, file, response) {
+                $('#'+field+'_preview').closest('.ibox-content').toggleClass('sk-loading');
+                progressbar.parent().slideUp();
+                progressbar.width('0%');
+                progressbar.attr('aria-valuenow', 0);
+
+                response = JSON.parse(response.response);
+
+                preview.attr('src', response.result.tempPath);
+                filename.val(file.name);
+                tempname.val(response.result.tempName);
+                temppath.val(response.result.tempPath);
+                crop.attr('src', response.result.tempPath);
+                crop_preview.attr('src', response.result.tempPath);
+                if (preview.hasClass('placeholder')) {
+                    Holder.setResizeUpdate(preview.get(0), false);
+                }
+
+                $input.closest('.form-group').find('.start-cropper').removeClass('btn-primary').addClass('btn-default');
+                $input.closest('.form-group').find('.crop-data').val('');
+                cropButtons.slideDown();
+                additionalFields.slideDown();
+            });
+        });
+    }
+
     if ($('.start-cropper').length > 0) {
         $('.start-cropper').on('click', function(event) {
             event.preventDefault();
 
-            //$('.img-preview').parent().hide();
+            var cropSettings = JSON.parse($(this).attr('data-crop-settings'));
 
             $('#crop_modal .modal-title').text($(this).closest('.form-group').children('label').text());
+            $('#crop_modal .description').text(cropSettings.description);
             $('#crop_modal .save').attr('data-crop-field', $(this).attr('data-crop-field'));
             $('#crop_image').attr('data-ratio', $(this).attr('data-ratio'));
+
+            $('#crop_modal .crop-size').attr('data-width', cropSettings.width);
+            $('#crop_modal .crop-size').attr('data-height', cropSettings.height);
+            $('#crop_modal .crop-size').attr('data-type', cropSettings.type);
 
             var $cropField = $('[name='+jq($(this).attr('data-crop-field'))+']');
             $('#crop_image').attr('data-values', $cropField.val());
 
-            if (! $('#crop_image').attr('src')) {
-                var imageSrc = $(this).closest('.form-group').find('img').attr('src');
-                $('#crop_image').attr('src', imageSrc);
-                $('#crop_preview').attr('src', imageSrc);
-            }
+            var imageSrc = $(this).closest('.form-group').find('img').attr('src');
+            $('#crop_image').attr('src', imageSrc);
+            $('#crop_preview').attr('src', imageSrc);
 
             $('#crop_modal').modal();
         });
@@ -73,7 +148,37 @@ $(document).ready(function() {
                 cropperOptions.data = JSON.parse($image.attr('data-values'));
             }
 
-            $image.cropper(cropperOptions);
+            $image.on({
+                crop: function (e) {
+                    var infoContainer = $('#crop_modal .crop-size'),
+                        requiredWidth = infoContainer.attr('data-width'),
+                        requiredHeight = infoContainer.attr('data-height'),
+                        requiredType = infoContainer.attr('data-type'),
+                        width = Math.round(e.width),
+                        height = Math.round(e.height);
+
+                    infoContainer.removeClass('label-primary').removeClass('label-danger');
+
+                    switch (requiredType) {
+                        case 'min':
+                            if (width < requiredWidth || height < requiredHeight) {
+                                infoContainer.addClass('label-danger');
+                            } else {
+                                infoContainer.addClass('label-primary');
+                            }
+                            break;
+                        case 'fixed':
+                            if (width != requiredWidth && height != requiredHeight) {
+                                infoContainer.addClass('label-danger');
+                            } else {
+                                infoContainer.addClass('label-primary');
+                            }
+                            break;
+                    }
+
+                    infoContainer.text(width+'x'+height);
+                }
+            }).cropper(cropperOptions);
         });
 
         $('#crop_modal').on('click', '[data-method]', function () {
@@ -143,60 +248,6 @@ $(document).ready(function() {
 
             $('#crop_modal').modal('hide');
         });
-    }
-
-    if ($('.inputImage').length > 0) {
-        if (window.FileReader) {
-            $('.inputImage').change(function () {
-                var fileReader = new FileReader(),
-                    $input = $(this),
-                    files = this.files,
-                    field = $input.attr('data-field'),
-                    base64 = $('#'+field+'_base64'),
-                    filename = $('#'+field+'_filename'),
-                    preview = $('#'+field+'_preview img'),
-                    cropButtons = $('#'+field+'_crop_buttons'),
-                    additionalFields = $('#'+field+'_additional'),
-                    crop = $('#crop_image'),
-                    crop_preview = $('#crop_preview'),
-                    file;
-
-                if (!files.length) {
-                    return;
-                }
-
-                file = files[0];
-
-                if (/^image\/\w+$/.test(file.type)) {
-                    fileReader.readAsDataURL(file);
-                    fileReader.onload = function (e) {
-                        preview.attr('src', e.target.result);
-                        base64.val(e.target.result);
-                        filename.val(file.name);
-                        crop.attr('src', e.target.result);
-                        crop_preview.attr('src', e.target.result);
-                        if (preview.hasClass('placeholder')) {
-                            Holder.setResizeUpdate(preview.get(0), false);
-                        }
-
-                        $input.closest('.form-group').find('.start-cropper').removeClass('btn-primary').addClass('btn-default');
-                        $input.closest('.form-group').find('.crop-data').val('');
-                        cropButtons.slideDown();
-                        additionalFields.slideDown();
-
-                        $input.val('');
-                    };
-                } else {
-                    swal({
-                        title: 'Ошибка',
-                        text: 'Выберите изображение',
-                        type: 'error'
-                    });
-                }
-            });
-        } else {
-            $('.inputImage').addClass("hide");
-        }
     }
 
     if ($('[data-src]:not([class*=placeholder])').length > 0) {
@@ -306,6 +357,55 @@ $(document).ready(function() {
     }
 
     if ($('.tinymce').length > 0) {
+        var imagesContainer = [];
+
+        var uploaderModal = new Vue({
+            el: '#uploader_modal',
+            data: {
+                target: '',
+                upload: true,
+                progress: {
+                    state: false,
+                    percents: 0,
+                    text: '',
+                    style: {
+                        width: '0%'
+                    }
+                },
+                images: [],
+                inputs: []
+            },
+            methods: {
+                save: function (event) {
+                    var target = this.target;
+
+                    $.each(this.images, function (key, image) {
+                        imagesContainer[target].images.push(image);
+                    });
+
+                    $('#uploader_modal').modal('hide');
+
+                    this.images.splice(0);
+                    this.upload = true;
+                }
+            }
+        });
+
+        var imageModal = new Vue({
+            el: '#edit_image_modal',
+            data: {
+                target: '',
+                image: {},
+                inputs: []
+            },
+            methods: {
+                save: function () {
+                    $('#edit_image_modal').modal('hide');
+                }
+            }
+        });
+
+
         tinymce.init({
             selector: '.tinymce',
             height: 500,
@@ -315,7 +415,110 @@ $(document).ready(function() {
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table contextmenu paste code'
             ],
-            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link'
+            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | images',
+            setup: function (editor) {
+                if ($(editor.getElement()).get(0).hasAttribute('hasImages')) {
+
+                    var $input = $('#uploader-area'),
+                        url = $input.attr('data-target'),
+                        name = editor.id,
+                        images = JSON.parse($('#'+name+'_images').attr('data-media'));
+
+                    imagesContainer[name] = new Vue({
+                        el: '#'+name+'_images',
+                        data: {
+                            images: images,
+                            inputs: JSON.parse($(editor.getElement()).attr('properties'))
+                        },
+                        methods: {
+                            add: function (index) {
+
+                            },
+                            edit: function (index) {
+                                var modalWindow = $('#edit_image_modal');
+
+                                imageModal.target = name;
+                                imageModal.image = this.images[index];
+                                imageModal.inputs = this.inputs;
+
+                                modalWindow.modal();
+                            },
+                            remove: function (index) {
+                                this.$delete(this.images, index);
+                            }
+                        }
+                    });
+
+                    editor.addButton('images', {
+                        title: 'Загрузить изображения',
+                        onclick: function() {
+                            uploaderModal.images.splice(0);
+                            uploaderModal.upload = true;
+                            uploaderModal.target = editor.id;
+                            uploaderModal.inputs = JSON.parse($(editor.getElement()).attr('properties'));
+
+                            var uploader = new plupload.Uploader({
+                                browse_button : 'uploader-area',
+                                drop_element : 'uploader-area',
+                                url: url,
+                                filters: {
+                                    mime_types : "image/*"
+                                },
+                                chunk_size: '500kb',
+                                multi_selection: true,
+                                file_data_name: name,
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                multipart_params: {
+                                    fieldName: name
+                                }
+                            });
+
+                            uploader.init();
+
+                            uploader.bind('FilesAdded', function(up) {
+                                uploaderModal.progress.state = true;
+                                uploaderModal.upload = false;
+                                up.start();
+                            });
+
+                            uploader.bind('UploadProgress', function(up) {
+                                uploaderModal.progress.percents = up.total.percent;
+                                uploaderModal.progress.text = up.total.percent+'% ('+(up.total.uploaded+1)+' из '+up.files.length+')';
+                                uploaderModal.progress.style.width = up.total.percent + '%';
+                            });
+
+                            uploader.bind('FileUploaded', function(up, file, response) {
+                                response = JSON.parse(response.response);
+
+                                var properties = {};
+                                $.each(uploaderModal.inputs, function (key, value) {
+                                    properties[value.name] = "";
+                                });
+
+                                uploaderModal.images.push({
+                                    src: response.result.tempPath,
+                                    tempname: response.result.tempName,
+                                    filename: file.name,
+                                    properties: properties
+                                });
+                            });
+
+                            uploader.bind('UploadComplete', function(up) {
+                                uploaderModal.progress.state = false;
+                                uploaderModal.progress.percents = 0;
+                                uploaderModal.progress.text = '';
+                                uploaderModal.progress.style.width = '0%';
+                                up.destroy()
+                            });
+
+                            uploaderModal.upload = true;
+                            $('#uploader_modal').modal();
+                        }
+                    });
+                }
+            }
         });
     }
 
@@ -423,7 +626,7 @@ $(document).ready(function() {
         new Clipboard('.clipboard');
     }
 
-    $('.table').on('click', '.delete', function (event) {
+    $('.table, .dd-list').on('click', '.delete', function (event) {
         event.preventDefault();
 
         var $button = $(this);
@@ -447,7 +650,7 @@ $(document).ready(function() {
                 },
                 success: function (data) {
                     if (data.success == true) {
-                        $button.closest('tr').remove();
+                        $button.closest('tr, .dd3-item').remove();
                         swal({
                             title: "Запись удалена",
                             type: "success"

@@ -30,6 +30,8 @@ class SetupCommand extends Command
         'migrate' => 'Migration',
         'optimize' => 'Optimize',
         'inetstudio:panel:admin' => 'Create admin user',
+        'inetstudio:panel:folders' => 'Create folders',
+        'vandor:publish --provider="InetStudio\AdminPanel\AdminPanelServiceProvider" --tag="public" --force' => 'Publish public',
     ];
 
     /**

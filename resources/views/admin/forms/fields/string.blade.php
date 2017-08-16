@@ -19,4 +19,6 @@
     </div>
 </div>
 
-<div class="hr-line-dashed"></div>
+@if (!(isset($attributes['hr']) && $attributes['hr']['show'] == false))
+    <div class="hr-line-dashed"></div>
+@endif

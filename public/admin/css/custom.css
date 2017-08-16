@@ -38,3 +38,25 @@
 #toast-container > .toast-success:before {
     content: "";
 }
+
+#uploader-area {
+    border: 10px dashed #999;
+    text-align: center;
+    color: #999;
+    font-size: 20px;
+    line-height: 300px;
+    cursor: pointer;
+}
+
+#uploader-area.dragover {
+    background: rgba(255, 255, 255, 0.4);
+    border-color: green;
+}
+
+.jstree-open > .jstree-anchor > .fa-folder:before {
+    content: "\f07c";
+}
+
+.jstree-default .jstree-icon.none {
+    width: 0;
+}

@@ -9,6 +9,9 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
+                        <small class="label label-warning description"></small>
+                        <p class="m-t-lg">Размер выбранной области: <span class="label crop-size"></span></p>
+
                         <div class="m-b-xs">
                             <img src="" class="m-b-md img-responsive center-block" id="crop_image">
                         </div>
@@ -96,6 +99,7 @@
                     </div>
                 </div>
             </div>
+
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-white" data-dismiss="modal">Закрыть</button>

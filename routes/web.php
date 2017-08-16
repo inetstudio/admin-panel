@@ -32,6 +32,10 @@ Route::group(['middleware' => 'web', 'prefix' => 'back'], function () {
                 ], 'as' => 'back.acl']);
             });
 
+            Route::group(['namespace' => 'Uploads'], function () {
+                Route::post('upload', 'UploadsController@upload')->name('back.upload');
+            });
+
             Route::get('/', 'PagesController@showIndexPage')->name('back');
         });
     });

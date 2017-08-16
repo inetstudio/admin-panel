@@ -6,6 +6,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 
 class AdminPanelServiceProvider extends ServiceProvider
 {
@@ -18,6 +19,10 @@ class AdminPanelServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views/admin', 'admin');
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/filesystems.php', 'filesystems.disks'
+        );
+
         $router->aliasMiddleware('back.auth', 'InetStudio\AdminPanel\Middleware\AdminAuthenticate');
         $router->aliasMiddleware('role', 'Laratrust\Middleware\LaratrustRole');
         $router->aliasMiddleware('permission', 'Laratrust\Middleware\LaratrustPermission');
@@ -27,6 +32,7 @@ class AdminPanelServiceProvider extends ServiceProvider
             $this->commands([
                 Commands\SetupCommand::class,
                 Commands\CreateAdminCommand::class,
+                Commands\CreateFoldersCommand::class,
             ]);
         }
 
@@ -44,6 +50,25 @@ class AdminPanelServiceProvider extends ServiceProvider
             return $result;
         });
 
+        Validator::extend('crop_size', function ($attribute, $value, $parameters, $validator) {
+            $crop = json_decode($value, true);
+
+            switch ($parameters[2]) {
+                case 'min':
+                    if (round($crop['width']) < $parameters[0] or round($crop['height']) < $parameters[1]) {
+                        return false;
+                    }
+                    break;
+                case 'fixed':
+                    if (round($crop['width']) != $parameters[0] and round($crop['height']) != $parameters[1]) {
+                        return false;
+                    }
+                    break;
+            }
+
+            return true;
+        });
+
         \Form::component('string', 'admin::forms.fields.string', ['name', 'value', 'attributes']);
         \Form::component('passwords', 'admin::forms.fields.passwords', ['name', 'value', 'attributes']);
         \Form::component('radios', 'admin::forms.fields.radios', ['name', 'value', 'attributes']);
@@ -53,10 +78,15 @@ class AdminPanelServiceProvider extends ServiceProvider
         \Form::component('dropdown', 'admin::forms.fields.dropdown', ['name', 'value', 'attributes']);
         \Form::component('crop', 'admin::forms.fields.crop', ['name', 'value', 'attributes']);
 
+        \Form::component('meta', 'admin::forms.groups.meta', ['name' => null, 'value' => null, 'attributes' => null]);
+        \Form::component('social_meta', 'admin::forms.groups.social_meta', ['name' => null, 'value' => null, 'attributes' => null]);
+
         \Form::component('info', 'admin::forms.blocks.info', ['name' => null, 'value' => null, 'attributes' => null]);
         \Form::component('buttons', 'admin::forms.blocks.buttons', ['name', 'value', 'attributes']);
 
         \Form::component('modals_crop', 'admin::forms.modals.crop', ['name' => null, 'value' => null, 'attributes' => null]);
+        \Form::component('modals_uploader', 'admin::forms.modals.uploader', ['name' => null, 'value' => null, 'attributes' => null]);
+        \Form::component('modals_edit_image', 'admin::forms.modals.edit_image', ['name' => null, 'value' => null, 'attributes' => null]);
     }
 
     /**
@@ -66,16 +96,21 @@ class AdminPanelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register('Laratrust\LaratrustServiceProvider');
         $this->app->register('Collective\Html\HtmlServiceProvider');
+        $this->app->register('Cviebrock\EloquentSluggable\ServiceProvider');
+        $this->app->register('JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider');
+        $this->app->register('Laratrust\LaratrustServiceProvider');
         $this->app->register('Laravelista\Ekko\EkkoServiceProvider');
+        $this->app->register('Phoenix\EloquentMeta\ServiceProvider');
+        $this->app->register('Spatie\MediaLibrary\MediaLibraryServiceProvider');
         $this->app->register('Yajra\Datatables\HtmlServiceProvider');
         $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
 
         $loader = AliasLoader::getInstance();
-        $loader->alias('Laratrust', 'Laratrust\LaratrustFacade');
+        $loader->alias('Ekko', 'Laravelista\Ekko\Facades\Ekko');
         $loader->alias('Form', 'Collective\Html\FormFacade');
         $loader->alias('Html', 'Collective\Html\HtmlFacade');
-        $loader->alias('Ekko', 'Laravelista\Ekko\Facades\Ekko');
+        $loader->alias('Laratrust', 'Laratrust\LaratrustFacade');
+        $loader->alias('Plupload', 'JildertMiedema\LaravelPlupload\Facades\Plupload');
     }
 }
