@@ -26,28 +26,34 @@ class SetupCommand extends Command
      * @var array
      */
     protected $calls = [
-        'laratrust:setup' => [
+        [
             'description' => 'Laratrust setup',
+            'command' => 'laratrust:setup',
             'params' => [],
         ],
-        'migrate' => [
+        [
             'description' => 'Migration',
+            'command' => 'migrate',
             'params' => [],
         ],
-        'optimize' => [
+        [
             'description' => 'Optimize',
+            'command' => 'optimize',
             'params' => [],
         ],
-        'inetstudio:panel:admin' => [
+        [
             'description' => 'Create admin user',
+            'command' => 'inetstudio:panel:admin',
             'params' => [],
         ],
-        'inetstudio:panel:folders' => [
+        [
             'description' => 'Create folders',
+            'command' => 'inetstudio:panel:folders',
             'params' => [],
         ],
-        'vendor:publish' => [
+        [
             'description' => 'Publish public',
+            'command' => 'vendor:publish',
             'params' => [
                 '--provider' => 'InetStudio\AdminPanel\AdminPanelServiceProvider',
                 '--tag' => 'public',
@@ -63,9 +69,9 @@ class SetupCommand extends Command
      */
     public function fire()
     {
-        foreach ($this->calls as $command => $info) {
+        foreach ($this->calls as $info) {
             $this->line(PHP_EOL.$info['description']);
-            $this->call($command, $info['params']);
+            $this->call($info['command'], $info['params']);
         }
     }
 }
