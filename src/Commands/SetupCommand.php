@@ -32,6 +32,22 @@ class SetupCommand extends Command
             'params' => [],
         ],
         [
+            'description' => 'Meta setup',
+            'command' => 'vendor:publish',
+            'params' => [
+                '--provider' => 'Phoenix\EloquentMeta\ServiceProvider',
+                '--tag' => 'migrations',
+            ],
+        ],
+        [
+            'description' => 'Medialibrary setup',
+            'command' => 'vendor:publish',
+            'params' => [
+                '--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider',
+                '--tag' => 'migrations',
+            ],
+        ],
+        [
             'description' => 'Migration',
             'command' => 'migrate',
             'params' => [],

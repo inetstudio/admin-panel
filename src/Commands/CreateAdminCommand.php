@@ -5,6 +5,7 @@ namespace InetStudio\AdminPanel\Commands;
 use App\Role;
 use App\User;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
 class CreateAdminCommand extends Command
 {
@@ -51,6 +52,14 @@ class CreateAdminCommand extends Command
             $user->save();
         }
 
-        $user->syncRoles($role);
+        if (DB::table('role_user')->where('user_id', $user->id)->where('role_id', $role->id)->where('user_type', get_class($user))->count() == 0) {
+            DB::table('role_user')->insert([
+                [
+                    'user_id' => $user->id, 
+                    'role_id' => $role->id,
+                    'user_type' => get_class($user),
+                ],
+            ]);
+        }
     }
 }
