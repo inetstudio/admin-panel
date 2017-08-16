@@ -31,7 +31,7 @@ class SetupCommand extends Command
         'optimize' => 'Optimize',
         'inetstudio:panel:admin' => 'Create admin user',
         'inetstudio:panel:folders' => 'Create folders',
-        'vandor:publish --provider="InetStudio\AdminPanel\AdminPanelServiceProvider" --tag="public" --force' => 'Publish public',
+        'vendor:publish --provider="InetStudio\AdminPanel\AdminPanelServiceProvider" --tag="public" --force' => 'Publish public',
     ];
 
     /**
