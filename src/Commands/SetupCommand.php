@@ -48,6 +48,13 @@ class SetupCommand extends Command
             ],
         ],
         [
+            'description' => 'Revisionable setup',
+            'command' => 'migrate',
+            'params' => [
+                '--path' => 'vendor/venturecraft/revisionable/src/migrations',
+            ],
+        ],
+        [
             'description' => 'Migration',
             'command' => 'migrate',
             'params' => [],
