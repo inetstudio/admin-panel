@@ -69,6 +69,9 @@ class AdminPanelServiceProvider extends ServiceProvider
             return true;
         });
 
+        \Form::component('info', 'admin::forms.blocks.info', ['name' => null, 'value' => null, 'attributes' => null]);
+        \Form::component('buttons', 'admin::forms.blocks.buttons', ['name', 'value', 'attributes']);
+
         \Form::component('string', 'admin::forms.fields.string', ['name', 'value', 'attributes']);
         \Form::component('passwords', 'admin::forms.fields.passwords', ['name', 'value', 'attributes']);
         \Form::component('radios', 'admin::forms.fields.radios', ['name', 'value', 'attributes']);
@@ -77,16 +80,15 @@ class AdminPanelServiceProvider extends ServiceProvider
         \Form::component('wysiwyg', 'admin::forms.fields.wysiwyg', ['name', 'value', 'attributes']);
         \Form::component('dropdown', 'admin::forms.fields.dropdown', ['name', 'value', 'attributes']);
         \Form::component('crop', 'admin::forms.fields.crop', ['name', 'value', 'attributes']);
+        \Form::component('list', 'admin::forms.fields.list', ['name', 'value', 'attributes']);
 
         \Form::component('meta', 'admin::forms.groups.meta', ['name' => null, 'value' => null, 'attributes' => null]);
         \Form::component('social_meta', 'admin::forms.groups.social_meta', ['name' => null, 'value' => null, 'attributes' => null]);
 
-        \Form::component('info', 'admin::forms.blocks.info', ['name' => null, 'value' => null, 'attributes' => null]);
-        \Form::component('buttons', 'admin::forms.blocks.buttons', ['name', 'value', 'attributes']);
-
         \Form::component('modals_crop', 'admin::forms.modals.crop', ['name' => null, 'value' => null, 'attributes' => null]);
         \Form::component('modals_uploader', 'admin::forms.modals.uploader', ['name' => null, 'value' => null, 'attributes' => null]);
         \Form::component('modals_edit_image', 'admin::forms.modals.edit_image', ['name' => null, 'value' => null, 'attributes' => null]);
+        \Form::component('modals_list', 'admin::forms.modals.list', ['name' => null, 'value' => null, 'attributes' => null]);
     }
 
     /**

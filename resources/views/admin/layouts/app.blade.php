@@ -21,6 +21,9 @@
         <!-- Toastr -->
         <link href="{!! asset('admin/css/plugins/toastr/toastr.min.css') !!}" rel="stylesheet">
 
+        <!-- Fields -->
+        <link href="{!! asset('admin/css/plugins/iCheck/custom.css') !!}" rel="stylesheet">
+
         @yield('styles')
 
         <!-- CUSTOM STYLES -->
@@ -77,6 +80,9 @@
 
         <!-- Holder -->
         <script src="{!! asset('admin/js/plugins/holder/holder.min.js') !!}"></script>
+
+        <!-- Fields -->
+        <script src="{!! asset('admin/js/plugins/iCheck/icheck.min.js') !!}"></script>
 
         @yield('scripts')
 
