@@ -4,7 +4,7 @@
     $propertiesArr = (isset($attributes['fields'])) ? $attributes['fields'] : [];
     $properties = json_encode($propertiesArr);
 
-    $items = $value->map(function ($item) use ($propertiesArr) {
+    $items = (! empty($value)) ? $value->map(function ($item) use ($propertiesArr) {
         $data = [
             'id' => $item->id,
             'properties' => [],
@@ -15,7 +15,7 @@
         }
 
         return $data;
-    })->toArray();
+    })->toArray() : [];
 
     $items = json_encode($items);
 @endphp

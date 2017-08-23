@@ -291,6 +291,87 @@ $(document).ready(function () {
         });
     }
 
+    if ($('.editable-list').length > 0) {
+        var listComponents = [];
+
+        var editItemComponent = new Vue({
+            el: '#modal_edit_item',
+            data: {
+                mode: '',
+                target: '',
+                item: {},
+                inputs: []
+            },
+            methods: {
+                save: function () {
+                    var item = this.item;
+
+                    $(this.$el).find('input').each(function () {
+                        item.properties[$(this).attr('name')] = $(this).val();
+                    });
+
+                    if (this.mode == 'add') {
+                        listComponents[this.target].items.push(item);
+                    }
+
+                    $('#modal_edit_item').modal('hide');
+                }
+            }
+        });
+
+        $('.editable-list').each(function() {
+            var name = $(this).attr('id'),
+                inputs = JSON.parse($(this).attr('data-properties')),
+                items = JSON.parse($(this).attr('data-items'));
+
+            listComponents[name] = new Vue({
+                el: '#'+name,
+                data: {
+                    items: items,
+                    inputs: inputs
+                },
+                methods: {
+                    add: function (index) {
+                        editItemComponent.mode = 'add';
+                        editItemComponent.target = this.$el.id;
+                        editItemComponent.inputs = this.inputs;
+
+                        var properties = {};
+                        $.each(this.inputs, function (key, value) {
+                            properties[value.name] = "";
+                        });
+
+                        editItemComponent.item = {
+                            properties: properties
+                        };
+
+                        $('#modal_edit_item').modal();
+                    },
+                    edit: function (index) {
+                        editItemComponent.item = {};
+
+                        editItemComponent.mode = 'edit';
+                        editItemComponent.target = this.$el.id;
+                        editItemComponent.inputs = this.inputs;
+                        editItemComponent.item = this.items[index];
+
+                        $('#modal_edit_item').modal();
+                    },
+                    remove: function (index) {
+                        this.$delete(this.items, index);
+                    }
+                },
+                computed: {
+                    itemTitles: function() {
+                        return this.items.map(function(item) {
+                            return item.properties[Object.keys(item.properties)[0]];
+                        });
+                    }
+                }
+            });
+        });
+    }
+
     if ($('.nested-list').length > 0) {
         $('.nested-list').each(function () {
             var orderURL = $(this).attr('data-order-url');
