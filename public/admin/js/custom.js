@@ -504,7 +504,7 @@ $(document).ready(function () {
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table contextmenu paste'
             ],
-            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | skin_bullist skin_bullist-h skin_numlist skin_numlist-h | outdent indent | link | longread_link longread longread_clear | images | skin_blockquote | code | bg_pink bg_green bg_beige | important block_pointer | add_table_styles add_drop',
+            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | skin_bullist skin_bullist-h skin_numlist skin_numlist-h | outdent indent | link | longread_link longread longread_clear | images | skin_blockquote | code | bg_pink bg_green bg_beige | important | block_pointer block_pointer-preview block_pointer-ingr block_pointer-expert | add_table_styles add_drop',
 
             setup: function (editor) {
                 if ($(editor.getElement()).get(0).hasAttribute('hasImages')) {
@@ -609,6 +609,7 @@ $(document).ready(function () {
                         }
                     });
                 }
+
                 editor.addButton('longread_link', {
                     title: 'Содержание лонгрида',
                     icon: 'anchor',
@@ -633,7 +634,6 @@ $(document).ready(function () {
 
                                 anchBlock.find('li:last').attr('data-target', num);
 
-
                             }
                         });
 
@@ -643,24 +643,23 @@ $(document).ready(function () {
                 var longreadCounter = 1;
                 editor.addButton('longread', {
                     title: 'Лонгрид',
-                    text: 'лонгрид',
+                    image: '/admin/img/admin-13.png',
+
                     onclick: function () {
                         editor.focus();
 
                         console.log(editor.selection.getNode());
 
-
                         editor.execCommand('mceInsertContent', false, '<div class="article-block" data-anchor="' + longreadCounter + '">' + editor.selection.getContent() + '<div class="article-backtop"><a href="">Вернуться к оглавлению</a></div></div>');
-
 
                         longreadCounter++;
                     }
                 });
 
-
                 editor.addButton('longread_clear', {
                     title: 'Сброс связей лонгрида',
-                    text: 'лонгрид-отмена',
+                    image: '/admin/img/admin-14.png',
+
                     onclick: function () {
 
                         if (longreadCounter === 1) return;
@@ -674,6 +673,33 @@ $(document).ready(function () {
                 editor.addButton('block_pointer', {
                     title: 'Блок с указателем',
                     image: '/admin/img/admin-3.png',
+                    onclick: function () {
+                        editor.focus();
+                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div style="background:grey" class="article-aside_left"></div></div>');
+                    }
+                });
+
+                editor.addButton('block_pointer-preview', {
+                    title: 'Превью статьи для блока с указателем',
+                    image: '/admin/img/admin-10.png',
+                    onclick: function () {
+                        editor.focus();
+                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div style="background:grey" class="article-aside_left"></div></div>');
+                    }
+                });
+
+                editor.addButton('block_pointer-ingr', {
+                    title: 'Ингредиент для блока с указателем',
+                    image: '/admin/img/admin-11.png',
+                    onclick: function () {
+                        editor.focus();
+                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div style="background:grey" class="article-aside_left"></div></div>');
+                    }
+                });
+
+                editor.addButton('block_pointer-expert', {
+                    title: 'Мнение эксперта для блока с указателем',
+                    image: '/admin/img/admin-12.png',
                     onclick: function () {
                         editor.focus();
                         editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div style="background:grey" class="article-aside_left"></div></div>');
