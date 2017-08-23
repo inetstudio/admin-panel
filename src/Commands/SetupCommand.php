@@ -83,6 +83,14 @@ class SetupCommand extends Command
                 '--force' => true,
             ],
         ],
+        [
+            'description' => 'Publish medialibrary config',
+            'command' => 'vendor:publish',
+            'params' => [
+                '--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider',
+                '--tag' => 'config',
+            ],
+        ],
     ];
 
     /**
