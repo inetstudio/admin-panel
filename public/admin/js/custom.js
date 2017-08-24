@@ -498,6 +498,7 @@ $(document).ready(function () {
             remove_script_host: false,
             content_css: '/assets/css/article-page.min.css',
             body_class: 'article-content',
+            content_style: '.article-aside_left {border: 2px solid #2B7291}',
             visual_table_class: 'table-compare',
             plugins: [
                 'autolink lists link charmap print preview',
@@ -667,15 +668,12 @@ $(document).ready(function () {
                     }
                 });
 
-
-                // block with pointer to left column
-
                 editor.addButton('block_pointer', {
                     title: 'Блок с указателем',
                     image: '/admin/img/admin-3.png',
                     onclick: function () {
                         editor.focus();
-                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div style="background:grey" class="article-aside_left"></div></div>');
+                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div" class="article-aside_left"></div></div>');
                     }
                 });
 
@@ -684,7 +682,25 @@ $(document).ready(function () {
                     image: '/admin/img/admin-10.png',
                     onclick: function () {
                         editor.focus();
-                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div style="background:grey" class="article-aside_left"></div></div>');
+                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div" class="article-aside_left"></div></div>');
+                    }
+                });
+
+                editor.addButton('block_pointer-ingr', {
+                    title: 'Ингредиент для блока с указателем',
+                    image: '/admin/img/admin-11.png',
+                    onclick: function () {
+                        editor.focus();
+                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div" class="article-aside_left"></div></div>');
+                    }
+                });
+
+                editor.addButton('block_pointer-expert', {
+                    title: 'Мнение эксперта для блока с указателем',
+                    image: '/admin/img/admin-12.png',
+                    onclick: function () {
+                        editor.focus();
+                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div" class="article-aside_left"></div></div>');
                     }
                 });
 
