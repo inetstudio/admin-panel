@@ -1,6 +1,14 @@
 $.lazyLoadXT.autoInit = false;
 
-var toastrOptions = {
+var Admin = Admin || {
+    options: {},
+    modals: {},
+    containers: {
+        images: []
+    }
+};
+
+Admin.options.toastr = {
     "closeButton": true,
     "debug": false,
     "progressBar": true,
@@ -15,6 +23,24 @@ var toastrOptions = {
     "hideEasing": "linear",
     "showMethod": "fadeIn",
     "hideMethod": "fadeOut"
+};
+
+Admin.options.tinyMCE = {
+    selector: '.tinymce',
+    height: 500,
+    menubar: false,
+    automatic_uploads: false,
+    drag_drop_upload: false,
+    drag_drop: false,
+    relative_urls: false,
+    remove_script_host: false,
+    language: 'ru',
+    plugins: [
+        'autolink lists link charmap print preview',
+        'searchreplace visualblocks code fullscreen',
+        'insertdatetime media table contextmenu paste images'
+    ],
+    toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link | images | code'
 };
 
 $(document).ready(function () {
@@ -277,13 +303,13 @@ $(document).ready(function () {
                         'dataType': 'json',
                         'success': function (data) {
                             if (data.success) {
-                                toastr.success('', 'Сортировка сохранена', toastrOptions);
+                                toastr.success('', 'Сортировка сохранена', Admin.options.toastr);
                             } else {
-                                toastr.error('', 'При изменении сортировки произошла ошибка', toastrOptions);
+                                toastr.error('', 'При изменении сортировки произошла ошибка', Admin.options.toastr);
                             }
                         },
                         'error': function () {
-                            toastr.error('', 'При изменении сортировки произошла ошибка', toastrOptions);
+                            toastr.error('', 'При изменении сортировки произошла ошибка', Admin.options.toastr);
                         }
                     });
                 }
@@ -393,13 +419,13 @@ $(document).ready(function () {
                     'dataType': 'json',
                     'success': function (data) {
                         if (data.success) {
-                            toastr.success('', 'Порядок изменен', toastrOptions);
+                            toastr.success('', 'Порядок изменен', Admin.options.toastr);
                         } else {
-                            toastr.error('', 'При изменении порядка произошла ошибка', toastrOptions);
+                            toastr.error('', 'При изменении порядка произошла ошибка', Admin.options.toastr);
                         }
                     },
                     'error': function () {
-                        toastr.error('', 'При изменении порядка произошла ошибка', toastrOptions);
+                        toastr.error('', 'При изменении порядка произошла ошибка', Admin.options.toastr);
                     }
                 });
             });
@@ -426,7 +452,7 @@ $(document).ready(function () {
                     'three_state': false,
                     'cascade': list.attr('data-cascade')
                 }
-            }
+            };
 
             $(this).jstree(options).on('changed.jstree', function (e, data) {
                 var ids = list.jstree('get_selected').map(function (id) {
@@ -438,602 +464,7 @@ $(document).ready(function () {
     }
 
     if ($('.tinymce').length > 0) {
-        var imagesContainer = [];
-
-        var uploaderModal = new Vue({
-            el: '#uploader_modal',
-            data: {
-                target: '',
-                upload: true,
-                progress: {
-                    state: false,
-                    percents: 0,
-                    text: '',
-                    style: {
-                        width: '0%'
-                    }
-                },
-                images: [],
-                inputs: []
-            },
-            methods: {
-                save: function (event) {
-                    var target = this.target;
-
-                    $.each(this.images, function (key, image) {
-                        imagesContainer[target].images.push(image);
-                    });
-
-                    $('#uploader_modal').modal('hide');
-
-                    this.images.splice(0);
-                    this.upload = true;
-                }
-            }
-        });
-
-        var imageModal = new Vue({
-            el: '#edit_image_modal',
-            data: {
-                target: '',
-                image: {},
-                inputs: []
-            },
-            methods: {
-                save: function () {
-                    $('#edit_image_modal').modal('hide');
-                }
-            }
-        });
-
-
-        tinymce.init({
-            selector: '.tinymce',
-            height: 500,
-            menubar: false,
-            automatic_uploads: false,
-            drag_drop_upload: false,
-            drag_drop: false,
-            relative_urls: false,
-            remove_script_host: false,
-            content_css: '/assets/css/article-page.min.css',
-            body_class: 'article-content',
-            content_style: '.article-aside_left {border: 2px solid #2B7291}',
-            visual_table_class: 'table-compare',
-            plugins: [
-                'autolink lists link charmap print preview',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table contextmenu paste'
-            ],
-            toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | skin_bullist skin_bullist-h skin_numlist skin_numlist-h | outdent indent | link | longread_link longread longread_clear | images | skin_blockquote | code | bg_pink bg_green bg_beige | important | block_pointer block_pointer-preview block_pointer-ingr block_pointer-expert | add_table_styles add_drop',
-
-            setup: function (editor) {
-                if ($(editor.getElement()).get(0).hasAttribute('hasImages')) {
-
-                    var $input = $('#uploader-area'),
-                        url = $input.attr('data-target'),
-                        name = editor.id,
-                        images = JSON.parse($('#' + name + '_images').attr('data-media'));
-
-                    imagesContainer[name] = new Vue({
-                        el: '#' + name + '_images',
-                        data: {
-                            images: images,
-                            inputs: JSON.parse($(editor.getElement()).attr('properties'))
-                        },
-                        methods: {
-                            add: function (index) {
-                                tinymce.get(name).editorManager.execCommand('mceInsertContent', false, '<div class="article-block_img"><img src="' + this.images[index].src + '" alt="' + this.images[index].properties.alt + '"><p class="fix">' + this.images[index].properties.description + '</p></div>');
-                            },
-                            edit: function (index) {
-                                var modalWindow = $('#edit_image_modal');
-
-                                imageModal.target = name;
-                                imageModal.image = this.images[index];
-                                imageModal.inputs = this.inputs;
-
-                                modalWindow.modal();
-                            },
-                            remove: function (index) {
-                                this.$delete(this.images, index);
-                            }
-                        }
-                    });
-
-                    editor.addButton('images', {
-                        title: 'Загрузить изображения',
-                        icon: 'image',
-                        onclick: function () {
-                            uploaderModal.images.splice(0);
-                            uploaderModal.upload = true;
-                            uploaderModal.target = editor.id;
-                            uploaderModal.inputs = JSON.parse($(editor.getElement()).attr('properties'));
-
-                            var uploader = new plupload.Uploader({
-                                browse_button: 'uploader-area',
-                                drop_element: 'uploader-area',
-                                url: url,
-                                filters: {
-                                    mime_types: "image/*"
-                                },
-                                chunk_size: '500kb',
-                                multi_selection: true,
-                                file_data_name: name,
-                                headers: {
-                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                },
-                                multipart_params: {
-                                    fieldName: name
-                                }
-                            });
-
-                            uploader.init();
-
-                            uploader.bind('FilesAdded', function (up) {
-                                uploaderModal.progress.state = true;
-                                uploaderModal.upload = false;
-                                up.start();
-                            });
-
-                            uploader.bind('UploadProgress', function (up) {
-                                uploaderModal.progress.percents = up.total.percent;
-                                uploaderModal.progress.text = up.total.percent + '% (' + (up.total.uploaded + 1) + ' из ' + up.files.length + ')';
-                                uploaderModal.progress.style.width = up.total.percent + '%';
-                            });
-
-                            uploader.bind('FileUploaded', function (up, file, response) {
-                                response = JSON.parse(response.response);
-
-                                var properties = {};
-                                $.each(uploaderModal.inputs, function (key, value) {
-                                    properties[value.name] = "";
-                                });
-
-                                uploaderModal.images.push({
-                                    src: response.result.tempPath,
-                                    tempname: response.result.tempName,
-                                    filename: file.name,
-                                    properties: properties
-                                });
-                            });
-
-                            uploader.bind('UploadComplete', function (up) {
-                                uploaderModal.progress.state = false;
-                                uploaderModal.progress.percents = 0;
-                                uploaderModal.progress.text = '';
-                                uploaderModal.progress.style.width = '0%';
-                                up.destroy()
-                            });
-
-                            uploaderModal.upload = true;
-                            $('#uploader_modal').modal();
-                        }
-                    });
-                }
-
-                editor.addButton('longread_link', {
-                    title: 'Содержание лонгрида',
-                    icon: 'anchor',
-                    onclick: function () {
-
-                        editor.focus();
-
-                        var num = 1;
-
-                        editor.execCommand('mceInsertContent', false, '<div class="article-block_anchors"><p class="article-block_anchors-h">Содержание</p><ul class="article-block_anchors-list"><li data-target="' + num + '">' + editor.selection.getContent() + '</li></ul></div>');
-
-                        editor.on('keyup', function (e) {
-
-
-                            var anchBlock = $(editor.selection.getNode()).closest('.article-block_anchors');
-
-                            // console.log(anchBlock);
-
-                            if (e.keyCode == 13 && anchBlock.length > 0) {
-
-                                num++;
-
-                                anchBlock.find('li:last').attr('data-target', num);
-
-                            }
-                        });
-
-                    }
-                });
-
-                var longreadCounter = 1;
-                editor.addButton('longread', {
-                    title: 'Лонгрид',
-                    image: '/admin/img/admin-13.png',
-
-                    onclick: function () {
-                        editor.focus();
-
-                        console.log(editor.selection.getNode());
-
-                        editor.execCommand('mceInsertContent', false, '<div class="article-block" data-anchor="' + longreadCounter + '">' + editor.selection.getContent() + '<div class="article-backtop"><a href="">Вернуться к оглавлению</a></div></div>');
-
-                        longreadCounter++;
-                    }
-                });
-
-                editor.addButton('longread_clear', {
-                    title: 'Сброс связей лонгрида',
-                    image: '/admin/img/admin-14.png',
-
-                    onclick: function () {
-
-                        if (longreadCounter === 1) return;
-                        longreadCounter--;
-                    }
-                });
-
-                editor.addButton('block_pointer', {
-                    title: 'Блок с указателем',
-                    image: '/admin/img/admin-3.png',
-                    onclick: function () {
-                        editor.focus();
-                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div" class="article-aside_left"></div></div>');
-                    }
-                });
-
-                editor.addButton('block_pointer-preview', {
-                    title: 'Превью статьи для блока с указателем',
-                    image: '/admin/img/admin-10.png',
-                    onclick: function () {
-                        editor.focus();
-                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div" class="article-aside_left"></div></div>');
-                    }
-                });
-
-                editor.addButton('block_pointer-ingr', {
-                    title: 'Ингредиент для блока с указателем',
-                    image: '/admin/img/admin-11.png',
-                    onclick: function () {
-                        editor.focus();
-                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div" class="article-aside_left"></div></div>');
-                    }
-                });
-
-                editor.addButton('block_pointer-expert', {
-                    title: 'Мнение эксперта для блока с указателем',
-                    image: '/admin/img/admin-12.png',
-                    onclick: function () {
-                        editor.focus();
-                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div" class="article-aside_left"></div></div>');
-                    }
-                });
-
-                editor.addButton('block_pointer-ingr', {
-                    title: 'Ингредиент для блока с указателем',
-                    image: '/admin/img/admin-11.png',
-                    onclick: function () {
-                        editor.focus();
-                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div style="background:grey" class="article-aside_left"></div></div>');
-                    }
-                });
-
-                editor.addButton('block_pointer-expert', {
-                    title: 'Мнение эксперта для блока с указателем',
-                    image: '/admin/img/admin-12.png',
-                    onclick: function () {
-                        editor.focus();
-                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_pointer"><div class="article-block_text">' + editor.selection.getContent() + '</div><div style="background:grey" class="article-aside_left"></div></div>');
-                    }
-                });
-
-
-                // add drop to table
-
-                editor.addButton('add_drop', {
-                    title: 'Добавить каплю в таблицу',
-                    image: '/admin/img/admin-4.png',
-                    onclick: function () {
-                        editor.focus();
-                        editor.execCommand('mceInsertContent', false, '<i class="icon-drop-glare">&nbsp;</i>');
-                    }
-                });
-
-
-                // add table styles
-
-                editor.addButton('add_table_styles', {
-                    title: 'Сформировать таблицу',
-                    image: '/admin/img/admin-5.png',
-                    onclick: function () {
-                        editor.focus();
-                        editor.execCommand('mceReplaceContent', false, '<div class="article-block_compare"><div class="article-block_compare-h"><p>Введите название таблицы</p></div><div class="article-block_compare-table">' + editor.selection.getContent() + '</div></div>');
-                    }
-                });
-
-                //blockqoute
-                editor.addButton('skin_blockquote', {
-                    title: 'Цитата',
-                    icon: 'blockquote',
-                    onclick: function () {
-                        editor.focus();
-                        editor.execCommand('mceReplaceContent', false, '<blockquote class="article-block_blockquote">' + editor.selection.getContent() + '</blockquote>');
-                    }
-                });
-
-                // pink background
-                editor.addButton('bg_pink', {
-                    title: 'Фон - розовый',
-                    image: '/admin/img/admin-8.png',
-
-                    onclick: function () {
-                        editor.focus();
-
-
-                        console.log(editor.selection.getNode());
-
-                        var content = $(editor.selection.getNode());
-
-                        if (content.is('body')) {
-                            content = editor.selection.getContent();
-
-                            editor.execCommand('mceInsertContent', false, '<div class="article-block_text"><div class="pink-bg">' + content + '</div></div>');
-
-                        } else if (content.is('.simple')) {
-
-                            content.addClass('pink-bg');
-
-                        } else if (content.closest('.article-block_text-important')) {
-
-                            content.closest('.article-block_text-important').addClass('pink-bg')
-
-                        } else {
-
-                            content.wrap('<div class="article-block_text"><div class="pink-bg"></div></div>');
-
-                        }
-
-                    }
-                });
-
-                // green background
-                editor.addButton('bg_green', {
-                    title: 'Фон - зеленый',
-                    image: '/admin/img/admin-7.png',
-                    onclick: function () {
-                        editor.focus();
-
-
-                        // console.log(editor.selection.getNode());
-
-                        var content = $(editor.selection.getNode());
-
-                        if (content.is('body')) {
-                            content = editor.selection.getContent();
-
-                            editor.execCommand('mceInsertContent', false, '<div class="article-block_text"><div class="green-light-bg">' + content + '</div></div>');
-
-                        } else if (content.is('.simple')) {
-
-                            content.addClass('green-light-bg');
-
-                        } else if (content.closest('.article-block_text-important')) {
-
-                            content.closest('.article-block_text-important').addClass('green-light-bg')
-
-                        } else {
-
-                            content.wrap('<div class="article-block_text"><div class="green-light-bg"></div></div>');
-
-                        }
-
-                    }
-                });
-
-                // beige background
-                editor.addButton('bg_beige', {
-                    title: 'Фон - бежевый',
-                    image: '/admin/img/admin-9.png',
-
-                    onclick: function () {
-                        editor.focus();
-
-
-                        // console.log(editor.selection.getNode());
-
-                        var content = $(editor.selection.getNode());
-
-                        if (content.is('body')) {
-                            content = editor.selection.getContent();
-
-                            editor.execCommand('mceInsertContent', false, '<div class="article-block_text"><div class="beige-bg">' + content + '</div></div>');
-
-                        } else if (content.is('.simple')) {
-
-                            content.addClass('beige-bg');
-
-                        } else if (content.closest('.article-block_text-important')) {
-
-                            content.closest('.article-block_text-important').addClass('beige-bg')
-
-                        } else {
-
-                            content.wrap('<div class="article-block_text"><div class="beige-bg"></div></div>');
-
-                        }
-
-                    }
-                });
-
-                var endId = tinymce.DOM.uniqueId();
-
-                // console.log(endId);
-
-                // help event CTRL + N - exit from block to the end of the content
-                editor.on('keydown', function (e) {
-
-                    if ((e.metaKey || e.ctrlKey) && ( String.fromCharCode(e.which).toLowerCase() === 'n')) {
-
-                        var newNode = editor.dom.select('span#' + endId);
-
-                        console.log(newNode);
-
-                        if (newNode.length > 0) {
-                            editor.selection.select(newNode[0]);
-                        } else {
-                            editor.dom.add(editor.getBody(), 'span', {'id': endId}, 'Конец документа');
-
-                            var newNode = editor.dom.select('span#' + endId);
-                            editor.selection.select(newNode[0]);
-                        }
-
-                    }
-                });
-
-
-                // block with important text
-                editor.addButton('important', {
-                    title: 'Важно',
-                    image: '/admin/img/admin-6.png',
-                    onclick: function () {
-                        editor.focus();
-
-                        var content = $(editor.selection.getNode());
-                        // console.log(content);
-
-                        if (content.closest('.article-block_text').length > 0) {
-
-                            content.closest('.article-block_text').addClass('article-block_text-important');
-
-                        } else {
-
-                            content.wrap('<div class="article-block_text article-block_text-important"></div>');
-
-                        }
-
-                    }
-                });
-
-                // simple unordered list
-                editor.addButton('skin_bullist', {
-                    title: 'Простой маркированный список',
-                    icon: 'bullist',
-                    onclick: function () {
-
-                        var content;
-
-                        editor.focus();
-                        if (editor.selection.getContent()) {
-                            content = editor.selection.getContent();
-                        } else {
-                            content = '&nbsp;';
-                        }
-
-
-                        var text = editor.selection.getContent({'format': 'html'});
-
-                        if (text && text.length > 0) {
-                            editor.execCommand('mceInsertContent', false, '<div class="article-block_text"><ul class="simple"><li>' + text + '</li></ul></div>');
-                        }
-
-                    }
-                });
-
-
-                // unordered list-chapter with or without heading
-                editor.addButton('skin_bullist-h', {
-                    title: 'Список-глава (с заголовком и без)',
-                    image: '/admin/img/admin-1.png',
-                    onclick: function () {
-
-                        var content;
-
-                        editor.focus();
-                        if (editor.selection.getContent()) {
-                            content = editor.selection.getContent();
-                        } else {
-                            content = '&nbsp;';
-                        }
-
-                        editor.execCommand('mceInsertContent', false, '<div class="article-block_text"><ul class="chapter"><li><p class="fix">' + content + '</p></li></ul></div>');
-
-
-                        editor.on('keyup', function (e) {
-
-
-                            var ul = $(editor.selection.getNode()).closest('ul.chapter');
-
-                            if (!(e.metaKey || e.ctrlKey) && (e.keyCode == 13) && ul.length > 0) {
-
-                                ul.find('li:last').append('<p class="fix">Текст пункта</p>');
-
-                            }
-                        });
-
-
-                    }
-                });
-
-                // simple ordered list
-                editor.addButton('skin_numlist', {
-                    title: 'Простой нумерованный список',
-                    icon: 'numlist',
-                    onclick: function () {
-                        editor.focus();
-
-                        var num = 1;
-
-                        editor.execCommand('mceInsertContent', false, '<div class="article-block_text"><ol class="simple"><li><span class="num">' + num + '</span>' + editor.selection.getContent() + '</li></ol></div>');
-
-
-                        editor.on('keyup', function (e) {
-
-                            // console.log(num);
-
-                            var ol = $(editor.selection.getNode()).closest('ol.simple');
-
-                            if ((e.keyCode == 13) && ol.length > 0) {
-
-                                num++;
-
-                                ol.find('li:last').prepend('<span class="num">' + num + '</span>');
-                                ol.find('li:last').append('Текст пункта');
-
-
-                            }
-                        });
-
-
-                    }
-                });
-
-                // ordered list-chapter with or without heading
-                editor.addButton('skin_numlist-h', {
-                    title: 'Нумерованный список-глава (с заголовком и без)',
-                    image: '/admin/img/admin-2.png',
-                    onclick: function () {
-
-                        var num = 1;
-
-
-                        editor.execCommand('mceInsertContent', false, '<div class="article-block_text"><ol class="chapter"><li><span class="chapter-i">' + num + '</span><p class="fix">' + editor.selection.getContent() + '</p></li></ol></div>');
-
-                        editor.on('keyup', function (e) {
-
-                            // console.log(num);
-
-                            var ol = $(editor.selection.getNode()).closest('ol.chapter');
-
-                            if (!(e.metaKey || e.ctrlKey) && (e.keyCode == 13) && ol.length > 0) {
-
-                                num++;
-
-                                ol.find('li:last').prepend('<span class="chapter-i">' + num + '</span>');
-                                ol.find('li:last').append('<p class="fix">Текст пункта</p>');
-
-
-                            }
-                        });
-
-                    }
-                });
-            }
-        });
+        tinymce.init(Admin.options.tinyMCE);
     }
 
     if ($('.tinymce-simple').length > 0) {
