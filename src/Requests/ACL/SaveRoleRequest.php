@@ -46,7 +46,7 @@ class SaveRoleRequest extends FormRequest
             'display_name' => 'max:255',
             'description' => 'max:255',
             'name' => 'required|max:255|unique:roles,name,'.$request->get('role_id'),
-            'permissions_id' => 'array',
+            'permissions_id' => 'nullable|array',
         ];
     }
 }

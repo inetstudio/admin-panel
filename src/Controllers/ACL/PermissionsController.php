@@ -163,7 +163,7 @@ class PermissionsController extends Controller
 
         $item->name = trim(strip_tags($request->get('name')));
         $item->display_name = trim(strip_tags($request->get('display_name')));
-        $item->description = $request->get('description');
+        $item->description = $request->input('description.text');
         $item->save();
 
         Session::flash('success', 'Право «'.$item->display_name.'» успешно '.$action);

@@ -55,8 +55,8 @@ class SaveUserRequest extends FormRequest
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,'.$request->get('user_id'),
-            'permissions_id' => 'array',
-            'roles_id' => 'array',
+            'permissions_id' => 'nullable|array',
+            'roles_id' => 'nullable|array',
             'password' => 'nullable|min:6|confirmed',
         ];
 

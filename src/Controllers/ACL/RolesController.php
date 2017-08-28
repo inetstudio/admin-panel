@@ -163,7 +163,7 @@ class RolesController extends Controller
 
         $item->name = trim(strip_tags($request->get('name')));
         $item->display_name = trim(strip_tags($request->get('display_name')));
-        $item->description = $request->get('description');
+        $item->description = $request->input('description.text');
         $item->save();
 
         $item->syncPermissions($request->get('permissions_id'));
