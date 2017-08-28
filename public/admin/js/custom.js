@@ -449,13 +449,23 @@ $(document).ready(function () {
                     }
                 },
                 'checkbox': {
-                    'three_state': false,
-                    'cascade': list.attr('data-cascade')
+                    'three_state': false
                 }
             };
 
-            $(this).jstree(options).on('changed.jstree', function (e, data) {
-                var ids = list.jstree('get_selected').map(function (id) {
+            $(this).jstree(options).on('changed.jstree', function (node, action, selected, event) {
+
+                if (list.attr('data-cascade') == 'up') {
+                    $.each(action.node.parents, function (key, val) {
+                        if (action.instance.get_checked_descendants(val).length > 0) {
+                            action.instance.check_node(val);
+                        } else {
+                            action.instance.uncheck_node(val);
+                        }
+                    });
+                }
+
+                var ids = action.instance.get_selected().map(function (id) {
                     return id.split('_')[1];
                 });
                 $('input[name=' + targetField + ']').val(ids);
