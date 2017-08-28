@@ -5,21 +5,23 @@
         </h2>
 
         <ol class="breadcrumb">
-            <li>
-                @if (isActiveRoute('back'))
+            @if (isActiveRoute('back'))
+                <li>
                     <strong>Главная</strong>
-                @else
+                </li>
+            @else
+                <li>
                     <a href="{{ url('/back/') }}">Главная</a>
-                @endif
-            </li>
+                </li>
 
-            @stack('breadcrumbs')
+                @stack('breadcrumbs')
 
-            <li class="active">
-                <strong>
-                    {{ $title }}
-                </strong>
-            </li>
+                <li class="active">
+                    <strong>
+                        {{ $title }}
+                    </strong>
+                </li>
+            @endif
 
         </ol>
     </div>

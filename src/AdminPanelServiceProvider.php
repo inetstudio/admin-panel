@@ -40,10 +40,12 @@ class AdminPanelServiceProvider extends ServiceProvider
             $namespaces = view()->getFinder()->getHints();
 
             $result = '';
+
             foreach ($namespaces as $namespace => $paths) {
                 if (strpos($namespace, 'admin.module') !== false) {
-                    $fullExpression = $namespace.'::'.$expression;
-                    $result .= "<?php echo \$__env->make('{$fullExpression}', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>";
+                    $namespaceParts = explode('.', $namespace);
+                    $fullExpression = $namespace.'::'.str_replace('module', end($namespaceParts), $expression);
+                    $result .= "<?php if (\$__env->exists('{$fullExpression}')) echo \$__env->make('{$fullExpression}', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>\r\n";
                 }
             }
 

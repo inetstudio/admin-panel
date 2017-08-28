@@ -2,7 +2,7 @@
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
 
-            @loadFromModules(includes.navigation)
+            @loadFromModules(includes.module.navigation)
 
             <li class="{{ areActiveRoutes(['back.acl.roles.*', 'back.acl.permissions.*', 'back.acl.users.*']) }}">
                 <a href="#"><i class="fa fa-users"></i> <span class="nav-label">ACL </span><span class="fa arrow"></span></a>
