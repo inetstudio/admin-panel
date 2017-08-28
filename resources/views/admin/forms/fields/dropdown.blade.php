@@ -40,3 +40,14 @@
 </div>
 
 <div class="hr-line-dashed"></div>
+
+@pushonce('styles:select2')
+    <!-- SELECT2 -->
+    <link href="{!! asset('admin/css/plugins/select2/select2.min.css') !!}" rel="stylesheet">
+@endpushonce
+
+@pushonce('scripts:select2')
+    <!-- SELECT2 -->
+    <script src="{!! asset('admin/js/plugins/select2/select2.full.min.js') !!}"></script>
+    <script src="{!! asset('admin/js/plugins/select2/i18n/ru.js') !!}"></script>
+@endpushonce

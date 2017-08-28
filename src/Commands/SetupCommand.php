@@ -26,11 +26,11 @@ class SetupCommand extends Command
      * @var array
      */
     protected $calls = [
-        [
+        (! class_exists('LaratrustSetupTables')) ? [
             'description' => 'Laratrust setup',
             'command' => 'laratrust:setup',
             'params' => [],
-        ],
+        ] : [],
         [
             'description' => 'Meta setup',
             'command' => 'vendor:publish',
@@ -101,6 +101,10 @@ class SetupCommand extends Command
     public function fire()
     {
         foreach ($this->calls as $info) {
+            if (! isset($info['command'])) {
+                continue;
+            }
+
             $this->line(PHP_EOL.$info['description']);
             $this->call($info['command'], $info['params']);
         }

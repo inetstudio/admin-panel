@@ -7,29 +7,15 @@
 @section('title', $title)
 
 @section('content')
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-sm-12">
-            <h2>
-                {{ $title }}
-            </h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ url('/back/') }}">Главная</a>
-                </li>
-                <li>
-                    <span>ACL</span>
-                </li>
-                <li>
-                    <a href="{{ route('back.acl.permissions.index') }}">Права</a>
-                </li>
-                <li class="active">
-                    <strong>
-                        {{ $title }}
-                    </strong>
-                </li>
-            </ol>
-        </div>
-    </div>
+
+    @push('breadcrumbs')
+        <li>
+            <span>ACL</span>
+        </li>
+        <li>
+            <a href="{{ route('back.acl.permissions.index') }}">Права</a>
+        </li>
+    @endpush
 
     <div class="wrapper wrapper-content">
 
@@ -81,9 +67,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <!-- TINYMCE -->
-    <script src="{!! asset('admin/js/plugins/tinymce/tinymce.min.js') !!}"></script>
 @endsection

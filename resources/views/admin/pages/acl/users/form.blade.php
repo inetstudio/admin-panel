@@ -6,35 +6,16 @@
 
 @section('title', $title)
 
-@section('styles')
-    <!-- SELECT2 -->
-    <link href="{!! asset('admin/css/plugins/select2/select2.min.css') !!}" rel="stylesheet">
-@endsection
-
 @section('content')
-    <div class="row wrapper border-bottom white-bg page-heading">
-        <div class="col-sm-12">
-            <h2>
-                {{ $title }}
-            </h2>
-            <ol class="breadcrumb">
-                <li>
-                    <a href="{{ url('/back/') }}">Главная</a>
-                </li>
-                <li>
-                    <span>ACL</span>
-                </li>
-                <li>
-                    <a href="{{ route('back.acl.users.index') }}">Пользователи</a>
-                </li>
-                <li class="active">
-                    <strong>
-                        {{ $title }}
-                    </strong>
-                </li>
-            </ol>
-        </div>
-    </div>
+
+    @push('breadcrumbs')
+        <li>
+            <span>ACL</span>
+        </li>
+        <li>
+            <a href="{{ route('back.acl.users.index') }}">Пользователи</a>
+        </li>
+    @endpush
 
     <div class="wrapper wrapper-content">
 
@@ -122,9 +103,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('scripts')
-    <!-- SELECT2 -->
-    <script src="{!! asset('admin/js/plugins/select2/select2.full.min.js') !!}"></script>
 @endsection

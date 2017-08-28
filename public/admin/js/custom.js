@@ -321,7 +321,7 @@ $(document).ready(function () {
         var listComponents = [];
 
         var editItemComponent = new Vue({
-            el: '#modal_edit_item',
+            el: '#edit_list_item_modal',
             data: {
                 mode: '',
                 target: '',
@@ -340,7 +340,7 @@ $(document).ready(function () {
                         listComponents[this.target].items.push(item);
                     }
 
-                    $('#modal_edit_item').modal('hide');
+                    $('#edit_list_item_modal').modal('hide');
                 }
             }
         });
@@ -371,7 +371,7 @@ $(document).ready(function () {
                             properties: properties
                         };
 
-                        $('#modal_edit_item').modal();
+                        $('#edit_list_item_modal').modal();
                     },
                     edit: function (index) {
                         editItemComponent.item = {};
@@ -381,7 +381,7 @@ $(document).ready(function () {
                         editItemComponent.inputs = this.inputs;
                         editItemComponent.item = this.items[index];
 
-                        $('#modal_edit_item').modal();
+                        $('#edit_list_item_modal').modal();
                     },
                     remove: function (index) {
                         this.$delete(this.items, index);

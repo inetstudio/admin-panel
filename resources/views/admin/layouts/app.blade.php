@@ -21,10 +21,7 @@
         <!-- Toastr -->
         <link href="{!! asset('admin/css/plugins/toastr/toastr.min.css') !!}" rel="stylesheet">
 
-        <!-- Fields -->
-        <link href="{!! asset('admin/css/plugins/iCheck/custom.css') !!}" rel="stylesheet">
-
-        @yield('styles')
+        @stack('styles')
 
         <!-- CUSTOM STYLES -->
         <link href="{!! asset('admin/css/custom.css') !!}" rel="stylesheet">
@@ -43,6 +40,9 @@
                 <!-- Page wrapper -->
                 @include('admin::includes.topnavbar')
 
+                <!-- Breadcrumbs -->
+                @include('admin::partials.breadcrumbs')
+
                 <!-- Main view  -->
                 @yield('content')
 
@@ -56,7 +56,7 @@
         <!-- End wrapper-->
 
         <!-- Modals-->
-        @yield('modals')
+        @stack('modals')
 
         <!-- Mainly scripts -->
         <script src="{!! asset('admin/js/jquery-3.1.1.min.js') !!}"></script>
@@ -81,10 +81,7 @@
         <!-- Holder -->
         <script src="{!! asset('admin/js/plugins/holder/holder.min.js') !!}"></script>
 
-        <!-- Fields -->
-        <script src="{!! asset('admin/js/plugins/iCheck/icheck.min.js') !!}"></script>
-
-        @yield('scripts')
+        @stack('scripts')
 
         <!-- CUSTOM SCRIPTS -->
         <script src="{!! asset('admin/js/custom.js') !!}"></script>
