@@ -26,7 +26,7 @@ class UserTransformer extends TransformerAbstract
             'name' => (string) $user->name,
             'email' => (string) $user->email,
             'roles' => $rolesHTML,
-            'actions' => view('admin::pages.acl.users.datatables.actions', ['id' => $user->id])->render(),
+            'actions' => view('admin::partials.datatables.users.actions', ['id' => $user->id])->render(),
         ];
     }
 }

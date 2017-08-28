@@ -11,7 +11,7 @@
                 </li>
             @else
                 <li>
-                    <a href="{{ url('/back/') }}">Главная</a>
+                    <a href="{{ route('back') }}">Главная</a>
                 </li>
 
                 @stack('breadcrumbs')

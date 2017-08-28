@@ -16,7 +16,7 @@ class AdminPanelServiceProvider extends ServiceProvider
             __DIR__.'/../public' => public_path(),
         ], 'public');
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views/admin', 'admin');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'admin');
         $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
 
         $this->mergeConfigFrom(
@@ -43,8 +43,7 @@ class AdminPanelServiceProvider extends ServiceProvider
 
             foreach ($namespaces as $namespace => $paths) {
                 if (strpos($namespace, 'admin.module') !== false) {
-                    $namespaceParts = explode('.', $namespace);
-                    $fullExpression = $namespace.'::'.str_replace('module', end($namespaceParts), $expression);
+                    $fullExpression = $namespace.'::'.$expression;
                     $result .= "<?php if (\$__env->exists('{$fullExpression}')) echo \$__env->make('{$fullExpression}', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>\r\n";
                 }
             }

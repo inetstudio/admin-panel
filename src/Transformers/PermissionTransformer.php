@@ -18,7 +18,7 @@ class PermissionTransformer extends TransformerAbstract
             'display_name' => (string) $permission->display_name,
             'name' => (string) $permission->name,
             'description' => (string) $permission->description,
-            'actions' => view('admin::pages.acl.permissions.datatables.actions', ['id' => $permission->id])->render(),
+            'actions' => view('admin::partials.datatables.permissions.actions', ['id' => $permission->id])->render(),
         ];
     }
 }
