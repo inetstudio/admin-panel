@@ -4239,12 +4239,14 @@ a.close-canvas-menu:hover {
   width: 240px;
   float: left;
 }
+/*
 .modal-backdrop {
   z-index: 2040 !important;
 }
 .modal {
   z-index: 2050 !important;
 }
+*/
 .spiner-example {
   height: 200px;
   padding-top: 70px;
