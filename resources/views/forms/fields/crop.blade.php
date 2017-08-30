@@ -106,7 +106,7 @@
 @endpushonce
 
 @pushonce('modals:crop')
-    <div class="modal inmodal fade" id="crop_modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="crop_modal" tabindex="-1" role="dialog" aria-hidden="true" class="modal inmodal fade">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">

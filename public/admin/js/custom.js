@@ -4,7 +4,8 @@ var Admin = Admin || {
     options: {},
     modals: {},
     containers: {
-        images: []
+        images: [],
+        lists: []
     }
 };
 
@@ -42,6 +43,14 @@ Admin.options.tinyMCE = {
     ],
     toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link | images | code'
 };
+
+$(document).on('show.bs.modal', '.modal', function () {
+    var zIndex = 2040 + (10 * $('.modal.fade.in').length);
+    $(this).css('z-index', zIndex);
+    setTimeout(function() {
+        $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+    }, 0);
+});
 
 $(document).ready(function () {
 
@@ -318,8 +327,6 @@ $(document).ready(function () {
     }
 
     if ($('.editable-list').length > 0) {
-        var listComponents = [];
-
         var editItemComponent = new Vue({
             el: '#edit_list_item_modal',
             data: {
@@ -337,7 +344,7 @@ $(document).ready(function () {
                     });
 
                     if (this.mode == 'add') {
-                        listComponents[this.target].items.push(item);
+                        Admin.containers.lists[this.target].items.push(item);
                     }
 
                     $('#edit_list_item_modal').modal('hide');
@@ -350,7 +357,7 @@ $(document).ready(function () {
                 inputs = JSON.parse($(this).attr('data-properties')),
                 items = JSON.parse($(this).attr('data-items'));
 
-            listComponents[name] = new Vue({
+            Admin.containers.lists[name] = new Vue({
                 el: '#'+name,
                 data: {
                     items: items,
