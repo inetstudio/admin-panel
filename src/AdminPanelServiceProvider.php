@@ -24,6 +24,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         );
 
         $router->aliasMiddleware('back.auth', 'InetStudio\AdminPanel\Middleware\AdminAuthenticate');
+        $router->aliasMiddleware('back.guest', 'InetStudio\AdminPanel\Middleware\RedirectIfAuthenticated');
         $router->aliasMiddleware('role', 'Laratrust\Middleware\LaratrustRole');
         $router->aliasMiddleware('permission', 'Laratrust\Middleware\LaratrustPermission');
         $router->aliasMiddleware('ability', 'Laratrust\Middleware\LaratrustAbility');

@@ -32,7 +32,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('back.guest', ['except' => 'logout']);
     }
 
     public function showLoginForm()
@@ -44,9 +44,10 @@ class LoginController extends Controller
     {
         $login = request()->input('login');
 
-        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
         request()->merge([$field => $login]);
 
         return $field;
     }
+
 }
