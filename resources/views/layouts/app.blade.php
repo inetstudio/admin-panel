@@ -83,6 +83,8 @@
 
         @stack('scripts')
 
+        @routes
+
         <!-- CUSTOM SCRIPTS -->
         <script src="{!! asset('admin/js/custom.js') !!}"></script>
 

@@ -19,6 +19,7 @@
       "phoenix/eloquent-meta": "1.6.*",
       "santigarcor/laratrust": "3.2.*",
       "spatie/laravel-medialibrary": "^5.0.0",
+      "tightenco/ziggy": "^0.4.1",
       "venturecraft/revisionable": "1.*",
       "yajra/laravel-datatables-oracle": "^7.9",
       "yajra/laravel-datatables-html": "^2.0"

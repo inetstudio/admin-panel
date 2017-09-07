@@ -114,6 +114,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         $this->app->register('Laravelista\Ekko\EkkoServiceProvider');
         $this->app->register('Phoenix\EloquentMeta\ServiceProvider');
         $this->app->register('Spatie\MediaLibrary\MediaLibraryServiceProvider');
+        $this->app->register('Tightenco\Ziggy\ZiggyServiceProvider');
         $this->app->register('Yajra\Datatables\HtmlServiceProvider');
         $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
 
