@@ -35,6 +35,7 @@
                 $data = [
                     'id' => $mediaItem->id,
                     'src' => url($mediaItem->getUrl()),
+                    'thumb' => ($mediaItem->getUrl($name.'_admin')) ? url($mediaItem->getUrl($name.'_admin')) : url($mediaItem->getUrl()),
                     'properties' => $mediaItem->custom_properties,
                 ];
 
@@ -49,7 +50,7 @@
                 <div class="file">
                     <span class="corner"></span>
                     <div class="image">
-                        <img :src="image.src" class="img-responsive">
+                        <img :src="image.thumb" class="img-responsive">
 
                         <input :name="'{{ $name }}[images][' + index + '][id]'" type="hidden" :value="image.id">
                         <input :name="'{{ $name }}[images][' + index + '][src]'" type="hidden" :value="image.src">
