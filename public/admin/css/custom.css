@@ -2,6 +2,10 @@
     overflow: inherit;
 }
 
+.mce-fullscreen {
+    z-index: 10000;
+}
+
 .select2-container.select2-container--default.select2-container--open  {
     z-index: 5000;
 }
