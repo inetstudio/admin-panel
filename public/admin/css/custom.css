@@ -3,7 +3,7 @@
 }
 
 .mce-fullscreen {
-    z-index: 10000;
+    z-index: 2039 !important;
 }
 
 .select2-container.select2-container--default.select2-container--open  {

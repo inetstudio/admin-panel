@@ -31,6 +31,7 @@ class CreateAdminCommand extends Command
     public function fire()
     {
         $roles = Role::where('name', 'admin')->get();
+
         if ($roles->count() == 1) {
             $role = $roles->first();
         } else {
@@ -42,6 +43,7 @@ class CreateAdminCommand extends Command
         }
 
         $users = User::where('name', 'admin')->get();
+
         if ($users->count() == 1) {
             $user = $users->first();
         } else {

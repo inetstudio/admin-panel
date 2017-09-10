@@ -39,15 +39,15 @@
                             ],
                             'crops' => [
                                 [
-                                    'title' => 'Размер 968х475',
+                                    'title' => 'Выбрать область',
                                     'name' => 'default',
                                     'ratio' => '968/475',
                                     'value' => isset($ogImageMedia) ? $ogImageMedia->getCustomProperty('crop.default') : '',
                                     'size' => [
                                         'width' => 968,
                                         'height' => 475,
-                                        'type' => 'fixed',
-                                        'description' => 'Фиксированный размер области — 968x475 пикселей'
+                                        'type' => 'min',
+                                        'description' => 'Минимальный размер области — 968x475 пикселей'
                                     ],
                                 ],
                             ],

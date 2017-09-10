@@ -14,4 +14,10 @@ return [
         'visibility' => 'public',
     ],
 
+    'plupload' => [
+        'driver' => 'local',
+        'root' => storage_path('plupload/'),
+        'visibility' => 'private',
+    ],
+
 ];

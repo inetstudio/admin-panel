@@ -27,10 +27,18 @@ class CreateFoldersCommand extends Command
      */
     public function fire()
     {
-        // TODO использовать конфиг
+        $folders = ['temp', 'plupload'];
 
-        $path = storage_path().'/app/public/temp';
+        foreach ($folders as $folder) {
+            if (config('filesystems.disks.'.$folder)) {
+                $path = config('filesystems.disks.'.$folder.'.root');
+                $this->createDir($path);
+            }
+        }
+    }
 
+    private function createDir($path)
+    {
         if (! is_dir($path)) {
             mkdir($path, 0777, true);
         }
