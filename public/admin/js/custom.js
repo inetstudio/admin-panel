@@ -480,6 +480,28 @@ $(document).ready(function () {
         });
     }
 
+    if ($('.autocomplete').length > 0) {
+        $('.autocomplete').each(function () {
+            var field = $(this),
+                url = field.attr('data-search');
+
+            var options = {
+                serviceUrl: url,
+                type: 'POST',
+                params: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    type: 'autocomplete'
+                },
+                minChars: 2,
+                onSelect: function (suggestion) {
+                    field.parent().find('.choose-data').val(JSON.stringify(suggestion.data));
+                }
+            };
+
+            field.autocomplete(options);
+        });
+    }
+
     if ($('.tinymce').length > 0) {
         tinymce.init(Admin.options.tinyMCE);
     }
