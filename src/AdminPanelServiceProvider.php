@@ -107,6 +107,7 @@ class AdminPanelServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->register('InetStudio\SimpleCounters\SimpleCountersServiceProvider');
         $this->app->register('Collective\Html\HtmlServiceProvider');
         $this->app->register('Cviebrock\EloquentSluggable\ServiceProvider');
         $this->app->register('JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider');
