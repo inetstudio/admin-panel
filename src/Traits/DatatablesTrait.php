@@ -61,6 +61,9 @@ trait DatatablesTrait
      */
     private function getTableParameters($entity, $type)
     {
-        return (config($entity.'.datatables.table.'.$type)) ? config($entity.'.datatables.table.'.$type) : ((config($entity.'.datatables.table.default')) ? config($entity.'.datatables.table.default') : []);
+        $options = (config($entity.'.datatables.table.'.$type)) ? config($entity.'.datatables.table.'.$type) : ((config($entity.'.datatables.table.default')) ? config($entity.'.datatables.table.default') : []);
+        $options['language']['url'] = (isset($options['language']['url'])) ? asset($options['language']['url']) : '';
+
+        return $options;
     }
 }
