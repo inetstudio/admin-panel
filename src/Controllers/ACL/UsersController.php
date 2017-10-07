@@ -4,7 +4,7 @@ namespace InetStudio\AdminPanel\Controllers\ACL;
 
 use App\User;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use InetStudio\AdminPanel\Traits\DatatablesTrait;
@@ -18,10 +18,10 @@ class UsersController extends Controller
     /**
      * Список сайтов с отзывами.
      *
-     * @param Datatables $dataTable
+     * @param DataTables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Datatables $dataTable)
+    public function index(DataTables $dataTable)
     {
         $table = $this->generateTable($dataTable, 'admin', 'users_index');
 
@@ -37,9 +37,9 @@ class UsersController extends Controller
     {
         $items = User::with('roles');
 
-        return Datatables::of($items)
+        return DataTables::of($items)
             ->setTransformer(new UserTransformer)
-            ->escapeColumns(['roles', 'actions'])
+            ->rawColumns(['roles', 'actions'])
             ->make();
     }
 

@@ -4,7 +4,7 @@ namespace InetStudio\AdminPanel\Controllers\ACL;
 
 use App\Permission;
 use Illuminate\Http\Request;
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use InetStudio\AdminPanel\Traits\DatatablesTrait;
@@ -18,10 +18,10 @@ class PermissionsController extends Controller
     /**
      * Список прав.
      *
-     * @param Datatables $dataTable
+     * @param DataTables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Datatables $dataTable)
+    public function index(DataTables $dataTable)
     {
         $table = $this->generateTable($dataTable, 'admin', 'permissions_index');
 
@@ -37,9 +37,9 @@ class PermissionsController extends Controller
     {
         $items = Permission::query();
 
-        return Datatables::of($items)
+        return DataTables::of($items)
             ->setTransformer(new PermissionTransformer)
-            ->escapeColumns(['actions'])
+            ->rawColumns(['actions'])
             ->make();
     }
 

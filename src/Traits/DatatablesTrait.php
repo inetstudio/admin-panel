@@ -2,17 +2,17 @@
 
 namespace InetStudio\AdminPanel\Traits;
 
-use Yajra\Datatables\Datatables;
+use Yajra\DataTables\DataTables;
 
 trait DatatablesTrait
 {
     /**
-     * @param Datatables $dataTable
+     * @param DataTables $dataTable
      * @param $entity
      * @param $type
      * @return mixed
      */
-    private function generateTable(Datatables $dataTable, $entity, $type)
+    private function generateTable(DataTables $dataTable, $entity, $type)
     {
         $table = $dataTable->getHtmlBuilder();
 

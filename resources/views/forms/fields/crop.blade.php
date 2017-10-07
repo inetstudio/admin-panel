@@ -59,9 +59,9 @@
                     <div id="{{ $name }}_crop_buttons" style="@if (! isset($value) and ! old($name.'.temppath')) display:none @endif">
                         @if (isset($attributes['crops']))
                             @foreach ($attributes['crops'] as $crop)
-                                <a href="#" class="btn btn-w-m {{ (($crop['value'] == '' and ! old($transformName.'.crop.'.$crop['name'])) or $errors->filled($transformName.'.crop.'.$crop['name'])) ? 'btn-default' : 'btn-primary' }} start-cropper" data-ratio="{{ $crop['ratio'] }}" data-crop-field="{{ $name }}[crop][{{ $crop['name'] }}]" data-crop-settings="{{ json_encode($crop['size']) }}"><i class="fa fa-crop"></i> {{ $crop['title'] }}</a><br/>
+                                <a href="#" class="btn btn-w-m {{ (($crop['value'] == '' and ! old($transformName.'.crop.'.$crop['name'])) or $errors->has($transformName.'.crop.'.$crop['name'])) ? 'btn-default' : 'btn-primary' }} start-cropper" data-ratio="{{ $crop['ratio'] }}" data-crop-field="{{ $name }}[crop][{{ $crop['name'] }}]" data-crop-settings="{{ json_encode($crop['size']) }}"><i class="fa fa-crop"></i> {{ $crop['title'] }}</a><br/>
 
-                                {!! Form::hidden($name.'[crop]'.'['.$crop['name'].']', ($errors->filled($transformName.'.crop.'.$crop['name'])) ? '' : $crop['value'], [
+                                {!! Form::hidden($name.'[crop]'.'['.$crop['name'].']', ($errors->has($transformName.'.crop.'.$crop['name'])) ? '' : $crop['value'], [
                                     'class' => 'crop-data',
                                 ]) !!}
                             @endforeach
