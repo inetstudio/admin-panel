@@ -12,12 +12,16 @@ class AdminPanelServiceProvider extends ServiceProvider
 {
     public function boot(Router $router)
     {
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'admin');
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+
         $this->publishes([
             __DIR__.'/../public' => public_path(),
         ], 'public');
 
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'admin');
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->publishes([
+            __DIR__.'/../config/admin.php' => config_path('admin.php'),
+        ], 'config');
 
         $this->mergeConfigFrom(
             __DIR__.'/../config/filesystems.php', 'filesystems.disks'
@@ -107,23 +111,10 @@ class AdminPanelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->register('InetStudio\SimpleCounters\SimpleCountersServiceProvider');
-        $this->app->register('Collective\Html\HtmlServiceProvider');
-        $this->app->register('Cviebrock\EloquentSluggable\ServiceProvider');
         $this->app->register('JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider');
-        $this->app->register('Laratrust\LaratrustServiceProvider');
-        $this->app->register('Laravelista\Ekko\EkkoServiceProvider');
         $this->app->register('Phoenix\EloquentMeta\ServiceProvider');
-        $this->app->register('Spatie\MediaLibrary\MediaLibraryServiceProvider');
-        $this->app->register('Tightenco\Ziggy\ZiggyServiceProvider');
-        $this->app->register('Yajra\Datatables\HtmlServiceProvider');
-        $this->app->register('Yajra\Datatables\DatatablesServiceProvider');
 
         $loader = AliasLoader::getInstance();
-        $loader->alias('Ekko', 'Laravelista\Ekko\Facades\Ekko');
-        $loader->alias('Form', 'Collective\Html\FormFacade');
-        $loader->alias('Html', 'Collective\Html\HtmlFacade');
-        $loader->alias('Laratrust', 'Laratrust\LaratrustFacade');
         $loader->alias('Plupload', 'JildertMiedema\LaravelPlupload\Facades\Plupload');
     }
 }

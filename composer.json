@@ -10,24 +10,31 @@
       }
     ],
     "require": {
-      "cviebrock/eloquent-sluggable": "^4.2",
+      "cviebrock/eloquent-sluggable": "^4.3",
       "jildertmiedema/laravel-plupload": "^0.4.1",
-      "inetstudio/simple-counters": "1.4.*",
+      "inetstudio/simple-counters": "1.5.*",
       "intervention/imagecache": "^2.3",
-      "laravelcollective/html": "^5.4",
-      "laravelista/ekko": "^1.3",
-      "league/fractal": "^0.16.0",
-      "phoenix/eloquent-meta": "1.6.*",
-      "santigarcor/laratrust": "3.2.*",
-      "spatie/laravel-medialibrary": "^5.0.0",
+      "laravelcollective/html": "^5.5",
+      "laravelista/ekko": "^1.4",
+      "league/fractal": "^0.17.0",
+      "phoenix/eloquent-meta": "^1.7",
+      "santigarcor/laratrust": "^5.0",
+      "spatie/laravel-medialibrary": "^6.1",
       "tightenco/ziggy": "^0.4.1",
-      "venturecraft/revisionable": "1.*",
-      "yajra/laravel-datatables-oracle": "^7.9",
-      "yajra/laravel-datatables-html": "^2.0"
+      "venturecraft/revisionable": "^1.28",
+      "yajra/laravel-datatables-html": "^3.1",
+      "yajra/laravel-datatables-oracle": "^8.0"
     },
     "autoload": {
       "psr-4": {
         "InetStudio\\AdminPanel\\": "src/"
+      }
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+          "InetStudio\\AdminPanel\\AdminPanelServiceProvider"
+        ]
       }
     }
 }

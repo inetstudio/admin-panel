@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use InetStudio\AdminPanel\Traits\DatatablesTrait;
 use InetStudio\AdminPanel\Requests\ACL\SavePermissionRequest;
 use InetStudio\AdminPanel\Transformers\PermissionTransformer;
 
 class PermissionsController extends Controller
 {
+    use DatatablesTrait;
+
     /**
      * Список прав.
      *
@@ -20,62 +23,9 @@ class PermissionsController extends Controller
      */
     public function index(Datatables $dataTable)
     {
-        $table = $dataTable->getHtmlBuilder();
-
-        $table->columns($this->getColumns());
-        $table->ajax($this->getAjaxOptions());
-        $table->parameters($this->getTableParameters());
+        $table = $this->generateTable($dataTable, 'admin', 'permissions_index');
 
         return view('admin::pages.acl.permissions.index', compact('table'));
-    }
-
-    /**
-     * Свойства колонок datatables.
-     *
-     * @return array
-     */
-    private function getColumns()
-    {
-        return [
-            ['data' => 'id', 'name' => 'id', 'title' => 'ID', 'orderable' => true],
-            ['data' => 'display_name', 'name' => 'display_name', 'title' => 'Название'],
-            ['data' => 'name', 'name' => 'name', 'title' => 'Алиас'],
-            ['data' => 'description', 'name' => 'description', 'title' => 'Описание'],
-            ['data' => 'actions', 'name' => 'actions', 'title' => 'Действия', 'orderable' => false, 'searchable' => false],
-        ];
-    }
-
-    /**
-     * Свойства ajax datatables.
-     *
-     * @return array
-     */
-    private function getAjaxOptions()
-    {
-        return [
-            'url' => route('back.acl.permissions.data'),
-            'type' => 'POST',
-            'data' => 'function(data) { data._token = $(\'meta[name="csrf-token"]\').attr(\'content\'); }',
-        ];
-    }
-
-    /**
-     * Свойства datatables.
-     *
-     * @return array
-     */
-    private function getTableParameters()
-    {
-        return [
-            'paging' => true,
-            'pagingType' => 'full_numbers',
-            'searching' => true,
-            'info' => false,
-            'searchDelay' => 350,
-            'language' => [
-                'url' => asset('admin/js/plugins/datatables/locales/russian.json'),
-            ],
-        ];
     }
 
     /**

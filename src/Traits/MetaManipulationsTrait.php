@@ -12,7 +12,7 @@ trait MetaManipulationsTrait
      */
     private function saveMeta($item, $request)
     {
-        if ($request->has('meta')) {
+        if ($request->filled('meta')) {
             foreach ($request->get('meta') as $key => $value) {
                 $item->updateMeta($key, $value);
             }

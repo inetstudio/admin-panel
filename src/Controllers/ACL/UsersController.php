@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use InetStudio\AdminPanel\Traits\DatatablesTrait;
 use InetStudio\AdminPanel\Requests\ACL\SaveUserRequest;
 use InetStudio\AdminPanel\Transformers\UserTransformer;
 
 class UsersController extends Controller
 {
+    use DatatablesTrait;
+
     /**
      * Список сайтов с отзывами.
      *
@@ -20,62 +23,9 @@ class UsersController extends Controller
      */
     public function index(Datatables $dataTable)
     {
-        $table = $dataTable->getHtmlBuilder();
-
-        $table->columns($this->getColumns());
-        $table->ajax($this->getAjaxOptions());
-        $table->parameters($this->getTableParameters());
+        $table = $this->generateTable($dataTable, 'admin', 'users_index');
 
         return view('admin::pages.acl.users.index', compact('table'));
-    }
-
-    /**
-     * Свойства колонок datatables.
-     *
-     * @return array
-     */
-    private function getColumns()
-    {
-        return [
-            ['data' => 'id', 'name' => 'id', 'title' => 'ID', 'orderable' => true],
-            ['data' => 'name', 'name' => 'name', 'title' => 'Имя'],
-            ['data' => 'email', 'name' => 'email', 'title' => 'Email'],
-            ['data' => 'roles', 'name' => 'roles.display_name', 'title' => 'Роли'],
-            ['data' => 'actions', 'name' => 'actions', 'title' => 'Действия', 'orderable' => false, 'searchable' => false],
-        ];
-    }
-
-    /**
-     * Свойства ajax datatables.
-     *
-     * @return array
-     */
-    private function getAjaxOptions()
-    {
-        return [
-            'url' => route('back.acl.users.data'),
-            'type' => 'POST',
-            'data' => 'function(data) { data._token = $(\'meta[name="csrf-token"]\').attr(\'content\'); }',
-        ];
-    }
-
-    /**
-     * Свойства datatables.
-     *
-     * @return array
-     */
-    private function getTableParameters()
-    {
-        return [
-            'paging' => true,
-            'pagingType' => 'full_numbers',
-            'searching' => true,
-            'info' => false,
-            'searchDelay' => 350,
-            'language' => [
-                'url' => asset('admin/js/plugins/datatables/locales/russian.json'),
-            ],
-        ];
     }
 
     /**
@@ -163,7 +113,7 @@ class UsersController extends Controller
 
         $item->name = trim(strip_tags($request->get('name')));
         $item->email = trim(strip_tags($request->get('email')));
-        if ($request->has('password')) {
+        if ($request->filled('password')) {
             $item->password = bcrypt(trim($request->get('password')));
         }
         $item->save();

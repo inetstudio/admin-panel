@@ -32,7 +32,7 @@ class SetupCommand extends Command
      *
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $this->initCommands();
 
@@ -88,11 +88,6 @@ class SetupCommand extends Command
                 'params' => [],
             ],
             [
-                'description' => 'Optimize',
-                'command' => 'optimize',
-                'params' => [],
-            ],
-            [
                 'description' => 'Create admin user',
                 'command' => 'inetstudio:panel:admin',
                 'params' => [],
@@ -109,6 +104,14 @@ class SetupCommand extends Command
                     '--provider' => 'InetStudio\AdminPanel\AdminPanelServiceProvider',
                     '--tag' => 'public',
                     '--force' => true,
+                ],
+            ],
+            [
+                'description' => 'Publish config',
+                'command' => 'vendor:publish',
+                'params' => [
+                    '--provider' => 'InetStudio\AdminPanel\AdminPanelServiceProvider',
+                    '--tag' => 'config',
                 ],
             ],
             [

@@ -28,7 +28,7 @@ class CreateAdminCommand extends Command
      *
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $roles = Role::where('name', 'admin')->get();
 

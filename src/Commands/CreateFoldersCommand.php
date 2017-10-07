@@ -25,7 +25,7 @@ class CreateFoldersCommand extends Command
      *
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         $folders = ['temp', 'plupload'];
 
@@ -37,6 +37,11 @@ class CreateFoldersCommand extends Command
         }
     }
 
+    /**
+     * Создание директории.
+     *
+     * @param $path
+     */
     private function createDir($path)
     {
         if (! is_dir($path)) {
