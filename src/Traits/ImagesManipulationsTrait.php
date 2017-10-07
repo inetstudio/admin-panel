@@ -52,7 +52,6 @@ trait ImagesManipulationsTrait
                         $cropData = json_decode($cropJSON, true);
 
                         foreach (config($disk.'.images.conversions.'.$name.'.'.$key) as $conversion) {
-
                             \Event::fire('inetstudio.images.cache.clear', $conversion['name'].'_'.md5(get_class($item).$item->id));
 
                             $manipulations[$conversion['name']] = [
@@ -86,7 +85,6 @@ trait ImagesManipulationsTrait
 
                     $media->manipulations = $manipulations;
                     $media->save();
-
                 } else {
                     $properties = array_filter($properties);
 

@@ -6,7 +6,6 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class ImagesController
 {
-
     public function getImage($id)
     {
         $mediaClass = config('medialibrary.media_model');
