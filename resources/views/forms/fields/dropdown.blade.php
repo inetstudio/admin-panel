@@ -22,7 +22,7 @@
     }
 @endphp
 
-<div class="form-group @if ($errors->has($transformName)){!! "has-error" !!}@endif">
+<div class="form-group @if ($errors->filled($transformName)){!! "has-error" !!}@endif">
 
     @if (isset($attributes['label']['title']))
         {!! Form::label($name, $attributes['label']['title'], (isset($attributes['label']['options'])) ? $attributes['label']['options'] : ['class' => 'col-sm-2 control-label']) !!}

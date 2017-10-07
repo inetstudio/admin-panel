@@ -60,7 +60,7 @@ class SaveUserRequest extends FormRequest
             'password' => 'nullable|min:6|confirmed',
         ];
 
-        if (! $request->has('user_id')) {
+        if (! $request->filled('user_id')) {
             $rules['password'] .= '|required';
         }
 
