@@ -289,6 +289,52 @@ $(document).ready(function () {
         $('[data-src]:not([class*=placeholder])').lazyLoadXT();
     }
 
+    if ($('.dataTable').length > 0) {
+        $('.dataTable').each(function () {
+            $(this).on('draw.dt', function () {
+                if ($('input.switchery').length > 0) {
+                    $('input.switchery').each(function (item) {
+                        var switchery = new Switchery($(this).get(0), {
+                            size: 'small'
+                        });
+
+                        var url = ($(this).attr('data-target'));
+
+                        if (url) {
+                            $(this).on('change', function () {
+                                var val = ($(this).is(':checked')) ? 1 : 0;
+
+                                $.ajax({
+                                    url: url,
+                                    method: 'POST',
+                                    data: {
+                                        val: val,
+                                        _token: $('meta[name="csrf-token"]').attr('content')
+                                    },
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        if (data.success == true) {
+                                            swal({
+                                                title: "Запись изменена",
+                                                type: "success"
+                                            });
+                                        } else {
+                                            swal({
+                                                title: "Ошибка",
+                                                text: "Произошла ошибка",
+                                                type: "error"
+                                            });
+                                        }
+                                    }
+                                });
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    }
+
     if ($('.order-list').length > 0) {
         $('.order-list').each(function () {
             var sortURL = $(this).attr('data-sort-url');
