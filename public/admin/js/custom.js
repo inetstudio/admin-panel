@@ -291,7 +291,57 @@ $(document).ready(function () {
 
     if ($('.dataTable').length > 0) {
         $('.dataTable').each(function () {
+            var table = $(this);
+            $('.table-group-buttons a').each(function () {
+                var btn = $(this);
+
+                btn.on('click', function () {
+                    var data = $('.group-element').serializeJSON();
+
+                    swal({
+                        title: "Вы уверены?",
+                        type: "warning",
+                        showCancelButton: true,
+                        cancelButtonText: "Отмена",
+                        confirmButtonColor: "#DD6B55",
+                        confirmButtonText: "Да",
+                        closeOnConfirm: true
+                    }, function () {
+                        $.ajax({
+                            url: btn.attr('data-url'),
+                            method: "POST",
+                            dataType: "json",
+                            data: $.extend(data, {
+                                _token: $('meta[name="csrf-token"]').attr('content')
+                            }),
+                            success: function (data) {
+                                if (data.success == true) {
+                                    swal({
+                                        title: "Записи обновлены",
+                                        type: "success"
+                                    });
+                                    table.DataTable().ajax.reload();
+                                } else {
+                                    swal({
+                                        title: "Ошибка",
+                                        text: "При обновлении записей произошла ошибка",
+                                        type: "error"
+                                    });
+                                }
+                            }
+                        });
+                    });
+                });
+            });
+
             $(this).on('draw.dt', function () {
+                if ($('.i-checks').length > 0) {
+                    $('.i-checks').iCheck({
+                        checkboxClass: 'icheckbox_square-green',
+                        radioClass: 'iradio_square-green'
+                    });
+                }
+
                 if ($('input.switchery').length > 0) {
                     $('input.switchery').each(function (item) {
                         var switchery = new Switchery($(this).get(0), {
@@ -302,13 +352,10 @@ $(document).ready(function () {
 
                         if (url) {
                             $(this).on('change', function () {
-                                var val = ($(this).is(':checked')) ? 1 : 0;
-
                                 $.ajax({
                                     url: url,
                                     method: 'POST',
                                     data: {
-                                        val: val,
                                         _token: $('meta[name="csrf-token"]').attr('content')
                                     },
                                     dataType: 'json',

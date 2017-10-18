@@ -85,6 +85,9 @@
 
         @routes
 
+        <!-- SerializeJSON -->
+        <script src="{!! asset('admin/js/plugins/serializeJSON/jquery.serializejson.min.js') !!}"></script>
+
         <!-- CUSTOM SCRIPTS -->
         <script src="{!! asset('admin/js/custom.js') !!}"></script>
 
