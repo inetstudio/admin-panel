@@ -615,7 +615,13 @@ $(document).ready(function () {
             if ($this.attr('data-source')) {
                 var url = $this.attr('data-source');
 
-                $(this).select2({
+                var options = {};
+
+                if ($this.attr('data-create') == '1') {
+                    options.tags = true;
+                }
+
+                $(this).select2($.extend({
                     language: "ru",
                     ajax: {
                         url: url,
@@ -641,7 +647,7 @@ $(document).ready(function () {
                         cache: true
                     },
                     minimumInputLength: 3
-                });
+                }, options));
             } else {
                 $(this).select2({
                     language: "ru"

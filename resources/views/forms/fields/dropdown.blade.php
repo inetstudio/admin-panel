@@ -1,9 +1,8 @@
 @php
-    use Illuminate\Support\Facades\Input;
-
     $transformName = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $name);
 
     $oldValues = old($transformName);
+
     if ($errors->count() > 0 && $oldValues) {
         if (is_array($oldValues)) {
             $correctValues = [];
@@ -14,10 +13,8 @@
             $correctValues = (filter_var($oldValues, FILTER_VALIDATE_INT)) ? intval($oldValues) : $oldValues;
         }
 
-        Input::merge(array($transformName => $correctValues));
-        Input::flash();
+        session(['_old_input.'.$transformName => $correctValues]);
     } elseif ($errors->count() > 0 && ! $oldValues) {
-        $attributes['options'] = [];
         $value = [];
     }
 @endphp
