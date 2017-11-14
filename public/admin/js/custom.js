@@ -54,6 +54,13 @@ $(document).on('show.bs.modal', '.modal', function () {
 
 $(document).ready(function () {
 
+    if ($('.json-data').length > 0) {
+        $('.json-data').each(function () {
+            var json = JSON.parse($(this).text());
+            $(this).text(JSON.stringify(json, null, '\t'));
+        });
+    }
+
     if ($('.upload-btn').length > 0) {
         $('.upload-btn').each(function () {
             var $input = $(this),
