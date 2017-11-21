@@ -116,7 +116,7 @@ class RolesController extends Controller
         $item->description = $request->input('description.text');
         $item->save();
 
-        $item->syncPermissions($request->get('permissions_id'));
+        $item->syncPermissions(collect($request->get('permissions_id'))->toArray());
 
         Session::flash('success', 'Роль «'.$item->display_name.'» успешно '.$action);
 

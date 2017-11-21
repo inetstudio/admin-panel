@@ -118,8 +118,8 @@ class UsersController extends Controller
         }
         $item->save();
 
-        $item->syncRoles($request->get('roles_id'));
-        $item->syncPermissions($request->get('permissions_id'));
+        $item->syncRoles(collect($request->get('roles_id'))->toArray());
+        $item->syncPermissions(collect($request->get('permissions_id'))->toArray());
 
         Session::flash('success', 'Пользователь «'.$item->name.'» успешно '.$action);
 
