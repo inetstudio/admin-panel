@@ -83,6 +83,14 @@ class SetupCommand extends Command
                 ],
             ],
             [
+                'description' => 'Publish migrations',
+                'command' => 'vendor:publish',
+                'params' => [
+                    '--provider' => 'InetStudio\AdminPanel\AdminPanelServiceProvider',
+                    '--tag' => 'migrations',
+                ],
+            ],
+            [
                 'description' => 'Migration',
                 'command' => 'migrate',
                 'params' => [],

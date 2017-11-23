@@ -34,6 +34,13 @@ class AdminPanelServiceProvider extends ServiceProvider
         $router->aliasMiddleware('ability', 'Laratrust\Middleware\LaratrustAbility');
 
         if ($this->app->runningInConsole()) {
+            if (! class_exists('CreateUsersTables')) {
+                $timestamp = date('Y_m_d_His', time());
+                $this->publishes([
+                    __DIR__.'/../database/migrations/create_users_tables.php.stub' => database_path('migrations/'.$timestamp.'_create_users_tables.php'),
+                ], 'migrations');
+            }
+
             $this->commands([
                 Commands\SetupCommand::class,
                 Commands\CreateAdminCommand::class,
