@@ -5,7 +5,7 @@ namespace InetStudio\AdminPanel\Models\Traits;
 use InetStudio\AdminPanel\Models\UserProfileModel;
 use InetStudio\AdminPanel\Models\UserSocialProfileModel;
 
-trait ProfilesTrait
+trait HasProfiles
 {
     /**
      * Отношение "один к одному" с моделью профиля
