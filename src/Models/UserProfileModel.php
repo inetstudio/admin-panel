@@ -84,7 +84,7 @@ class UserProfileModel extends Model
     {
         $additionalInfo = $this->additional_info;
 
-        array_set($customProperties, $name, $value);
+        array_set($additionalInfo, $name, $value);
 
         $this->additional_info = $additionalInfo;
 
@@ -100,7 +100,7 @@ class UserProfileModel extends Model
     {
         $additionalInfo = $this->additional_info;
 
-        array_forget($customProperties, $name);
+        array_forget($additionalInfo, $name);
 
         $this->additional_info = $additionalInfo;
 
