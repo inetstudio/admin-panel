@@ -12,7 +12,7 @@ class UserProfileModel extends Model
      *
      * @var string
      */
-    protected $table = 'users_socials_profiles';
+    protected $table = 'users_profiles';
 
     /**
      * Атрибуты, для которых разрешено массовое назначение.
@@ -20,7 +20,16 @@ class UserProfileModel extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'provider', 'provider_id', 'provider_email',
+        'user_id', 'additional_info',
+    ];
+
+    /**
+     * Атрибуты, которые должны быть преобразованы к базовым типам.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'additional_info' => 'array',
     ];
 
     /**
