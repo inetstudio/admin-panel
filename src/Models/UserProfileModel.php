@@ -4,9 +4,12 @@ namespace InetStudio\AdminPanel\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserProfileModel extends Model
 {
+    use SoftDeletes;
+
     /**
      * Связанная с моделью таблица.
      *

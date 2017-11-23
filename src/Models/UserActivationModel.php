@@ -4,18 +4,15 @@ namespace InetStudio\AdminPanel\Models;
 
 use App\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserSocialProfileModel extends Model
+class UserActivationModel extends Model
 {
-    use SoftDeletes;
-
     /**
      * Связанная с моделью таблица.
      *
      * @var string
      */
-    protected $table = 'users_socials_profiles';
+    protected $table = 'users_activations';
 
     /**
      * Атрибуты, для которых разрешено массовое назначение.
@@ -23,7 +20,7 @@ class UserSocialProfileModel extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'provider', 'provider_id', 'provider_email',
+        'user_id', 'token',
     ];
 
     /**
@@ -33,8 +30,6 @@ class UserSocialProfileModel extends Model
      */
     protected $dates = [
         'created_at',
-        'updated_at',
-        'deleted_at',
     ];
 
     /**

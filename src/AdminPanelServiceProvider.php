@@ -124,5 +124,7 @@ class AdminPanelServiceProvider extends ServiceProvider
 
         $loader = AliasLoader::getInstance();
         $loader->alias('Plupload', 'JildertMiedema\LaravelPlupload\Facades\Plupload');
+
+        $this->app->bind('UsersActivationsService', 'InetStudio\AdminPanel\Services\Front\UsersActivationsService');
     }
 }

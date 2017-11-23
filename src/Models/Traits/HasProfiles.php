@@ -8,7 +8,7 @@ use InetStudio\AdminPanel\Models\UserSocialProfileModel;
 trait HasProfiles
 {
     /**
-     * Отношение "один к одному" с моделью профиля
+     * Отношение "один к одному" с моделью профиля.
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
@@ -18,7 +18,7 @@ trait HasProfiles
     }
 
     /**
-     * Отношение "один ко многим" с моделью социального профиля
+     * Отношение "один ко многим" с моделью социального профиля.
      *
      * @return \Illuminate\Database\Eloquent\Relations\hasOne
      */
