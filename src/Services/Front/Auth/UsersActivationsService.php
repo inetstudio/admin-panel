@@ -29,6 +29,7 @@ class UsersActivationsService
         if (! $activation) {
             return $this->createToken($user);
         }
+
         return $this->regenerateToken($user);
     }
 
@@ -43,8 +44,9 @@ class UsersActivationsService
 
         $user->activation->update([
             'token' => $token,
-            'created_at' => new Carbon()
+            'created_at' => new Carbon(),
         ]);
+
         return $token;
     }
 
@@ -55,7 +57,7 @@ class UsersActivationsService
         UserActivationModel::create([
             'user_id' => $user->id,
             'token' => $token,
-            'created_at' => new Carbon()
+            'created_at' => new Carbon(),
         ]);
 
         return $token;

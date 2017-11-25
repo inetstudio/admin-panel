@@ -3,14 +3,11 @@
 namespace InetStudio\AdminPanel\Http\Middleware\Back\Auth;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AdminAuthenticate
 {
     /**
-     *
-     *
      * @param $request
      * @param Closure $next
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|mixed

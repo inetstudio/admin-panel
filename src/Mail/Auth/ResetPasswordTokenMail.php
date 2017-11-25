@@ -26,7 +26,7 @@ class ResetPasswordTokenMail extends Mailable
      *
      * @return $this
      */
-    public function build(): ResetPasswordTokenMail
+    public function build(): self
     {
         return $this->from(config('mail.from.address'), config('mail.from.name'))
             ->subject('Сброс пароля')
