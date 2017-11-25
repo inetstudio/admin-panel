@@ -10,6 +10,7 @@
       }
     ],
     "require": {
+      "arcanedev/seo-helper": "^1.4",
       "cviebrock/eloquent-sluggable": "^4.3",
       "jildertmiedema/laravel-plupload": "^0.4.1",
       "inetstudio/simple-counters": "1.5.*",
@@ -38,7 +39,10 @@
     "extra": {
       "laravel": {
         "providers": [
-          "InetStudio\\AdminPanel\\AdminPanelServiceProvider"
+          "InetStudio\\AdminPanel\\Providers\\AdminPanelServiceProvider",
+          "InetStudio\\AdminPanel\\Providers\\BladeServiceProvider",
+          "InetStudio\\AdminPanel\\Providers\\FormBuilderServiceProvider",
+          "InetStudio\\AdminPanel\\Providers\\ValidatorServiceProvider"
         ]
       }
     }

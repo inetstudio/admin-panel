@@ -1,0 +1,1 @@
+<a target="_blank" href="{{ route('front.account.activate.get', ['token' => $token]) }}">активировать аккаунт</a>

@@ -2,7 +2,7 @@
 
 namespace InetStudio\AdminPanel\Models\Traits;
 
-use InetStudio\AdminPanel\Models\UserActivationModel;
+use InetStudio\AdminPanel\Models\Auth\UserActivationModel;
 
 trait HasActivation
 {

@@ -30,6 +30,10 @@ class CreateUsersTables extends Migration
            $table->timestamps();
            $table->softDeletes();
        });
+
+       if (Schema::hasTable('users')) {
+           $table->boolean('activated')->after('id');
+       }
     }
 
     public function down()

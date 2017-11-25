@@ -1,7 +1,7 @@
 <?php
 
 Route::group(['middleware' => 'web'], function () {
-    Route::group(['namespace' => 'InetStudio\AdminPanel\Controllers'], function () {
+    Route::group(['namespace' => 'InetStudio\AdminPanel\Http\Controllers\Back'], function () {
         Route::group(['prefix' => 'back'], function () {
             Route::group(['namespace' => 'Auth'], function () {
                 Route::get('login', 'LoginController@showLoginForm')->name('back.login.form');
@@ -40,9 +40,21 @@ Route::group(['middleware' => 'web'], function () {
                 Route::get('/', 'PagesController@showIndexPage')->name('back');
             });
         });
+    });
 
+    Route::group(['namespace' => 'InetStudio\AdminPanel\Http\Controllers\Front'], function () {
         Route::group(['namespace' => 'Images'], function () {
             Route::get('img/{id}', 'ImagesController@getImage')->name('front.image.get');
+        });
+
+        Route::group(['namespace' => 'Auth'], function () {
+            Route::post('register', 'RegisterController@registerCustom')->name('front.register');
+            Route::get('account/activate/{token?}', 'RegisterController@activate')->name('front.account.activate.get');
+            Route::post('login', 'LoginController@loginCustom')->name('front.auth.login');
+            Route::post('logout', 'LoginController@logout')->name('front.auth.logout');
+            Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmailCustom')->name('front.password.email');
+            Route::get('password/reset/{token?}', 'ResetPasswordController@showResetForm')->name('front.password.reset.get');
+            Route::post('password/reset', 'ResetPasswordController@resetCustom')->name('front.password.reset.post');
         });
     });
 });

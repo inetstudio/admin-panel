@@ -2,8 +2,8 @@
 
 namespace InetStudio\AdminPanel\Models\Traits;
 
-use InetStudio\AdminPanel\Models\UserProfileModel;
-use InetStudio\AdminPanel\Models\UserSocialProfileModel;
+use InetStudio\AdminPanel\Models\ACL\UserProfileModel;
+use InetStudio\AdminPanel\Models\ACL\UserSocialProfileModel;
 
 trait HasProfiles
 {
