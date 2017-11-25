@@ -47,7 +47,7 @@ class UserProfileModel extends Model
     ];
 
     /**
-     * Обратное отношение с моделью пользователя
+     * Обратное отношение с моделью пользователя.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

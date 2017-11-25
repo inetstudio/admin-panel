@@ -5,8 +5,8 @@ namespace InetStudio\AdminPanel\Http\Controllers\Front\Auth;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Events\Registered;
-use InetStudio\AdminPanel\Services\Front\Auth\UsersActivationsService;
 use InetStudio\AdminPanel\Http\Requests\Front\Auth\RegisterRequest;
+use InetStudio\AdminPanel\Services\Front\Auth\UsersActivationsService;
 use App\Http\Controllers\Auth\RegisterController as BaseRegisterController;
 
 class RegisterController extends BaseRegisterController
@@ -46,7 +46,7 @@ class RegisterController extends BaseRegisterController
         $activation = $usersActivationsService->getActivationByToken($token);
 
         if ($activation === null) {
-            return null;
+            return;
         }
 
         $usersActivationsService->deleteActivation($token);

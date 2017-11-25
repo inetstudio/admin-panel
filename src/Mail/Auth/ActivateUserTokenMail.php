@@ -26,7 +26,7 @@ class ActivateUserTokenMail extends Mailable
      *
      * @return $this
      */
-    public function build(): ActivateUserTokenMail
+    public function build(): self
     {
         return $this->from(config('mail.from.address'), config('mail.from.name'))
             ->subject('Активация аккаунта')
