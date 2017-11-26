@@ -72,7 +72,7 @@ class LoginController extends BaseLoginController
 
             throw ValidationException::withMessages([
                 'email' => [
-                    trans('admin::auth.activationWarning'),
+                    trans('admin::activation.activationWarning'),
                 ],
             ]);
         }

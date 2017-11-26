@@ -49,7 +49,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['namespace' => 'Auth'], function () {
             Route::post('register', 'RegisterController@registerCustom')->name('front.register');
-            Route::get('account/activate/{token?}', 'RegisterController@activate')->name('front.account.activate.get');
+            Route::get('account/activate/{token?}', 'ActivateController@activate')->name('front.account.activate.get');
             Route::post('login', 'LoginController@loginCustom')->name('front.auth.login');
             Route::group(['middleware' => 'auth'], function () {
                 Route::post('logout', 'LoginController@logout')->name('front.auth.logout');
