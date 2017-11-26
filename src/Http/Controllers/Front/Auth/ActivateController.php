@@ -18,6 +18,8 @@ class ActivateController extends Controller
      */
     public function activate(UsersActivationsService $usersActivationsService, string $token): View
     {
+        $seoService = app()->make('SEOService');
+
         $activation = $usersActivationsService->getActivationByToken($token);
 
         if ($activation !== null) {
@@ -33,6 +35,7 @@ class ActivateController extends Controller
         }
 
         return view('admin::front.auth.activate', [
+            'SEO' => $seoService->getTags(null),
             'activationStatus' => $status,
         ]);
     }
