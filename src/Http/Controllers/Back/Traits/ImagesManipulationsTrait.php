@@ -3,6 +3,7 @@
 namespace InetStudio\AdminPanel\Http\Controllers\Back\Traits;
 
 use Illuminate\Support\Facades\Storage;
+use InetStudio\AdminPanel\Events\Images\UpdateImageEvent;
 
 trait ImagesManipulationsTrait
 {
@@ -19,7 +20,7 @@ trait ImagesManipulationsTrait
         foreach ($images as $name) {
             $properties = $request->get($name);
 
-            \Event::fire('inetstudio.images.cache.clear', $name.'_'.md5(get_class($item).$item->id));
+            event(new UpdateImageEvent($item, $name));
 
             if (isset($properties['images'])) {
                 $item->clearMediaCollectionExcept($name, $properties['images']);
@@ -53,7 +54,8 @@ trait ImagesManipulationsTrait
                         $cropData = json_decode($cropJSON, true);
 
                         foreach (config($disk.'.images.conversions.'.$name.'.'.$key) as $conversion) {
-                            \Event::fire('inetstudio.images.cache.clear', $conversion['name'].'_'.md5(get_class($item).$item->id));
+
+                            event(new UpdateImageEvent($item, $conversion['name']));
 
                             $manipulations[$conversion['name']] = [
                                 'manualCrop' => implode(',', [

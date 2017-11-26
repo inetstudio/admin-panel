@@ -2,7 +2,7 @@
 
 namespace InetStudio\AdminPanel\Http\Controllers\Back\Traits;
 
-use InetStudio\AdminPanel\Events\Auth\ChangeMetaEvent;
+use InetStudio\AdminPanel\Events\SEO\UpdateMetaEvent;
 
 trait MetaManipulationsTrait
 {
@@ -19,7 +19,7 @@ trait MetaManipulationsTrait
                 $item->updateMeta($key, $value);
             }
 
-            event(new ChangeMetaEvent($item));
+            event(new UpdateMetaEvent($item));
         }
     }
 }

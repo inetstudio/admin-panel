@@ -1,23 +1,26 @@
 <?php
 
-namespace InetStudio\AdminPanel\Events\Auth;
+namespace InetStudio\AdminPanel\Events\Images;
 
 use Illuminate\Queue\SerializesModels;
 
-class ChangeMetaEvent
+class UpdateImageEvent
 {
     use SerializesModels;
 
     public $object;
+    public $name;
 
     /**
      * Create a new event instance.
      *
-     * ClearCacheEvent constructor.
+     * UpdateImageEvent constructor.
      * @param $object
+     * @param $name
      */
-    public function __construct($object)
+    public function __construct($object, $name)
     {
         $this->object = $object;
+        $this->name = $name;
     }
 }

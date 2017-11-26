@@ -3,9 +3,9 @@
 namespace InetStudio\AdminPanel\Listeners\SEO;
 
 use Illuminate\Support\Facades\Cache;
-use InetStudio\AdminPanel\Events\Auth\ChangeMetaEvent;
+use InetStudio\AdminPanel\Events\Auth\UpdateMetaEvent;
 
-class ClearCacheListener
+class ClearMetaCacheListener
 {
     /**
      * ClearCacheListener constructor.
@@ -18,10 +18,10 @@ class ClearCacheListener
     /**
      * Handle the event.
      *
-     * @param ChangeMetaEvent $event
+     * @param UpdateMetaEvent $event
      * @return void
      */
-    public function handle(ChangeMetaEvent $event)
+    public function handle(UpdateMetaEvent $event)
     {
         $object = $event->object;
 

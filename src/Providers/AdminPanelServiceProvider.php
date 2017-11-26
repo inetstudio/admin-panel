@@ -10,14 +10,16 @@ use Illuminate\Support\ServiceProvider;
 use Laratrust\Middleware\LaratrustRole;
 use Laratrust\Middleware\LaratrustAbility;
 use Laratrust\Middleware\LaratrustPermission;
-use InetStudio\AdminPanel\Events\Auth\ChangeMetaEvent;
+use InetStudio\AdminPanel\Events\SEO\UpdateMetaEvent;
 use InetStudio\AdminPanel\Console\Commands\SetupCommand;
 use InetStudio\AdminPanel\Services\Front\SEO\SEOService;
+use InetStudio\AdminPanel\Events\Images\UpdateImageEvent;
 use InetStudio\AdminPanel\Services\Front\ACL\UsersService;
-use InetStudio\AdminPanel\Listeners\SEO\ClearCacheListener;
 use InetStudio\AdminPanel\Events\Auth\UnactivatedLoginEvent;
 use InetStudio\AdminPanel\Console\Commands\CreateAdminCommand;
+use InetStudio\AdminPanel\Listeners\SEO\ClearMetaCacheListener;
 use InetStudio\AdminPanel\Console\Commands\CreateFoldersCommand;
+use InetStudio\AdminPanel\Listeners\Images\ClearImageCacheListener;
 use InetStudio\AdminPanel\Http\Middleware\Back\Auth\AdminAuthenticate;
 use InetStudio\AdminPanel\Services\Front\Auth\UsersActivationsService;
 use InetStudio\AdminPanel\Listeners\Auth\SendActivateNotificationListener;
@@ -152,7 +154,8 @@ class AdminPanelServiceProvider extends ServiceProvider
     {
         Event::listen(Registered::class, SendActivateNotificationListener::class);
         Event::listen(UnactivatedLoginEvent::class, SendActivateNotificationListener::class);
-        Event::listen(ChangeMetaEvent::class, ClearCacheListener::class);
+        Event::listen(UpdateMetaEvent::class, ClearMetaCacheListener::class);
+        Event::listen(UpdateImageEvent::class, ClearImageCacheListener::class);
     }
 
     /**
