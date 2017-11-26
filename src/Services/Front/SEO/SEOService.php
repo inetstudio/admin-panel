@@ -15,7 +15,7 @@ class SEOService
      * Получаем мета теги страницы.
      *
      * @param $object
-     * @return array|mixed
+     * @return array
      */
     public function getTags($object): array
     {

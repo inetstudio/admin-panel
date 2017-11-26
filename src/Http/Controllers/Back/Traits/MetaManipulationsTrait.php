@@ -2,6 +2,8 @@
 
 namespace InetStudio\AdminPanel\Http\Controllers\Back\Traits;
 
+use InetStudio\AdminPanel\Events\Auth\ChangeMetaEvent;
+
 trait MetaManipulationsTrait
 {
     /**
@@ -17,7 +19,7 @@ trait MetaManipulationsTrait
                 $item->updateMeta($key, $value);
             }
 
-            \Event::fire('inetstudio.seo.cache.clear', $item);
+            event(new ChangeMetaEvent($item));
         }
     }
 }

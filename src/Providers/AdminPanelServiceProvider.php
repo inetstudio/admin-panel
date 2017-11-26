@@ -10,10 +10,12 @@ use Illuminate\Support\ServiceProvider;
 use Laratrust\Middleware\LaratrustRole;
 use Laratrust\Middleware\LaratrustAbility;
 use Laratrust\Middleware\LaratrustPermission;
-use InetStudio\AdminPanel\Events\UnactivatedLogin;
+use InetStudio\AdminPanel\Events\Auth\ChangeMetaEvent;
 use InetStudio\AdminPanel\Console\Commands\SetupCommand;
 use InetStudio\AdminPanel\Services\Front\SEO\SEOService;
 use InetStudio\AdminPanel\Services\Front\ACL\UsersService;
+use InetStudio\AdminPanel\Listeners\SEO\ClearCacheListener;
+use InetStudio\AdminPanel\Events\Auth\UnactivatedLoginEvent;
 use InetStudio\AdminPanel\Console\Commands\CreateAdminCommand;
 use InetStudio\AdminPanel\Console\Commands\CreateFoldersCommand;
 use InetStudio\AdminPanel\Http\Middleware\Back\Auth\AdminAuthenticate;
@@ -138,7 +140,8 @@ class AdminPanelServiceProvider extends ServiceProvider
     protected function registerEvents(): void
     {
         Event::listen(Registered::class, SendActivateNotificationListener::class);
-        Event::listen(UnactivatedLogin::class, SendActivateNotificationListener::class);
+        Event::listen(UnactivatedLoginEvent::class, SendActivateNotificationListener::class);
+        Event::listen(ChangeMetaEvent::class, ClearCacheListener::class);
     }
 
     /**

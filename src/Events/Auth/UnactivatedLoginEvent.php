@@ -1,10 +1,10 @@
 <?php
 
-namespace InetStudio\AdminPanel\Events;
+namespace InetStudio\AdminPanel\Events\Auth;
 
 use Illuminate\Queue\SerializesModels;
 
-class UnactivatedLogin
+class UnactivatedLoginEvent
 {
     use SerializesModels;
 
@@ -18,7 +18,7 @@ class UnactivatedLogin
     /**
      * Create a new event instance.
      *
-     * UnactivatedLogin constructor.
+     * UnactivatedLoginEvent constructor.
      * @param $user
      */
     public function __construct($user)

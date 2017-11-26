@@ -2,7 +2,6 @@
 
 namespace InetStudio\AdminPanel\Listeners\Auth;
 
-use Illuminate\Auth\Events\Registered;
 use InetStudio\AdminPanel\Notifications\Auth\ActivateUserTokenNotification;
 
 class SendActivateNotificationListener
@@ -10,7 +9,7 @@ class SendActivateNotificationListener
     protected $resendAfter = 24;
 
     /**
-     * SendActivateNotification constructor.
+     * SendActivateNotificationListener constructor.
      */
     public function __construct()
     {
@@ -20,10 +19,10 @@ class SendActivateNotificationListener
     /**
      * Handle the event.
      *
-     * @param Registered $event
+     * @param $event
      * @return void
      */
-    public function handle(Registered $event)
+    public function handle($event)
     {
         $usersActivationsService = app()->make('UsersActivationsService');
 

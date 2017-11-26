@@ -5,7 +5,7 @@ namespace InetStudio\AdminPanel\Http\Controllers\Front\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
-use InetStudio\AdminPanel\Events\UnactivatedLogin;
+use InetStudio\AdminPanel\Events\Auth\UnactivatedLoginEvent;
 use InetStudio\AdminPanel\Http\Requests\Front\Auth\LoginRequest;
 use App\Http\Controllers\Auth\LoginController as BaseLoginController;
 
@@ -65,7 +65,7 @@ class LoginController extends BaseLoginController
     public function authenticated(Request $request, $user)
     {
         if (! $user->activated) {
-            event(new UnactivatedLogin($user));
+            event(new UnactivatedLoginEvent($user));
             auth()->logout();
 
             throw ValidationException::withMessages([
