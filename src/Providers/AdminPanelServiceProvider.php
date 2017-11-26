@@ -3,11 +3,14 @@
 namespace InetStudio\AdminPanel\Providers;
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Laratrust\Middleware\LaratrustRole;
 use Laratrust\Middleware\LaratrustAbility;
 use Laratrust\Middleware\LaratrustPermission;
+use InetStudio\AdminPanel\Events\UnactivatedLogin;
 use InetStudio\AdminPanel\Console\Commands\SetupCommand;
 use InetStudio\AdminPanel\Services\Front\SEO\SEOService;
 use InetStudio\AdminPanel\Services\Front\ACL\UsersService;
@@ -15,6 +18,7 @@ use InetStudio\AdminPanel\Console\Commands\CreateAdminCommand;
 use InetStudio\AdminPanel\Console\Commands\CreateFoldersCommand;
 use InetStudio\AdminPanel\Http\Middleware\Back\Auth\AdminAuthenticate;
 use InetStudio\AdminPanel\Services\Front\Auth\UsersActivationsService;
+use InetStudio\AdminPanel\Listeners\Auth\SendActivateNotificationListener;
 use InetStudio\AdminPanel\Http\Middleware\Back\Auth\RedirectIfAuthenticated;
 
 class AdminPanelServiceProvider extends ServiceProvider
@@ -32,6 +36,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         $this->registerRoutes();
         $this->registerViews();
         $this->registerMiddlewares($router);
+        $this->registerEvents();
     }
 
     /**
@@ -123,6 +128,17 @@ class AdminPanelServiceProvider extends ServiceProvider
         $router->aliasMiddleware('role', LaratrustRole::class);
         $router->aliasMiddleware('permission', LaratrustPermission::class);
         $router->aliasMiddleware('ability', LaratrustAbility::class);
+    }
+
+    /**
+     * Регистрация событий.
+     *
+     * @return void
+     */
+    protected function registerEvents(): void
+    {
+        Event::listen(Registered::class, SendActivateNotificationListener::class);
+        Event::listen(UnactivatedLogin::class, SendActivateNotificationListener::class);
     }
 
     /**

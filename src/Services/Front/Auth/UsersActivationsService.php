@@ -2,27 +2,51 @@
 
 namespace InetStudio\AdminPanel\Services\Front\Auth;
 
+use App\User;
 use Carbon\Carbon;
 use InetStudio\AdminPanel\Models\Auth\UserActivationModel;
 
 class UsersActivationsService
 {
-    public function getActivation($user)
+    /**
+     * Получаем активацию пользователя.
+     *
+     * @param User $user
+     * @return UserActivationModel|null
+     */
+    public function getActivation(User $user): ?UserActivationModel
     {
         return $user->activation;
     }
 
-    public function getActivationByToken($token)
+    /**
+     * Получаем активацию по токену.
+     *
+     * @param string $token
+     * @return UserActivationModel|null
+     */
+    public function getActivationByToken(string $token): ?UserActivationModel
     {
         return UserActivationModel::where('token', $token)->first();
     }
 
-    public function deleteActivation($token)
+    /**
+     * Удаляем активацию.
+     *
+     * @param string $token
+     */
+    public function deleteActivation(string $token): void
     {
         UserActivationModel::where('token', $token)->delete();
     }
 
-    public function createActivation($user)
+    /**
+     * Создаем активацию.
+     *
+     * @param User $user
+     * @return string
+     */
+    public function createActivation(User $user): string
     {
         $activation = $this->getActivation($user);
 
@@ -33,12 +57,23 @@ class UsersActivationsService
         return $this->regenerateToken($user);
     }
 
-    protected function getToken()
+    /**
+     * Генерация токена.
+     *
+     * @return string
+     */
+    protected function getToken(): string
     {
         return hash_hmac('sha256', str_random(40), config('app.key'));
     }
 
-    private function regenerateToken($user)
+    /**
+     * Обновление токена.
+     *
+     * @param User $user
+     * @return string
+     */
+    private function regenerateToken(User $user): string
     {
         $token = $this->getToken();
 
@@ -50,7 +85,13 @@ class UsersActivationsService
         return $token;
     }
 
-    private function createToken($user)
+    /**
+     * Создание токена.
+     *
+     * @param User $user
+     * @return string
+     */
+    private function createToken(User $user): string
     {
         $token = $this->getToken();
 

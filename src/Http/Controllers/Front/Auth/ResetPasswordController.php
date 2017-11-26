@@ -6,7 +6,6 @@ use App\User;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Validation\ValidationException;
@@ -72,7 +71,7 @@ class ResetPasswordController extends BaseResetPasswordController
      */
     protected function resetPasswordWithoutLogin(User $user, string $password): void
     {
-        $user->password = Hash::make($password);
+        $user->password = bcrypt($password);
         $user->save();
 
         event(new PasswordReset($user));

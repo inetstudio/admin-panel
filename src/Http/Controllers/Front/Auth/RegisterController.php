@@ -6,7 +6,6 @@ use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Auth\Events\Registered;
 use InetStudio\AdminPanel\Http\Requests\Front\Auth\RegisterRequest;
-use InetStudio\AdminPanel\Services\Front\Auth\UsersActivationsService;
 use App\Http\Controllers\Auth\RegisterController as BaseRegisterController;
 
 class RegisterController extends BaseRegisterController
@@ -15,11 +14,13 @@ class RegisterController extends BaseRegisterController
      * Регистрация пользователя.
      *
      * @param RegisterRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function registerCustom(RegisterRequest $request): JsonResponse
     {
-        event(new Registered($user = $this->create($request->all())));
+        $user = $this->create($request->all());
+
+        event(new Registered($user));
 
         return response()->json([
             'success' => true,
@@ -27,7 +28,7 @@ class RegisterController extends BaseRegisterController
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Создаем пользователя.
      *
      * @param array $data
      * @return User
@@ -38,19 +39,7 @@ class RegisterController extends BaseRegisterController
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'activated' => false,
         ]);
-    }
-
-    public function activate(UsersActivationsService $usersActivationsService, $token)
-    {
-        $activation = $usersActivationsService->getActivationByToken($token);
-
-        if ($activation === null) {
-            return;
-        }
-
-        $usersActivationsService->deleteActivation($token);
-
-        return 'test';
     }
 }

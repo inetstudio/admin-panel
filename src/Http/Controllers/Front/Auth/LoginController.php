@@ -4,6 +4,8 @@ namespace InetStudio\AdminPanel\Http\Controllers\Front\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
+use InetStudio\AdminPanel\Events\UnactivatedLogin;
 use InetStudio\AdminPanel\Http\Requests\Front\Auth\LoginRequest;
 use App\Http\Controllers\Auth\LoginController as BaseLoginController;
 
@@ -50,6 +52,32 @@ class LoginController extends BaseLoginController
             ?: response()->json([
                 'success' => true,
             ]);
+    }
+
+    /**
+     * Проверяем, активирован ли аккаунт пользователя.
+     *
+     * @param Request $request
+     * @param mixed $user
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function authenticated(Request $request, $user)
+    {
+        if (! $user->activated) {
+            event(new UnactivatedLogin($user));
+            auth()->logout();
+
+            throw ValidationException::withMessages([
+                'email' => [
+                    'test',
+                ],
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+        ]);
     }
 
     /**

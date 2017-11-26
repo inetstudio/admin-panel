@@ -51,7 +51,9 @@ Route::group(['middleware' => 'web'], function () {
             Route::post('register', 'RegisterController@registerCustom')->name('front.register');
             Route::get('account/activate/{token?}', 'RegisterController@activate')->name('front.account.activate.get');
             Route::post('login', 'LoginController@loginCustom')->name('front.auth.login');
-            Route::post('logout', 'LoginController@logout')->name('front.auth.logout');
+            Route::group(['middleware' => 'auth'], function () {
+                Route::post('logout', 'LoginController@logout')->name('front.auth.logout');
+            });
             Route::post('password/email', 'ForgotPasswordController@sendResetLinkEmailCustom')->name('front.password.email');
             Route::get('password/reset/{token?}', 'ResetPasswordController@showResetForm')->name('front.password.reset.get');
             Route::post('password/reset', 'ResetPasswordController@resetCustom')->name('front.password.reset.post');
