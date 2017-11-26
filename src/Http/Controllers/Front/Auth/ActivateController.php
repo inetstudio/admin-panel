@@ -16,7 +16,7 @@ class ActivateController extends Controller
      * @param string $token
      * @return View
      */
-    public function activate(UsersActivationsService $usersActivationsService, string $token): View
+    public function activate(UsersActivationsService $usersActivationsService, string $token = null): View
     {
         $seoService = app()->make('SEOService');
 
