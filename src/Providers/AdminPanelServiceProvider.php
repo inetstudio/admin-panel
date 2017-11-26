@@ -37,6 +37,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         $this->registerPublishes();
         $this->registerRoutes();
         $this->registerViews();
+        $this->registerTranslations();
         $this->registerMiddlewares($router);
         $this->registerEvents();
     }
@@ -114,6 +115,16 @@ class AdminPanelServiceProvider extends ServiceProvider
     protected function registerViews(): void
     {
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'admin');
+    }
+
+    /**
+     * Регистрация переводов.
+     *
+     * @return void
+     */
+    protected function registerTranslations(): void
+    {
+        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'admin');
     }
 
     /**

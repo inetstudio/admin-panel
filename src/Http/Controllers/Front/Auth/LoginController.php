@@ -66,11 +66,13 @@ class LoginController extends BaseLoginController
     {
         if (! $user->activated) {
             event(new UnactivatedLoginEvent($user));
-            auth()->logout();
+
+            $this->guard()->logout();
+            $request->session()->invalidate();
 
             throw ValidationException::withMessages([
                 'email' => [
-                    'test',
+                    trans('admin::auth.activationWarning'),
                 ],
             ]);
         }
