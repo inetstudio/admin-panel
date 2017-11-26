@@ -24,7 +24,7 @@ class ActivateController extends Controller
 
         if ($activation !== null) {
             $user = User::find($activation->user_id);
-            $user->activated = true;
+            $user->activated = 1;
             $user->save();
 
             $usersActivationsService->deleteActivation($token);

@@ -33,7 +33,7 @@ class CreateUsersTables extends Migration
 
        if (Schema::hasTable('users')) {
            Schema::table('users', function (Blueprint $table) {
-                $table->boolean('activated')->after('id');
+                $table->boolean('activated')->default(0)->after('id');
            });
        }
     }

@@ -39,7 +39,7 @@ class RegisterController extends BaseRegisterController
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
-            'activated' => false,
+            'activated' => 0,
         ]);
     }
 }
