@@ -25,7 +25,7 @@ class UsersActivationsService
      * @param string $token
      * @return UserActivationModel|null
      */
-    public function getActivationByToken(string $token): ?UserActivationModel
+    public function getActivationByToken(string $token = ''): ?UserActivationModel
     {
         return UserActivationModel::where('token', $token)->first();
     }
@@ -35,7 +35,7 @@ class UsersActivationsService
      *
      * @param string $token
      */
-    public function deleteActivation(string $token): void
+    public function deleteActivation(string $token = ''): void
     {
         UserActivationModel::where('token', $token)->delete();
     }
