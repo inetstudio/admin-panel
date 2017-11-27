@@ -29,14 +29,20 @@ class ActivateController extends Controller
 
             $usersActivationsService->deleteActivation($token);
 
-            $status = trans('admin::activation.activationSuccess');
+            $activation = [
+                'success' => true,
+                'message' => trans('admin::activation.activationSuccess'),
+            ];
         } else {
-            $status = trans('admin::activation.activationFail');
+            $activation = [
+                'success' => false,
+                'message' => trans('admin::activation.activationFail'),
+            ];
         }
 
         return view('admin::front.auth.activate', [
             'SEO' => $seoService->getTags(null),
-            'activationStatus' => $status,
+            'activation' => $activation,
         ]);
     }
 }
