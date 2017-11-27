@@ -4,6 +4,7 @@ namespace InetStudio\AdminPanel\Services\Front\ACL;
 
 use App\User;
 use Illuminate\Http\Request;
+use InetStudio\AdminPanel\Models\ACL\UserSocialProfileModel;
 
 class UsersService
 {
@@ -82,5 +83,39 @@ class UsersService
         $user = $this->user;
 
         return ($user) ? $user->email : strip_tags($request->get('email'));
+    }
+
+    /**
+     * Создаем или получаем пользователя социальной сети.
+     *
+     * @param $providerObj
+     * @param $providerName
+     * @return mixed
+     */
+    public function createOrGetSocialUser($providerObj, $providerName)
+    {
+        $providerUser = $providerObj->user();
+
+        $socialProfile = UserSocialProfileModel::updateOrCreate([
+            'provider' => $providerName,
+            'provider_id' => $providerUser->getId(),
+        ], [
+            'provider_email' => $providerUser->getEmail(),
+        ]);
+
+        $user = $socialProfile->user;
+
+        if (! $user) {
+            $user = User::create([
+                'name' => $providerUser->getName(),
+                'email' => ($providerUser->getEmail()) ? $providerUser->getEmail() : time().'@default.mail',
+                'password' => bcrypt($providerUser->getName().$providerUser->getEmail()),
+                'activated' => 1,
+            ]);
+
+            $socialProfile->user()->associate($user);
+        }
+
+        return $user;
     }
 }
