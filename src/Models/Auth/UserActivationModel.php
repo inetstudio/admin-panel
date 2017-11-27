@@ -9,6 +9,8 @@ class UserActivationModel extends Model
 {
     const UPDATED_AT = null;
 
+    protected $primaryKey = 'token';
+
     /**
      * Связанная с моделью таблица.
      *
