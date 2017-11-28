@@ -114,6 +114,7 @@ class UsersService
             ]);
 
             $socialProfile->user()->associate($user);
+            $socialProfile->save();
         }
 
         return $user;

@@ -10,6 +10,7 @@ use Illuminate\Support\ServiceProvider;
 use Laratrust\Middleware\LaratrustRole;
 use Laratrust\Middleware\LaratrustAbility;
 use Laratrust\Middleware\LaratrustPermission;
+use SocialiteProviders\Manager\SocialiteWasCalled;
 use InetStudio\AdminPanel\Events\SEO\UpdateMetaEvent;
 use InetStudio\AdminPanel\Console\Commands\SetupCommand;
 use InetStudio\AdminPanel\Services\Front\SEO\SEOService;
@@ -156,6 +157,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         Event::listen(UnactivatedLoginEvent::class, SendActivateNotificationListener::class);
         Event::listen(UpdateMetaEvent::class, ClearMetaCacheListener::class);
         Event::listen(UpdateImageEvent::class, ClearImageCacheListener::class);
+        Event::listen(SocialiteWasCalled::class, 'SocialiteProviders\VKontakte\VKontakteExtendSocialite@handle');
     }
 
     /**
