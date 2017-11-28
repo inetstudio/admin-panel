@@ -106,16 +106,20 @@ class UsersService
         $user = $socialProfile->user;
 
         if (! $user) {
+            $user = User::where('email', $providerUser->getEmail())->first();
+        }
+
+        if (! $user) {
             $user = User::create([
                 'name' => $providerUser->getName(),
                 'email' => ($providerUser->getEmail()) ? $providerUser->getEmail() : time().'@default.mail',
                 'password' => bcrypt($providerUser->getName().$providerUser->getEmail()),
                 'activated' => 1,
             ]);
-
-            $socialProfile->user()->associate($user);
-            $socialProfile->save();
         }
+
+        $socialProfile->user()->associate($user);
+        $socialProfile->save();
 
         return $user;
     }
