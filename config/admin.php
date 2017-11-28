@@ -61,4 +61,9 @@ return [
         ],
     ],
 
+    'linkedItems' => [
+        'comments' => '\InetStudio\Comments\Models\CommentModel',
+        'feedback' => '\InetStudio\Feedback\Models\FeedbackModel',
+    ],
+
 ];

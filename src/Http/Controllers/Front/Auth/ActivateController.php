@@ -29,6 +29,8 @@ class ActivateController extends Controller
 
             $usersActivationsService->deleteActivation($token);
 
+            $this->updateLinkedItems($user);
+
             $activation = [
                 'success' => true,
                 'message' => trans('admin::activation.activationSuccess'),
@@ -44,5 +46,27 @@ class ActivateController extends Controller
             'SEO' => $seoService->getTags(null),
             'activation' => $activation,
         ]);
+    }
+
+    /**
+     * Присваиваем пользователю связанные с его почтой сущности.
+     *
+     * @param User $user
+     */
+    private function updateLinkedItems(User $user): void
+    {
+        $items = config('admin.linkedItems');
+
+        if ($items) {
+            foreach ($items as $itemClass) {
+                if (class_exists($itemClass)) {
+                    $model = new $itemClass();
+
+                    $model::where('email', $user->email)->where('user_id', 0)->update([
+                        'user_id' => $user->id,
+                    ]);
+                }
+            }
+        }
     }
 }
