@@ -10,16 +10,26 @@ class SocialLoginController extends Controller
 {
     public function redirectToProvider($provider)
     {
-        return Socialite::driver($provider)->stateless()->scopes(['email'])->redirect();
+        $driver = Socialite::driver($provider);
+
+        if ($provider != 'twitter') {
+            $driver->stateless()->scopes(['email']);
+        }
+
+        return $driver->redirect();
     }
 
     public function handleProviderCallback($provider)
     {
         $usersService = app()->make('UsersService');
 
-        $providerObj = Socialite::driver($provider)->stateless();
+        $driverObj = Socialite::driver($provider);
 
-        $authUser = $usersService->createOrGetSocialUser($providerObj, $provider);
+        if ($provider != 'twitter') {
+            $driverObj->stateless();
+        }
+
+        $authUser = $usersService->createOrGetSocialUser($driverObj, $provider);
         Auth::login($authUser, true);
 
         return redirect('/');

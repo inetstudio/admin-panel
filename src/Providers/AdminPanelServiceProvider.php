@@ -16,6 +16,7 @@ use InetStudio\AdminPanel\Console\Commands\SetupCommand;
 use InetStudio\AdminPanel\Services\Front\SEO\SEOService;
 use InetStudio\AdminPanel\Events\Images\UpdateImageEvent;
 use InetStudio\AdminPanel\Services\Front\ACL\UsersService;
+use SocialiteProviders\VKontakte\VKontakteExtendSocialite;
 use InetStudio\AdminPanel\Events\Auth\UnactivatedLoginEvent;
 use InetStudio\AdminPanel\Console\Commands\CreateAdminCommand;
 use InetStudio\AdminPanel\Listeners\SEO\ClearMetaCacheListener;
@@ -23,6 +24,7 @@ use InetStudio\AdminPanel\Console\Commands\CreateFoldersCommand;
 use InetStudio\AdminPanel\Listeners\Images\ClearImageCacheListener;
 use InetStudio\AdminPanel\Http\Middleware\Back\Auth\AdminAuthenticate;
 use InetStudio\AdminPanel\Services\Front\Auth\UsersActivationsService;
+use JhaoDa\SocialiteProviders\Odnoklassniki\OdnoklassnikiExtendSocialite;
 use InetStudio\AdminPanel\Listeners\Auth\SendActivateNotificationListener;
 use InetStudio\AdminPanel\Http\Middleware\Back\Auth\RedirectIfAuthenticated;
 
@@ -157,7 +159,8 @@ class AdminPanelServiceProvider extends ServiceProvider
         Event::listen(UnactivatedLoginEvent::class, SendActivateNotificationListener::class);
         Event::listen(UpdateMetaEvent::class, ClearMetaCacheListener::class);
         Event::listen(UpdateImageEvent::class, ClearImageCacheListener::class);
-        Event::listen(SocialiteWasCalled::class, 'SocialiteProviders\VKontakte\VKontakteExtendSocialite@handle');
+        Event::listen(SocialiteWasCalled::class, VKontakteExtendSocialite::class);
+        Event::listen(SocialiteWasCalled::class, OdnoklassnikiExtendSocialite::class);
     }
 
     /**
