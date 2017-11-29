@@ -29,7 +29,7 @@ class ActivateController extends Controller
 
             $usersActivationsService->deleteActivation($token);
 
-            $this->updateLinkedItems($user);
+            $this->updateRelatedItems($user);
 
             $activation = [
                 'success' => true,
@@ -53,9 +53,9 @@ class ActivateController extends Controller
      *
      * @param User $user
      */
-    private function updateLinkedItems(User $user): void
+    private function updateRelatedItems(User $user): void
     {
-        $items = config('admin.linkedItems');
+        $items = config('admin.relatedItems');
 
         if ($items) {
             foreach ($items as $itemClass) {
@@ -64,6 +64,7 @@ class ActivateController extends Controller
 
                     $model::where('email', $user->email)->where('user_id', 0)->update([
                         'user_id' => $user->id,
+                        'name' => $user->name,
                     ]);
                 }
             }
