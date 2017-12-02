@@ -27,6 +27,10 @@ class LoginController extends BaseLoginController
             return $this->sendLockoutResponse($baseRequest);
         }
 
+        if ($user = $this->checkActivation($baseRequest)) {
+            return $this->sendNeedActivationResponse($user);
+        }
+
         if ($this->attemptLogin($baseRequest)) {
             return $this->sendLoginResponseJSON($baseRequest);
         }
@@ -48,37 +52,46 @@ class LoginController extends BaseLoginController
 
         $this->clearLoginAttempts($request);
 
-        return $this->authenticated($request, $this->guard()->user())
-            ?: response()->json([
-                'success' => true,
-            ]);
+        return response()->json([
+            'success' => true,
+        ]);
     }
 
     /**
-     * Проверяем, активирован ли аккаунт пользователя.
+     * Проверяем активацию пользователя.
      *
      * @param Request $request
-     * @param mixed $user
-     * @return JsonResponse
-     * @throws ValidationException
+     * @return null
      */
-    public function authenticated(Request $request, $user)
+    public function checkActivation(Request $request)
     {
-        if (! $user->activated) {
-            event(new UnactivatedLoginEvent($user));
+        $provider = \Auth::getProvider();
 
-            $this->guard()->logout();
-            $request->session()->invalidate();
+        $credentials = $this->credentials($request);
+        $user = $provider->retrieveByCredentials($credentials);
 
-            throw ValidationException::withMessages([
-                'email' => [
-                    trans('admin::activation.activationWarning'),
-                ],
-            ]);
+        if (! is_null($user) && $provider->validateCredentials($user, $credentials)) {
+            if (! $user->activated) {
+                return $user;
+            }
         }
 
-        return response()->json([
-            'success' => true,
+        return null;
+    }
+
+    /**
+     * Ошибка активации аккаунта.
+     *
+     * @throws ValidationException
+     */
+    public function sendNeedActivationResponse($user)
+    {
+        event(new UnactivatedLoginEvent($user));
+
+        throw ValidationException::withMessages([
+            'email' => [
+                trans('admin::activation.activationWarning'),
+            ],
         ]);
     }
 
