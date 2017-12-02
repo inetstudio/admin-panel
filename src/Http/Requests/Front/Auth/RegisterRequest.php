@@ -36,7 +36,7 @@ class RegisterRequest extends FormRequest
             'password.confirmed' => 'Введенные пароли не совпадают',
             'password.min' => 'Поле «Новый пароль» должно содержать минимум 6 символов',
 
-            'reg-agree.required' => 'Обязательно для заполнения',
+            'policy-agree.required' => 'Обязательно для заполнения',
         ];
     }
 
@@ -51,7 +51,7 @@ class RegisterRequest extends FormRequest
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'password' => 'required|confirmed|min:6',
-            'reg-agree' => 'required',
+            'policy-agree' => 'required',
         ];
     }
 }
