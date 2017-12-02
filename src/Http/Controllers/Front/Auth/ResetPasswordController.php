@@ -86,7 +86,8 @@ class ResetPasswordController extends BaseResetPasswordController
     protected function sendResetResponseJSON(string $response): JsonResponse
     {
         return response()->json([
-            'success' => trans($response),
+            'success' => true,
+            'message' => trans('admin::'.$response),
         ]);
     }
 
@@ -100,7 +101,7 @@ class ResetPasswordController extends BaseResetPasswordController
     {
         throw ValidationException::withMessages([
             'email' => [
-                trans($response),
+                trans('admin::'.$response),
             ],
         ]);
     }

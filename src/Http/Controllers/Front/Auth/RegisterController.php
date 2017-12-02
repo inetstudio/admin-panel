@@ -24,6 +24,7 @@ class RegisterController extends BaseRegisterController
 
         return response()->json([
             'success' => true,
+            'message' => trans('admin::activation.activationStatus'),
         ]);
     }
 

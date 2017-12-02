@@ -36,7 +36,8 @@ class ForgotPasswordController extends BaseForgotPasswordController
     protected function sendResetLinkResponseJSON(string $response): JsonResponse
     {
         return response()->json([
-            'success' => trans($response),
+            'success' => true,
+            'message' => trans('admin::'.$response),
         ]);
     }
 
@@ -50,7 +51,7 @@ class ForgotPasswordController extends BaseForgotPasswordController
     {
         throw ValidationException::withMessages([
             'email' => [
-                trans($response),
+                trans('admin::'.$response),
             ],
         ]);
     }
