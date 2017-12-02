@@ -5,6 +5,7 @@ namespace InetStudio\AdminPanel\Http\Controllers\Front\Auth;
 use App\User;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
+use InetStudio\AdminPanel\Events\Auth\ActivatedEvent;
 use InetStudio\AdminPanel\Services\Front\Auth\UsersActivationsService;
 
 class ActivateController extends Controller
@@ -29,7 +30,7 @@ class ActivateController extends Controller
 
             $usersActivationsService->deleteActivation($token);
 
-            $this->updateRelatedItems($user);
+            event(new ActivatedEvent($user));
 
             $activation = [
                 'success' => true,
@@ -46,28 +47,5 @@ class ActivateController extends Controller
             'SEO' => $seoService->getTags(null),
             'activation' => $activation,
         ]);
-    }
-
-    /**
-     * Присваиваем пользователю связанные с его почтой сущности.
-     *
-     * @param User $user
-     */
-    private function updateRelatedItems(User $user): void
-    {
-        $items = config('admin.relatedItems');
-
-        if ($items) {
-            foreach ($items as $itemClass) {
-                if (class_exists($itemClass)) {
-                    $model = new $itemClass();
-
-                    $model::where('email', $user->email)->where('user_id', 0)->update([
-                        'user_id' => $user->id,
-                        'name' => $user->name,
-                    ]);
-                }
-            }
-        }
     }
 }
