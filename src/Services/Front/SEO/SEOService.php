@@ -24,7 +24,7 @@ class SEOService
         if ($object) {
             $cacheKey = 'SEOService_getTags_'.md5(get_class($object).$object->id);
 
-            $tags = \Cache::tags(['seo'])->remember($cacheKey, 1440, function () use ($object) {
+            $tags = \Cache::remember($cacheKey, 1440, function () use ($object) {
                 $meta = $object->meta->pluck('value', 'key')->toArray();
 
                 $data = [];

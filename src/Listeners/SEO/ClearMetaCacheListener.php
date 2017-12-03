@@ -3,7 +3,7 @@
 namespace InetStudio\AdminPanel\Listeners\SEO;
 
 use Illuminate\Support\Facades\Cache;
-use InetStudio\AdminPanel\Events\Auth\UpdateMetaEvent;
+use InetStudio\AdminPanel\Events\SEO\UpdateMetaEvent;
 
 class ClearMetaCacheListener
 {
@@ -25,6 +25,6 @@ class ClearMetaCacheListener
     {
         $object = $event->object;
 
-        Cache::tags(['seo'])->forget('SEOService_getTags_'.md5(get_class($object).$object->id));
+        Cache::forget('SEOService_getTags_'.md5(get_class($object).$object->id));
     }
 }
