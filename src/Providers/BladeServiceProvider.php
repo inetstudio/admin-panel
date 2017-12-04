@@ -48,6 +48,35 @@ class BladeServiceProvider extends ServiceProvider
         Blade::directive('endpushonce', function ($expression) {
             return '<?php $__env->stopPush(); endif; ?>';
         });
+
+        Blade::if('env', function ($env) {
+            return app()->environment($env);
+        });
+
+        Blade::directive('inline', function ($expression) {
+            $include = "//  {$expression}\n".
+                "<?php echo str_replace([
+                        '(../assets/img',
+                        '(../assets/fonts',
+                        '(/assets/img',
+                        '(/assets/fonts',
+                    ], [
+                        '('.static_asset('assets/img'),
+                        '('.static_asset('assets/fonts'),
+                        '('.static_asset('assets/img'),
+                        '('.static_asset('assets/fonts'),
+                    ], file_get_contents(public_path().{$expression})); ?>\n";
+
+            if (ends_with($expression, ".html'")) {
+                return $include;
+            }
+            if (ends_with($expression, ".css'")) {
+                return "<style>\n".$include.'</style>';
+            }
+            if (ends_with($expression, ".js'")) {
+                return "<script>\n".$include.'</script>';
+            }
+        });
     }
 
     /**
