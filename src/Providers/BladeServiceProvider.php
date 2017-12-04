@@ -22,7 +22,14 @@ class BladeServiceProvider extends ServiceProvider
             foreach ($namespaces as $namespace => $paths) {
                 if (strpos($namespace, 'admin.module') !== false) {
                     $fullExpression = $namespace.'::'.$expression;
-                    $result .= "<?php if (\$__env->exists('{$fullExpression}')) echo \$__env->make('{$fullExpression}', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>\r\n";
+                    $alternativeExpression = $namespace.'::back.'.$expression;
+
+                    $result .= "<?php 
+                    
+                        if (\$__env->exists('{$fullExpression}')) echo \$__env->make('{$fullExpression}', array_except(get_defined_vars(), array('__data', '__path')))->render();
+                        if (\$__env->exists('{$alternativeExpression}')) echo \$__env->make('{$alternativeExpression}', array_except(get_defined_vars(), array('__data', '__path')))->render();
+                     
+                     ?>\r\n";
                 }
             }
 

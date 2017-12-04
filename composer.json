@@ -40,7 +40,9 @@
       "laravel": {
         "providers": [
           "InetStudio\\AdminPanel\\Providers\\AdminPanelServiceProvider",
+          "InetStudio\\AdminPanel\\Providers\\ArrServiceProvider",
           "InetStudio\\AdminPanel\\Providers\\BladeServiceProvider",
+          "InetStudio\\AdminPanel\\Providers\\CarbonServiceProvider",
           "InetStudio\\AdminPanel\\Providers\\FormBuilderServiceProvider",
           "InetStudio\\AdminPanel\\Providers\\ValidatorServiceProvider"
         ]

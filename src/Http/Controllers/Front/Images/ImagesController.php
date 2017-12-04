@@ -1,6 +1,6 @@
 <?php
 
-namespace InetStudio\AdminPanel\Controllers\Images;
+namespace InetStudio\AdminPanel\Http\Controllers\Front\Images;
 
 use Intervention\Image\ImageManagerStatic as Image;
 
