@@ -77,6 +77,10 @@ class BladeServiceProvider extends ServiceProvider
                 return "<script>\n".$include.'</script>';
             }
         });
+
+        Blade::if('withoutRole', function ($role) {
+            return (! app('laratrust')->hasRole($role));
+        });
     }
 
     /**
