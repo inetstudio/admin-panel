@@ -15,9 +15,12 @@ use InetStudio\AdminPanel\Events\SEO\UpdateMetaEvent;
 use InetStudio\AdminPanel\Console\Commands\SetupCommand;
 use InetStudio\AdminPanel\Services\Front\SEO\SEOService;
 use InetStudio\AdminPanel\Events\Images\UpdateImageEvent;
+use InetStudio\AdminPanel\Listeners\AttachUserRoleToUser;
 use InetStudio\AdminPanel\Services\Front\ACL\UsersService;
 use SocialiteProviders\VKontakte\VKontakteExtendSocialite;
 use InetStudio\AdminPanel\Events\Auth\SocialActivatedEvent;
+use InetStudio\AdminPanel\Listeners\AttachSocialRoleToUser;
+use InetStudio\AdminPanel\Events\Auth\SocialRegisteredEvent;
 use InetStudio\AdminPanel\Events\Auth\UnactivatedLoginEvent;
 use InetStudio\AdminPanel\Console\Commands\CreateAdminCommand;
 use InetStudio\AdminPanel\Listeners\SEO\ClearMetaCacheListener;
@@ -157,12 +160,15 @@ class AdminPanelServiceProvider extends ServiceProvider
     protected function registerEvents(): void
     {
         Event::listen(Registered::class, SendActivateNotificationListener::class);
+        Event::listen(Registered::class, AttachUserRoleToUser::class);
         Event::listen(UnactivatedLoginEvent::class, SendActivateNotificationListener::class);
         Event::listen(UpdateMetaEvent::class, ClearMetaCacheListener::class);
         Event::listen(UpdateImageEvent::class, ClearImageCacheListener::class);
         Event::listen(SocialiteWasCalled::class, VKontakteExtendSocialite::class);
         Event::listen(SocialiteWasCalled::class, OdnoklassnikiExtendSocialite::class);
         Event::listen(SocialActivatedEvent::class, SendActivateNotificationListener::class);
+        Event::listen(SocialRegisteredEvent::class, AttachSocialRoleToUser::class);
+        Event::listen(SocialRegisteredEvent::class, AttachUserRoleToUser::class);
     }
 
     /**

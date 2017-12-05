@@ -2,6 +2,7 @@
 
 namespace InetStudio\AdminPanel\Http\Requests\Front\Auth;
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Foundation\Http\FormRequest;
 
 class EmailRequest extends FormRequest
@@ -38,6 +39,8 @@ class EmailRequest extends FormRequest
      */
     public function rules(): array
     {
+        Session::reflash();
+
         return [
             'email' => 'required|email|max:255|unique:users,email',
         ];

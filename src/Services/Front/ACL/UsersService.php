@@ -98,16 +98,19 @@ class UsersService
     {
         $email = ($approveEmail) ? $approveEmail : $socialUser->getEmail();
 
-        if (! $email) {
+        $socialProfile = UserSocialProfileModel::where('provider', $providerName)->where('provider_id', $socialUser->getId())->first();
+
+        if (! $email && ! $socialProfile) {
             return null;
         }
 
-        $socialProfile = UserSocialProfileModel::updateOrCreate([
-            'provider' => $providerName,
-            'provider_id' => $socialUser->getId(),
-        ], [
-            'provider_email' => $email,
-        ]);
+        if (! $socialProfile) {
+            $socialProfile = UserSocialProfileModel::create([
+                'provider' => $providerName,
+                'provider_id' => $socialUser->getId(),
+                'provider_email' => $email,
+            ]);
+        }
 
         $user = $socialProfile->user;
 
@@ -124,6 +127,10 @@ class UsersService
             ]);
 
             event(new SocialRegisteredEvent($user));
+        } else {
+            $user->update([
+                'activated' => 1,
+            ]);
         }
 
         $socialProfile->user()->associate($user);

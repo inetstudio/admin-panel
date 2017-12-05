@@ -42,7 +42,7 @@ class SocialLoginController extends Controller
 
             return response()->redirectToRoute('front.oauth.email');
         }
-        
+
         Auth::login($authUser, true);
 
         return response()->redirectTo('/');
