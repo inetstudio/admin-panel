@@ -3,7 +3,6 @@
 namespace InetStudio\AdminPanel\Listeners;
 
 use App\Role;
-use Illuminate\Auth\Events\Registered;
 
 class AttachUserRoleToUser
 {
@@ -20,10 +19,10 @@ class AttachUserRoleToUser
     /**
      * Handle the event.
      *
-     * @param Registered $event
+     * @param $event
      * @return void
      */
-    public function handle(Registered $event): void
+    public function handle($event): void
     {
         $user = $event->user;
         $userRole = Role::where('name', 'user')->first();
