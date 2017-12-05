@@ -89,23 +89,17 @@ class UsersService
     /**
      * Создаем или получаем пользователя социальной сети.
      *
-     * @param $providerObj
+     * @param $socialUser
      * @param $providerName
      * @return mixed
      */
-    public function createOrGetSocialUser($providerObj, $providerName)
+    public function createOrGetSocialUser($socialUser, $providerName)
     {
-        $providerUser = $providerObj->user();
-
-        $email = $providerUser->getEmail();
-
-        if (! $email) {
-
-        }
+        $email = $socialUser->getEmail();
 
         $socialProfile = UserSocialProfileModel::updateOrCreate([
             'provider' => $providerName,
-            'provider_id' => $providerUser->getId(),
+            'provider_id' => $socialUser->getId(),
         ], [
             'provider_email' => $email,
         ]);
@@ -118,9 +112,9 @@ class UsersService
 
         if (! $user) {
             $user = User::create([
-                'name' => $providerUser->getName(),
+                'name' => $socialUser->getName(),
                 'email' => $email,
-                'password' => bcrypt($providerUser->getName().$providerUser->getEmail()),
+                'password' => bcrypt($socialUser->getName().$socialUser->getEmail()),
                 'activated' => 1,
             ]);
 

@@ -4,6 +4,7 @@ namespace InetStudio\AdminPanel\Http\Controllers\Front\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialLoginController extends Controller
@@ -29,11 +30,18 @@ class SocialLoginController extends Controller
             $driverObj->stateless();
         }
 
-        $authUser = $usersService->createOrGetSocialUser($driverObj, $provider);
-        
+        $socialUser = $provider->user();
+
+        if (! $socialUser->getEmail()) {
+            Session::flash('social_user', $socialUser);
+
+            return response()->redirectToRoute('front.oauth.email');
+        }
+
+        $authUser = $usersService->createOrGetSocialUser($socialUser, $provider);
         
         Auth::login($authUser, true);
 
-        return redirect('/');
+        return response()->redirect('/');
     }
 }

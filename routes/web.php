@@ -49,6 +49,7 @@ Route::group(['middleware' => 'web'], function () {
 
         Route::group(['namespace' => 'Auth'], function () {
             Route::get('account/activate/{token?}', 'ActivateController@activate')->name('front.account.activate.get');
+            Route::view('oauth/email', 'admin::front.auth.email')->name('front.oauth.email');
             Route::get('oauth/{provider}', 'SocialLoginController@redirectToProvider')->name('front.oauth.login');
             Route::get('oauth/{provider}/callback', 'SocialLoginController@handleProviderCallback')->name('front.oauth.callback');
             Route::post('login', 'LoginController@loginCustom')->name('front.auth.login');
