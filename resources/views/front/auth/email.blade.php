@@ -1,5 +1,5 @@
 @php
-    \Session::keep('social_user');
+    \Session::reflash();
 @endphp
 
 <form>

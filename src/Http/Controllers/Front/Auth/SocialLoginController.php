@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
+use InetStudio\AdminPanel\Events\Auth\SocialActivatedEvent;
+use InetStudio\AdminPanel\Http\Requests\Front\Auth\EmailRequest;
 
 class SocialLoginController extends Controller
 {
@@ -32,13 +34,14 @@ class SocialLoginController extends Controller
 
         $socialUser = $driverObj->user();
 
-        if (! $socialUser->getEmail()) {
+        $authUser = $usersService->createOrGetSocialUser($socialUser, $provider);
+
+        if (! $authUser) {
             Session::flash('social_user', $socialUser);
+            Session::flash('provider', $provider);
 
             return response()->redirectToRoute('front.oauth.email');
         }
-
-        $authUser = $usersService->createOrGetSocialUser($socialUser, $provider);
         
         Auth::login($authUser, true);
 
@@ -55,6 +58,24 @@ class SocialLoginController extends Controller
 
         return view('admin::front.auth.email')->with([
             'SEO' => $seoService->getTags(null),
+        ]);
+    }
+
+    public function approveEmail(EmailRequest $request)
+    {
+        $usersService = app()->make('UsersService');
+
+        $socialUser = Session::get('social_user');
+        $provider = Session::get('provider');
+        $email = $request->get('email');
+
+        $authUser = $usersService->createOrGetSocialUser($socialUser, $provider, $email);
+
+        event(new SocialActivatedEvent($authUser));
+
+        return response()->json([
+            'success' => true,
+            'message' => trans('admin::activation.activationStatus'),
         ]);
     }
 }

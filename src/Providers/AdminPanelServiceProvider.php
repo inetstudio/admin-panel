@@ -17,6 +17,7 @@ use InetStudio\AdminPanel\Services\Front\SEO\SEOService;
 use InetStudio\AdminPanel\Events\Images\UpdateImageEvent;
 use InetStudio\AdminPanel\Services\Front\ACL\UsersService;
 use SocialiteProviders\VKontakte\VKontakteExtendSocialite;
+use InetStudio\AdminPanel\Events\Auth\SocialActivatedEvent;
 use InetStudio\AdminPanel\Events\Auth\UnactivatedLoginEvent;
 use InetStudio\AdminPanel\Console\Commands\CreateAdminCommand;
 use InetStudio\AdminPanel\Listeners\SEO\ClearMetaCacheListener;
@@ -161,6 +162,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         Event::listen(UpdateImageEvent::class, ClearImageCacheListener::class);
         Event::listen(SocialiteWasCalled::class, VKontakteExtendSocialite::class);
         Event::listen(SocialiteWasCalled::class, OdnoklassnikiExtendSocialite::class);
+        Event::listen(SocialActivatedEvent::class, SendActivateNotificationListener::class);
     }
 
     /**

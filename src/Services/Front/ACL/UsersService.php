@@ -91,11 +91,16 @@ class UsersService
      *
      * @param $socialUser
      * @param $providerName
+     * @param $approveEmail
      * @return mixed
      */
-    public function createOrGetSocialUser($socialUser, $providerName)
+    public function createOrGetSocialUser($socialUser, $providerName, $approveEmail = '')
     {
-        $email = $socialUser->getEmail();
+        $email = ($approveEmail) ? $approveEmail : $socialUser->getEmail();
+
+        if (! $email) {
+            return null;
+        }
 
         $socialProfile = UserSocialProfileModel::updateOrCreate([
             'provider' => $providerName,
@@ -115,7 +120,7 @@ class UsersService
                 'name' => $socialUser->getName(),
                 'email' => $email,
                 'password' => bcrypt($socialUser->getName().$socialUser->getEmail()),
-                'activated' => 1,
+                'activated' => ($approveEmail) ? 0 : 1,
             ]);
 
             event(new SocialRegisteredEvent($user));
