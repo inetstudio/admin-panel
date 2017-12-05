@@ -30,7 +30,7 @@ class SocialLoginController extends Controller
             $driverObj->stateless();
         }
 
-        $socialUser = $provider->user();
+        $socialUser = $driverObj->user();
 
         if (! $socialUser->getEmail()) {
             Session::flash('social_user', $socialUser);
@@ -42,6 +42,19 @@ class SocialLoginController extends Controller
         
         Auth::login($authUser, true);
 
-        return response()->redirect('/');
+        return response()->redirectTo('/');
+    }
+
+    public function askEmail()
+    {
+        if (! Session::has('social_user')) {
+            return response()->redirectTo('/');
+        }
+
+        $seoService = app()->make('SEOService');
+
+        return view('admin::front.auth.email')->with([
+            'SEO' => $seoService->getTags(null),
+        ]);
     }
 }
