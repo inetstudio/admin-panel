@@ -30,6 +30,8 @@ class SocialLoginController extends Controller
         }
 
         $authUser = $usersService->createOrGetSocialUser($driverObj, $provider);
+        
+        
         Auth::login($authUser, true);
 
         return redirect('/');

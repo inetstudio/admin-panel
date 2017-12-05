@@ -5,6 +5,7 @@ namespace InetStudio\AdminPanel\Services\Front\ACL;
 use App\User;
 use Illuminate\Http\Request;
 use InetStudio\AdminPanel\Models\ACL\UserSocialProfileModel;
+use InetStudio\AdminPanel\Events\Auth\SocialRegisteredEvent;
 
 class UsersService
 {
@@ -96,26 +97,34 @@ class UsersService
     {
         $providerUser = $providerObj->user();
 
+        $email = $providerUser->getEmail();
+
+        if (! $email) {
+
+        }
+
         $socialProfile = UserSocialProfileModel::updateOrCreate([
             'provider' => $providerName,
             'provider_id' => $providerUser->getId(),
         ], [
-            'provider_email' => $providerUser->getEmail(),
+            'provider_email' => $email,
         ]);
 
         $user = $socialProfile->user;
 
         if (! $user) {
-            $user = User::where('email', $providerUser->getEmail())->first();
+            $user = User::where('email', $email)->first();
         }
 
         if (! $user) {
             $user = User::create([
                 'name' => $providerUser->getName(),
-                'email' => ($providerUser->getEmail()) ? $providerUser->getEmail() : time().'@default.mail',
+                'email' => $email,
                 'password' => bcrypt($providerUser->getName().$providerUser->getEmail()),
                 'activated' => 1,
             ]);
+
+            event(new SocialRegisteredEvent($user));
         }
 
         $socialProfile->user()->associate($user);
