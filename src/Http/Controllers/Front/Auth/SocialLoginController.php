@@ -37,7 +37,7 @@ class SocialLoginController extends Controller
         try {
             $socialUser = $driverObj->user();
         } catch (\Exception $e) {
-            return response()->redirectTo('/?auth');
+            return response()->redirectTo('/?popup=auth');
         }
 
         $authUser = $usersService->createOrGetSocialUser($socialUser, $provider);
