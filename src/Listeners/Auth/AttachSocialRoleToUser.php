@@ -3,7 +3,6 @@
 namespace InetStudio\AdminPanel\Listeners;
 
 use App\Role;
-use InetStudio\AdminPanel\Events\Auth\SocialRegisteredEvent;
 
 class AttachSocialRoleToUser
 {
@@ -20,10 +19,10 @@ class AttachSocialRoleToUser
     /**
      * Handle the event.
      *
-     * @param SocialRegisteredEvent $event
+     * @param $event
      * @return void
      */
-    public function handle(SocialRegisteredEvent $event): void
+    public function handle($event): void
     {
         $user = $event->user;
         $userRole = Role::where('name', 'social_user')->first();
