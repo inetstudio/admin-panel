@@ -24,8 +24,8 @@ class ForgotPasswordRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'Поле «E-mail» обязательно для заполнения',
-            'email.email' => 'Поле «E-mail» содержит значение в некорректном формате',
+            'email.required' => 'Поле «E-mail» обязательно для заполнения.',
+            'email.email' => 'Поле «E-mail» содержит значение в некорректном формате.',
         ];
     }
 

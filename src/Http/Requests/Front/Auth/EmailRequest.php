@@ -25,10 +25,10 @@ class EmailRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'Поле «E-mail» обязательно для заполнения',
-            'email.email' => 'Поле «E-mail» содержит значение в некорректном формате',
-            'email.max' => 'Поле «E-mail» не должно превышать 255 символов',
-            'email.unique' => 'Пользователь с таким «E-mail» уже существует',
+            'email.required' => 'Поле «E-mail» обязательно для заполнения.',
+            'email.email' => 'Поле «E-mail» содержит значение в некорректном формате.',
+            'email.max' => 'Поле «E-mail» не должно превышать 255 символов.',
+            'email.unique' => 'Пользователь с таким «E-mail» уже существует. Воспользуйтесь стандартной формой входа.',
         ];
     }
 

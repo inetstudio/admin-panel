@@ -24,12 +24,12 @@ class ResetPasswordRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'Поле «E-mail» обязательно для заполнения',
-            'email.email' => 'Поле «E-mail» содержит значение в некорректном формате',
+            'email.required' => 'Поле «E-mail» обязательно для заполнения.',
+            'email.email' => 'Поле «E-mail» содержит значение в некорректном формате.',
 
-            'password.required' => 'Поле «Новый пароль» обязательно для заполнения',
-            'password.confirmed' => 'Введенные пароли не совпадают',
-            'password.min' => 'Поле «Новый пароль» должно содержать минимум 6 символов',
+            'password.required' => 'Поле «Новый пароль» обязательно для заполнения.',
+            'password.confirmed' => 'Введенные пароли не совпадают.',
+            'password.min' => 'Поле «Новый пароль» должно содержать минимум 6 символов.',
         ];
     }
 
