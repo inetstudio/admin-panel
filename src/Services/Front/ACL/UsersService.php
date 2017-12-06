@@ -128,9 +128,11 @@ class UsersService
 
             event(new SocialRegisteredEvent($user));
         } else {
-            $user->update([
-                'activated' => 1,
-            ]);
+            if (! $user->hasRole('social_user')) {
+                $user->update([
+                    'activated' => 1,
+                ]);
+            }
         }
 
         $socialProfile->user()->associate($user);

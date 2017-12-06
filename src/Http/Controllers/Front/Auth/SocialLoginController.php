@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use InetStudio\AdminPanel\Events\Auth\SocialActivatedEvent;
+use InetStudio\AdminPanel\Events\Auth\UnactivatedLoginEvent;
 use InetStudio\AdminPanel\Http\Requests\Front\Auth\EmailRequest;
 
 class SocialLoginController extends Controller
@@ -24,6 +25,7 @@ class SocialLoginController extends Controller
 
     public function handleProviderCallback($provider)
     {
+        $seoService = app()->make('SEOService');
         $usersService = app()->make('UsersService');
 
         $driverObj = Socialite::driver($provider);
@@ -41,6 +43,18 @@ class SocialLoginController extends Controller
             Session::flash('provider', $provider);
 
             return response()->redirectToRoute('front.oauth.email');
+        }
+
+        if (! $authUser->activated) {
+            event(new UnactivatedLoginEvent($authUser));
+
+            return view('admin::front.auth.activate', [
+                'SEO' => $seoService->getTags(null),
+                'activation' => [
+                    'success' => false,
+                    'message' => trans('admin::activation.activationWarning'),
+                ],
+            ]);
         }
 
         Auth::login($authUser, true);
