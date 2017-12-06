@@ -34,7 +34,11 @@ class SocialLoginController extends Controller
             $driverObj->stateless();
         }
 
-        $socialUser = $driverObj->user();
+        try {
+            $socialUser = $driverObj->user();
+        } catch (\Exception $e) {
+            return response()->redirectTo('/?auth');
+        }
 
         $authUser = $usersService->createOrGetSocialUser($socialUser, $provider);
 
