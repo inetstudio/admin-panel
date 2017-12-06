@@ -122,7 +122,7 @@ class UsersService
             $user = User::create([
                 'name' => $socialUser->getName(),
                 'email' => $email,
-                'password' => bcrypt($socialUser->getName().$socialUser->getEmail()),
+                'password' => bcrypt($socialUser->getName().config('app.key').$socialUser->getEmail()),
                 'activated' => ($approveEmail) ? 0 : 1,
             ]);
 
