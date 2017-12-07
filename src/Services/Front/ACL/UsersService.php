@@ -49,11 +49,11 @@ class UsersService
      * @param string $email
      * @return int
      */
-    public function getUserId($email = ''): int
+    public function getUserId(string $email = ''): int
     {
         $user = $this->user;
 
-        if (! $user && $email) {
+        if ($email) {
             $user = User::where('email', $email)->first();
         }
 
@@ -63,38 +63,38 @@ class UsersService
     /**
      * Возвращаем имя пользователя.
      *
-     * @param Request $request
-     * @return mixed|string
+     * @param $request
+     * @return string
      */
-    public function getUserName(Request $request): string
+    public function getUserName($request = null): string
     {
         $user = $this->user;
 
-        return ($user) ? $user->name : strip_tags($request->get('name'));
+        return ($request && $request->has('name')) ? strip_tags($request->get('name')) : (($user) ? $user->name : '');
     }
 
     /**
      * Возвращаем email пользователя.
      *
-     * @param Request $request
-     * @return mixed|string
+     * @param $request
+     * @return string
      */
-    public function getUserEmail(Request $request): string
+    public function getUserEmail($request = null): string
     {
         $user = $this->user;
 
-        return ($user) ? $user->email : strip_tags($request->get('email'));
+        return ($request && $request->has('email')) ? strip_tags($request->get('email')) : (($user) ? $user->email : '');
     }
 
     /**
      * Создаем или получаем пользователя социальной сети.
      *
      * @param $socialUser
-     * @param $providerName
-     * @param $approveEmail
+     * @param string $providerName
+     * @param string $approveEmail
      * @return mixed
      */
-    public function createOrGetSocialUser($socialUser, $providerName, $approveEmail = '')
+    public function createOrGetSocialUser($socialUser, string $providerName, string $approveEmail = '')
     {
         $email = ($approveEmail) ? $approveEmail : $socialUser->getEmail();
 
