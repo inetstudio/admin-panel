@@ -21,6 +21,7 @@
       "laravelcollective/html": "^5.5",
       "laravelista/ekko": "^1.4",
       "phoenix/eloquent-meta": "^1.7",
+      "predis/predis": "^1.1",
       "santigarcor/laratrust": "^5.0",
       "socialiteproviders/vkontakte": "^3.0",
       "spatie/laravel-medialibrary": "^6.1",
