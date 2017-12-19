@@ -10,9 +10,9 @@
       }
     ],
     "require": {
-      "arcanedev/seo-helper": "^1.4",
       "cviebrock/eloquent-sluggable": "^4.3",
       "jildertmiedema/laravel-plupload": "^0.4.1",
+      "inetstudio/meta": "1.5.*",
       "inetstudio/simple-counters": "1.5.*",
       "intervention/imagecache": "^2.3",
       "jhaoda/socialite-odnoklassniki": "^3.0",
@@ -20,7 +20,6 @@
       "laravel/socialite": "^3.0",
       "laravelcollective/html": "^5.5",
       "laravelista/ekko": "^1.4",
-      "phoenix/eloquent-meta": "^1.7",
       "predis/predis": "^1.1",
       "santigarcor/laratrust": "^5.0",
       "socialiteproviders/vkontakte": "^3.0",

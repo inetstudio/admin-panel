@@ -11,6 +11,7 @@ trait DatatablesTrait
      * @param $entity
      * @param $type
      * @return mixed
+     * @throws \Exception
      */
     private function generateTable(DataTables $dataTable, $entity, $type)
     {
