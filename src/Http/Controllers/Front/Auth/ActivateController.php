@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use App\Http\Controllers\Controller;
 use InetStudio\AdminPanel\Events\Auth\ActivatedEvent;
 use InetStudio\AdminPanel\Services\Front\Auth\UsersActivationsService;
+use InetStudio\Meta\Contracts\Services\Front\MetaServiceContract as FrontMetaServiceContract;
 
 class ActivateController extends Controller
 {
@@ -19,7 +20,7 @@ class ActivateController extends Controller
      */
     public function activate(UsersActivationsService $usersActivationsService, string $token = ''): View
     {
-        $seoService = app()->make('SEOService');
+        $seoService = app()->make(FrontMetaServiceContract::class);
 
         $activation = $usersActivationsService->getActivationByToken($token);
 
@@ -44,7 +45,7 @@ class ActivateController extends Controller
         }
 
         return view('admin::front.auth.activate', [
-            'SEO' => $seoService->getTags(null),
+            'SEO' => $seoService->getAllTags(null),
             'activation' => $activation,
         ]);
     }

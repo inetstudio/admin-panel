@@ -9,6 +9,7 @@ use Laravel\Socialite\Facades\Socialite;
 use InetStudio\AdminPanel\Events\Auth\SocialActivatedEvent;
 use InetStudio\AdminPanel\Events\Auth\UnactivatedLoginEvent;
 use InetStudio\AdminPanel\Http\Requests\Front\Auth\EmailRequest;
+use InetStudio\Meta\Contracts\Services\Front\MetaServiceContract as FrontMetaServiceContract;
 
 class SocialLoginController extends Controller
 {
@@ -25,7 +26,7 @@ class SocialLoginController extends Controller
 
     public function handleProviderCallback($provider)
     {
-        $seoService = app()->make('SEOService');
+        $seoService = app()->make(FrontMetaServiceContract::class);
         $usersService = app()->make('UsersService');
 
         $driverObj = Socialite::driver($provider);
@@ -53,7 +54,7 @@ class SocialLoginController extends Controller
             event(new UnactivatedLoginEvent($authUser));
 
             return view('admin::front.auth.activate', [
-                'SEO' => $seoService->getTags(null),
+                'SEO' => $seoService->getAllTags(null),
                 'activation' => [
                     'success' => false,
                     'message' => trans('admin::activation.activationWarning'),

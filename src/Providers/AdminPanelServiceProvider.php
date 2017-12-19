@@ -11,9 +11,7 @@ use Laratrust\Middleware\LaratrustRole;
 use Laratrust\Middleware\LaratrustAbility;
 use Laratrust\Middleware\LaratrustPermission;
 use SocialiteProviders\Manager\SocialiteWasCalled;
-use InetStudio\AdminPanel\Events\SEO\UpdateMetaEvent;
 use InetStudio\AdminPanel\Console\Commands\SetupCommand;
-use InetStudio\AdminPanel\Services\Front\SEO\SEOService;
 use InetStudio\AdminPanel\Events\Images\UpdateImageEvent;
 use InetStudio\AdminPanel\Listeners\AttachUserRoleToUser;
 use InetStudio\AdminPanel\Services\Front\ACL\UsersService;
@@ -23,7 +21,6 @@ use InetStudio\AdminPanel\Listeners\AttachSocialRoleToUser;
 use InetStudio\AdminPanel\Events\Auth\SocialRegisteredEvent;
 use InetStudio\AdminPanel\Events\Auth\UnactivatedLoginEvent;
 use InetStudio\AdminPanel\Console\Commands\CreateAdminCommand;
-use InetStudio\AdminPanel\Listeners\SEO\ClearMetaCacheListener;
 use InetStudio\AdminPanel\Console\Commands\CreateFoldersCommand;
 use InetStudio\AdminPanel\Listeners\Images\ClearImageCacheListener;
 use InetStudio\AdminPanel\Http\Middleware\Back\Auth\AdminAuthenticate;
@@ -162,7 +159,6 @@ class AdminPanelServiceProvider extends ServiceProvider
         Event::listen(Registered::class, SendActivateNotificationListener::class);
         Event::listen(Registered::class, AttachUserRoleToUser::class);
         Event::listen(UnactivatedLoginEvent::class, SendActivateNotificationListener::class);
-        Event::listen(UpdateMetaEvent::class, ClearMetaCacheListener::class);
         Event::listen(UpdateImageEvent::class, ClearImageCacheListener::class);
         Event::listen(SocialiteWasCalled::class, VKontakteExtendSocialite::class);
         Event::listen(SocialiteWasCalled::class, OdnoklassnikiExtendSocialite::class);
@@ -179,12 +175,10 @@ class AdminPanelServiceProvider extends ServiceProvider
     public function registerBindings(): void
     {
         $this->app->register('JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider');
-        $this->app->register('Phoenix\EloquentMeta\ServiceProvider');
 
         $loader = AliasLoader::getInstance();
         $loader->alias('Plupload', 'JildertMiedema\LaravelPlupload\Facades\Plupload');
 
-        $this->app->bind('SEOService', SEOService::class);
         $this->app->bind('UsersActivationsService', UsersActivationsService::class);
         $this->app->singleton('UsersService', UsersService::class);
     }

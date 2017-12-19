@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Validation\ValidationException;
 use InetStudio\AdminPanel\Http\Requests\Front\Auth\ResetPasswordRequest;
 use App\Http\Controllers\Auth\ResetPasswordController as BaseResetPasswordController;
+use InetStudio\Meta\Contracts\Services\Front\MetaServiceContract as FrontMetaServiceContract;
 
 class ResetPasswordController extends BaseResetPasswordController
 {
@@ -23,10 +24,10 @@ class ResetPasswordController extends BaseResetPasswordController
      */
     public function showResetForm(Request $request, $token = null): View
     {
-        $seoService = app()->make('SEOService');
+        $seoService = app()->make(FrontMetaServiceContract::class);
 
         return view('admin::front.auth.reset')->with([
-            'SEO' => $seoService->getTags(null),
+            'SEO' => $seoService->getAllTags(null),
             'token' => $token,
         ]);
     }
@@ -36,6 +37,7 @@ class ResetPasswordController extends BaseResetPasswordController
      *
      * @param ResetPasswordRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @throws ValidationException
      */
     public function resetCustom(ResetPasswordRequest $request)
     {
