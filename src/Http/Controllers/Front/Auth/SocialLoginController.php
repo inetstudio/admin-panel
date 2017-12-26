@@ -73,10 +73,10 @@ class SocialLoginController extends Controller
             return response()->redirectTo('/');
         }
 
-        $seoService = app()->make('SEOService');
+        $seoService = app()->make(FrontMetaServiceContract::class);
 
         return view('admin::front.auth.email')->with([
-            'SEO' => $seoService->getTags(null),
+            'SEO' => $seoService->getAllTags(null),
         ]);
     }
 

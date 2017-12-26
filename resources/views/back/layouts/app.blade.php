@@ -9,6 +9,8 @@
 
         <link rel="icon" href="{!! asset('images/favicon.ico') !!}">
 
+        @stack('styles')
+
         <link href="{!! asset('admin/css/bootstrap.min.css') !!}" rel="stylesheet">
         <link href="{!! asset('admin/font-awesome/css/font-awesome.css') !!}" rel="stylesheet">
 
@@ -20,8 +22,6 @@
 
         <!-- Toastr -->
         <link href="{!! asset('admin/css/plugins/toastr/toastr.min.css') !!}" rel="stylesheet">
-
-        @stack('styles')
 
         <!-- CUSTOM STYLES -->
         <link href="{!! asset('admin/css/custom.css') !!}" rel="stylesheet">
