@@ -2,7 +2,7 @@
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
 
-            @loadFromModules(includes.navigation)
+            @loadFromModules(back.includes.navigation)
 
             @include('admin::back.includes.acl.navigation')
         </ul>
