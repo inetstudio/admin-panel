@@ -26,9 +26,6 @@ class FormBuilderServiceProvider extends ServiceProvider
         FormBuilder::component('dropdown', 'admin::back.forms.fields.dropdown', ['name', 'value', 'attributes']);
         FormBuilder::component('crop', 'admin::back.forms.fields.crop', ['name', 'value', 'attributes']);
         FormBuilder::component('list', 'admin::back.forms.fields.list', ['name', 'value', 'attributes']);
-
-        FormBuilder::component('meta', 'admin::back.forms.groups.meta', ['name' => null, 'value' => null, 'attributes' => null]);
-        FormBuilder::component('social_meta', 'admin::back.forms.groups.social_meta', ['name' => null, 'value' => null, 'attributes' => null]);
     }
 
     /**

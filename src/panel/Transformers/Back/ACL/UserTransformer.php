@@ -5,13 +5,20 @@ namespace InetStudio\AdminPanel\Transformers\Back\ACL;
 use App\User;
 use League\Fractal\TransformerAbstract;
 
+/**
+ * Class UserTransformer
+ * @package InetStudio\AdminPanel\Transformers\Back\ACL
+ */
 class UserTransformer extends TransformerAbstract
 {
     /**
      * Подготовка данных для отображения в таблице.
      *
      * @param User $user
+     *
      * @return array
+     *
+     * @throws \Throwable
      */
     public function transform(User $user): array
     {

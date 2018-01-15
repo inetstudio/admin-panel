@@ -5,13 +5,20 @@ namespace InetStudio\AdminPanel\Transformers\Back\ACL;
 use App\Role;
 use League\Fractal\TransformerAbstract;
 
+/**
+ * Class RoleTransformer
+ * @package InetStudio\AdminPanel\Transformers\Back\ACL
+ */
 class RoleTransformer extends TransformerAbstract
 {
     /**
      * Подготовка данных для отображения в таблице.
      *
      * @param Role $role
+     *
      * @return array
+     *
+     * @throws \Throwable
      */
     public function transform(Role $role): array
     {

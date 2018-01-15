@@ -82,22 +82,22 @@ class AdminPanelServiceProvider extends ServiceProvider
     protected function registerPublishes(): void
     {
         $this->publishes([
-            __DIR__.'/../../public' => public_path(),
+            __DIR__.'/../../../public' => public_path(),
         ], 'public');
 
         $this->publishes([
-            __DIR__.'/../../config/admin.php' => config_path('admin.php'),
+            __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
         ], 'config');
 
         $this->mergeConfigFrom(
-            __DIR__.'/../../config/filesystems.php', 'filesystems.disks'
+            __DIR__.'/../../../config/filesystems.php', 'filesystems.disks'
         );
 
         if ($this->app->runningInConsole()) {
             if (! class_exists('CreateUsersTables')) {
                 $timestamp = date('Y_m_d_His', time());
                 $this->publishes([
-                    __DIR__.'/../../database/migrations/create_users_tables.php.stub' => database_path('migrations/'.$timestamp.'_create_users_tables.php'),
+                    __DIR__.'/../../../database/migrations/create_users_tables.php.stub' => database_path('migrations/'.$timestamp.'_create_users_tables.php'),
                 ], 'migrations');
             }
         }
@@ -110,7 +110,7 @@ class AdminPanelServiceProvider extends ServiceProvider
      */
     protected function registerRoutes(): void
     {
-        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../../../routes/web.php');
     }
 
     /**
@@ -120,7 +120,7 @@ class AdminPanelServiceProvider extends ServiceProvider
      */
     protected function registerViews(): void
     {
-        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'admin');
+        $this->loadViewsFrom(__DIR__.'/../../../resources/views', 'admin');
     }
 
     /**
@@ -130,7 +130,7 @@ class AdminPanelServiceProvider extends ServiceProvider
      */
     protected function registerTranslations(): void
     {
-        $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'admin');
+        $this->loadTranslationsFrom(__DIR__.'/../../../resources/lang', 'admin');
     }
 
     /**
