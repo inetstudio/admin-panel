@@ -16,9 +16,6 @@ class PagesController extends Controller
      */
     public function showIndexPage(): View
     {
-        return view('admin::back.pages.index', [
-            'test' => "тест {{ (true) ? 'hello' : 'bye' }}",
-            //'test2' => view('admin::back.pages.index')->getEngine()->getCompiler()->compileString("тест {{ (true) ? 'hello' : 'bye' }}"),
-        ]);
+        return view('admin::back.pages.index');
     }
 }

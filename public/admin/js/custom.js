@@ -563,13 +563,15 @@ $(document).ready(function () {
             $(this).jstree(options).on('changed.jstree', function (node, action, selected, event) {
 
                 if (list.attr('data-cascade') == 'up') {
-                    $.each(action.node.parents, function (key, val) {
-                        if (action.instance.get_checked_descendants(val).length > 0) {
-                            action.instance.check_node(val);
-                        } else {
-                            action.instance.uncheck_node(val);
-                        }
-                    });
+                    if (typeof action.node !== 'undefined') {
+                        $.each(action.node.parents, function (key, val) {
+                            if (action.instance.get_checked_descendants(val).length > 0) {
+                                action.instance.check_node(val);
+                            } else {
+                                action.instance.uncheck_node(val);
+                            }
+                        });
+                    }
                 }
 
                 var ids = action.instance.get_selected().map(function (id) {
