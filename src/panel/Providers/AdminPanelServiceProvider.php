@@ -3,9 +3,11 @@
 namespace InetStudio\AdminPanel\Providers;
 
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Laratrust\Middleware\LaratrustRole;
 use Laratrust\Middleware\LaratrustAbility;
@@ -46,6 +48,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerMiddlewares($router);
         $this->registerEvents();
+        $this->registerViewComposers();
     }
 
     /**
@@ -165,6 +168,26 @@ class AdminPanelServiceProvider extends ServiceProvider
         Event::listen(SocialActivatedEvent::class, SendActivateNotificationListener::class);
         Event::listen(SocialRegisteredEvent::class, AttachSocialRoleToUser::class);
         Event::listen(SocialRegisteredEvent::class, AttachUserRoleToUser::class);
+    }
+
+    /**
+     * Register Comments's view composers.
+     *
+     * @return void
+     */
+    public function registerViewComposers(): void
+    {
+        $userClassName = Config::get('auth.model');
+
+        if (is_null($userClassName)) {
+            $userClassName = Config::get('auth.providers.users.model');
+        }
+
+        view()->composer('admin::back.partials.analytics.users.statistic', function ($view) use ($userClassName) {
+            $registrations = (new $userClassName())->select(['activated', DB::raw('count(*) as total')])->groupBy('activated')->get();
+
+            $view->with('registrations', $registrations);
+        });
     }
 
     /**
