@@ -2,20 +2,17 @@
 
 namespace InetStudio\AdminPanel\Http\Controllers\Back\Traits;
 
-use Yajra\DataTables\DataTables;
-
 trait DatatablesTrait
 {
     /**
-     * @param DataTables $dataTable
      * @param $entity
      * @param $type
      * @return mixed
      * @throws \Exception
      */
-    private function generateTable(DataTables $dataTable, $entity, $type)
+    private function generateTable($entity, $type)
     {
-        $table = $dataTable->getHtmlBuilder();
+        $table = app('datatables.html');
 
         $table->columns($this->getColumns($entity, $type));
         $table->ajax($this->getAjaxOptions($entity, $type));

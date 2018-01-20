@@ -21,12 +21,11 @@ class PermissionsController extends Controller
     /**
      * Список прав.
      *
-     * @param DataTables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(DataTables $dataTable): View
+    public function index(): View
     {
-        $table = $this->generateTable($dataTable, 'admin', 'permissions_index');
+        $table = $this->generateTable('admin', 'permissions_index');
 
         return view('admin::back.pages.acl.permissions.index', compact('table'));
     }

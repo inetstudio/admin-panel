@@ -21,12 +21,11 @@ class RolesController extends Controller
     /**
      * Список ролей.
      *
-     * @param DataTables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(DataTables $dataTable): View
+    public function index(): View
     {
-        $table = $this->generateTable($dataTable, 'admin', 'roles_index');
+        $table = $this->generateTable('admin', 'roles_index');
 
         return view('admin::back.pages.acl.roles.index', compact('table'));
     }

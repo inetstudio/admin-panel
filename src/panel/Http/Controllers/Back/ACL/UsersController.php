@@ -21,12 +21,11 @@ class UsersController extends Controller
     /**
      * Список сайтов с отзывами.
      *
-     * @param DataTables $dataTable
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(DataTables $dataTable): View
+    public function index(): View
     {
-        $table = $this->generateTable($dataTable, 'admin', 'users_index');
+        $table = $this->generateTable('admin', 'users_index');
 
         return view('admin::back.pages.acl.users.index', compact('table'));
     }
