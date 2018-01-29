@@ -536,6 +536,8 @@ $(document).ready(function () {
                     }
                 });
             });
+
+            $(this).nestable('collapseAll');
         });
     }
 
