@@ -82,7 +82,9 @@
                                     'multiple' => 'multiple',
                                     'data-source' => route('back.acl.permissions.getSuggestions'),
                                 ],
-                                'options' => (old('permissions_id')) ? \App\Permission::whereIn('id', old('permissions_id'))->pluck('display_name', 'id')->toArray() : $item->permissions()->pluck('display_name', 'id')->toArray(),
+                                'options' => [
+                                    'values' => (old('permissions_id')) ? \App\Permission::whereIn('id', old('permissions_id'))->pluck('display_name', 'id')->toArray() : $item->permissions()->pluck('display_name', 'id')->toArray(),
+                                ],
                             ]) !!}
 
                             {!! Form::buttons('', '', ['back' => 'back.acl.roles.index']) !!}

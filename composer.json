@@ -25,7 +25,7 @@
       "socialiteproviders/vkontakte": "^3.0",
       "spatie/laravel-medialibrary": "^6.1",
       "tamayo/laravel-scout-elastic": "^3.0",
-      "tightenco/ziggy": "^0.4.1",
+      "tightenco/ziggy": "^0.6",
       "venturecraft/revisionable": "^1.28",
       "yajra/laravel-datatables-fractal": "^1.0",
       "yajra/laravel-datatables-html": "^3.1",

@@ -27,7 +27,7 @@
 
     <div class="col-sm-10">
 
-        {!! Form::select($name, (isset($attributes['options'])) ? $attributes['options'] : [], $value, (isset($attributes['field'])) ? $attributes['field'] : []) !!}
+        {!! Form::select($name, (isset($attributes['options']['values'])) ? $attributes['options']['values'] : [], $value, (isset($attributes['field'])) ? $attributes['field'] : [], (isset($attributes['options']['attributes'])) ? $attributes['options']['attributes'] : []) !!}
 
         @foreach ($errors->get($transformName) as $message)
             <span class="help-block m-b-none">{{ $message }}</span>

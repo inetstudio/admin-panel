@@ -4,7 +4,9 @@
 
 <div class="form-group @if ($errors->has($transformName)){!! "has-error" !!}@endif">
 
-    @if (isset($attributes['label']['title']))
+    @if (isset($attributes['label']['title']) && $attributes['label']['title'] == '')
+        <label for="{{ $name }}" class="col-sm-2 control-label"></label>
+    @elseif (isset($attributes['label']['title']))
         {!! Form::label($name, $attributes['label']['title'], (isset($attributes['label']['options'])) ? $attributes['label']['options'] : ['class' => 'col-sm-2 control-label']) !!}
     @endif
 

@@ -88,7 +88,9 @@
                                     'multiple' => 'multiple',
                                     'data-source' => route('back.acl.roles.getSuggestions'),
                                 ],
-                                'options' => (old('roles_id')) ? \App\Role::whereIn('id', old('roles_id'))->pluck('display_name', 'id')->toArray() : $item->roles()->pluck('display_name', 'id')->toArray(),
+                                'options' => [
+                                    'values' => (old('roles_id')) ? \App\Role::whereIn('id', old('roles_id'))->pluck('display_name', 'id')->toArray() : $item->roles()->pluck('display_name', 'id')->toArray(),
+                                ],
                             ]) !!}
 
                             {!! Form::dropdown('permissions_id[]', $item->permissions()->pluck('id')->toArray(), [
@@ -102,7 +104,9 @@
                                     'multiple' => 'multiple',
                                     'data-source' => route('back.acl.permissions.getSuggestions'),
                                 ],
-                                'options' => (old('permissions_id')) ? \App\Permission::whereIn('id', old('permissions_id'))->pluck('display_name', 'id')->toArray() : $item->permissions()->pluck('display_name', 'id')->toArray(),
+                                'options' => [
+                                    'values' => (old('permissions_id')) ? \App\Permission::whereIn('id', old('permissions_id'))->pluck('display_name', 'id')->toArray() : $item->permissions()->pluck('display_name', 'id')->toArray(),
+                                ],
                             ]) !!}
 
                             {!! Form::buttons('', '', ['back' => 'back.acl.users.index']) !!}
