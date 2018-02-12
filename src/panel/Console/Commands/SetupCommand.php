@@ -73,15 +73,6 @@ class SetupCommand extends Command
             ] : [],
             [
                 'type' => 'artisan',
-                'description' => 'Meta setup',
-                'command' => 'vendor:publish',
-                'params' => [
-                    '--provider' => 'Phoenix\EloquentMeta\ServiceProvider',
-                    '--tag' => 'migrations',
-                ],
-            ],
-            [
-                'type' => 'artisan',
                 'description' => 'Medialibrary setup',
                 'command' => 'vendor:publish',
                 'params' => [
@@ -102,6 +93,11 @@ class SetupCommand extends Command
                 'type' => 'artisan',
                 'description' => 'Migration',
                 'command' => 'migrate',
+            ],
+            [
+                'type' => 'artisan',
+                'description' => 'Meta setup',
+                'command' => 'inetstudio:meta:setup',
             ],
             [
                 'type' => 'artisan',

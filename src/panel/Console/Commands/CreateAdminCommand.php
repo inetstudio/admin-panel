@@ -31,21 +31,21 @@ class CreateAdminCommand extends Command
     public function handle(): void
     {
         $adminRole = Role::where('name', 'admin')->first();
-        $adminRole = ($adminRole) ?: Role::create([
+        $adminRole = ($adminRole) ?: $this->createRole([
             'name' => 'admin',
             'display_name' => 'Администратор',
             'description' => 'Пользователь, у которого есть доступ в административную панель.',
         ]);
 
         $userRole = Role::where('name', 'user')->first();
-        $userRole = ($userRole) ?: Role::create([
+        $userRole = ($userRole) ?: $this->createRole([
             'name' => 'user',
             'display_name' => 'Пользователь',
             'description' => 'Пользователь, зарегистрировавшийся через сайт.',
         ]);
 
         $socialUserRole = Role::where('name', 'social_user')->first();
-        $socialUserRole = ($socialUserRole) ?: Role::create([
+        $socialUserRole = ($socialUserRole) ?: $this->createRole([
             'name' => 'social_user',
             'display_name' => 'Пользователь социльной сети',
             'description' => 'Пользователь, зарегистрировавшийся через социальную сеть.',
@@ -67,5 +67,23 @@ class CreateAdminCommand extends Command
                 ],
             ]);
         }
+    }
+
+    /**
+     * Создаем роль.
+     *
+     * @param array $data
+     *
+     * @return Role
+     */
+    private function createRole($data)
+    {
+        $role = new Role();
+        $role->name = $data['name'];
+        $role->display_name = $data['display_name'];
+        $role->description = $data['description'];
+        $role->save();
+
+        return $role;
     }
 }
