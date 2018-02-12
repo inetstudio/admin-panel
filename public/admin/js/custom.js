@@ -656,8 +656,13 @@ $(document).ready(function () {
     if ($('.datetimepicker').length > 0) {
         $.datetimepicker.setLocale('ru');
 
-        $('.datetimepicker').datetimepicker({
-            format: 'd.m.Y H:i'
+        $('.datetimepicker').each(function () {
+            var fieldOptions = $(this).attr('data-options');
+            var extOptions = (typeof fieldOptions === 'undefined') ? {} : JSON.parse(fieldOptions);
+
+            var options = $.extend({format: 'd.m.Y H:i'}, extOptions);
+
+            $(this).datetimepicker(options);
         });
     }
 

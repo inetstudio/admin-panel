@@ -4,6 +4,10 @@ namespace InetStudio\AdminPanel\Console\Commands;
 
 use Illuminate\Console\Command;
 
+/**
+ * Class CreateFoldersCommand
+ * @package InetStudio\AdminPanel\Console\Commands
+ */
 class CreateFoldersCommand extends Command
 {
     /**
@@ -27,7 +31,10 @@ class CreateFoldersCommand extends Command
      */
     public function handle(): void
     {
-        $folders = ['temp', 'plupload'];
+        $folders = [
+            'temp',
+            'plupload',
+        ];
 
         foreach ($folders as $folder) {
             if (config('filesystems.disks.'.$folder)) {
@@ -46,6 +53,9 @@ class CreateFoldersCommand extends Command
     {
         if (! is_dir($path)) {
             mkdir($path, 0777, true);
+            $this->info($path.' Has been created.');
+        } else {
+            $this->info($path.' Already created.');
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace InetStudio\AdminPanel\Console\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Process\Process;
 
 class SetupCommand extends Command
 {
@@ -41,8 +42,19 @@ class SetupCommand extends Command
                 continue;
             }
 
+            $params = (isset($info['params'])) ? $info['params'] : [];
+
             $this->line(PHP_EOL.$info['description']);
-            $this->call($info['command'], $info['params']);
+
+            switch ($info['type']) {
+                case 'artisan':
+                    $this->call($info['command'], $params);
+                    break;
+                case 'cli':
+                    $process = new Process($info['command']);
+                    $process->run();
+                    break;
+            }
         }
     }
 
@@ -55,11 +67,12 @@ class SetupCommand extends Command
     {
         $this->calls = [
             (! class_exists('LaratrustSetupTables')) ? [
+                'type' => 'artisan',
                 'description' => 'Laratrust setup',
                 'command' => 'laratrust:setup',
-                'params' => [],
             ] : [],
             [
+                'type' => 'artisan',
                 'description' => 'Meta setup',
                 'command' => 'vendor:publish',
                 'params' => [
@@ -68,6 +81,7 @@ class SetupCommand extends Command
                 ],
             ],
             [
+                'type' => 'artisan',
                 'description' => 'Medialibrary setup',
                 'command' => 'vendor:publish',
                 'params' => [
@@ -76,6 +90,7 @@ class SetupCommand extends Command
                 ],
             ],
             [
+                'type' => 'artisan',
                 'description' => 'Publish migrations',
                 'command' => 'vendor:publish',
                 'params' => [
@@ -84,11 +99,12 @@ class SetupCommand extends Command
                 ],
             ],
             [
+                'type' => 'artisan',
                 'description' => 'Migration',
                 'command' => 'migrate',
-                'params' => [],
             ],
             [
+                'type' => 'artisan',
                 'description' => 'Revisionable setup',
                 'command' => 'migrate',
                 'params' => [
@@ -96,16 +112,17 @@ class SetupCommand extends Command
                 ],
             ],
             [
+                'type' => 'artisan',
                 'description' => 'Create admin user',
                 'command' => 'inetstudio:panel:admin',
-                'params' => [],
             ],
             [
+                'type' => 'artisan',
                 'description' => 'Create folders',
                 'command' => 'inetstudio:panel:folders',
-                'params' => [],
             ],
             [
+                'type' => 'artisan',
                 'description' => 'Publish public',
                 'command' => 'vendor:publish',
                 'params' => [
@@ -115,6 +132,7 @@ class SetupCommand extends Command
                 ],
             ],
             [
+                'type' => 'artisan',
                 'description' => 'Publish config',
                 'command' => 'vendor:publish',
                 'params' => [
@@ -123,12 +141,18 @@ class SetupCommand extends Command
                 ],
             ],
             [
+                'type' => 'artisan',
                 'description' => 'Publish medialibrary config',
                 'command' => 'vendor:publish',
                 'params' => [
                     '--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider',
                     '--tag' => 'config',
                 ],
+            ],
+            [
+                'type' => 'cli',
+                'description' => 'Composer dump',
+                'command' => 'composer dump-autoload',
             ],
         ];
     }

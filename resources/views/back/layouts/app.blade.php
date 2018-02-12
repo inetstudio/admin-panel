@@ -85,13 +85,22 @@
 
         @stack('scripts')
 
-        @routes
+        @routes('back')
 
         <!-- SerializeJSON -->
         <script src="{!! asset('admin/js/plugins/serializeJSON/jquery.serializejson.min.js') !!}"></script>
 
-        <!-- CUSTOM SCRIPTS -->
+        <!-- MD5 -->
+        <script src="{!! asset('admin/js/plugins/md5/md5.min.js') !!}"></script>
+
+        <!-- UUID -->
+        <script src="{!! asset('admin/js/plugins/uuid/uuid.core.js') !!}"></script>
+
+        <!-- ADMIN SCRIPTS -->
         <script src="{!! asset('admin/js/custom.js') !!}"></script>
+
+        <!-- MODULES SCRIPTS -->
+        @stack('custom_scripts')
 
     </body>
 </html>
