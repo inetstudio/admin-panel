@@ -47,7 +47,7 @@ class CreateAdminCommand extends Command
         $socialUserRole = Role::where('name', 'social_user')->first();
         $socialUserRole = ($socialUserRole) ?: $this->createRole([
             'name' => 'social_user',
-            'display_name' => 'Пользователь социльной сети',
+            'display_name' => 'Пользователь социальной сети',
             'description' => 'Пользователь, зарегистрировавшийся через социальную сеть.',
         ]);
 

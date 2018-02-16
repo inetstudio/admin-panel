@@ -91,6 +91,9 @@ $(document).ready(function () {
             file_data_name: name,
             multipart_params: {
                 fieldName: name
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
 
@@ -170,7 +173,7 @@ $(document).ready(function () {
         var $image = $('#crop_image');
 
         var cropperOptions = {
-            viewMode: 3,
+            viewMode: 2,
             preview: "#crop_modal .img-preview",
             ready: function () {
                 //$('.img-preview').parent().show();
