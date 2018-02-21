@@ -1,10 +1,14 @@
 <?php
 
-namespace InetStudio\AdminPanel\Events\Images;
+namespace InetStudio\AdminPanel\Events\Back\Images;
 
 use Illuminate\Queue\SerializesModels;
+use InetStudio\AdminPanel\Contracts\Events\Back\Images\UpdateImageEventContract;
 
-class UpdateImageEvent
+/**
+ * Class UpdateImageEvent.
+ */
+class UpdateImageEvent implements UpdateImageEventContract
 {
     use SerializesModels;
 
@@ -15,6 +19,7 @@ class UpdateImageEvent
      * Create a new event instance.
      *
      * UpdateImageEvent constructor.
+     *
      * @param $object
      * @param $name
      */

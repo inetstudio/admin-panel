@@ -204,5 +204,11 @@ class AdminPanelServiceProvider extends ServiceProvider
 
         $this->app->bind('UsersActivationsService', UsersActivationsService::class);
         $this->app->singleton('UsersService', UsersService::class);
+
+        // Events
+        $this->app->bind('InetStudio\AdminPanel\Contracts\Events\Back\Images\UpdateImageEventContract', 'InetStudio\AdminPanel\Events\Back\Images\UpdateImageEvent');
+
+        // Services
+        $this->app->bind('InetStudio\AdminPanel\Contracts\Services\Back\Images\ImagesServiceContract', 'InetStudio\AdminPanel\Services\Back\Images\ImagesService');
     }
 }
