@@ -14,7 +14,7 @@ use Laratrust\Middleware\LaratrustAbility;
 use Laratrust\Middleware\LaratrustPermission;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 use InetStudio\AdminPanel\Console\Commands\SetupCommand;
-use InetStudio\AdminPanel\Events\Images\UpdateImageEvent;
+use InetStudio\AdminPanel\Events\Back\Images\UpdateImageEvent;
 use InetStudio\AdminPanel\Listeners\AttachUserRoleToUser;
 use InetStudio\AdminPanel\Services\Front\ACL\UsersService;
 use SocialiteProviders\VKontakte\VKontakteExtendSocialite;

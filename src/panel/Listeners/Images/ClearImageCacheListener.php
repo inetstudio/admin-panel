@@ -3,7 +3,7 @@
 namespace InetStudio\AdminPanel\Listeners\Images;
 
 use Illuminate\Support\Facades\Cache;
-use InetStudio\AdminPanel\Events\Images\UpdateImageEvent;
+use InetStudio\AdminPanel\Events\Back\Images\UpdateImageEvent;
 
 class ClearImageCacheListener
 {
