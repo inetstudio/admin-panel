@@ -17,15 +17,24 @@ trait ImagesManipulationsTrait
      * @param $request
      * @param array $images
      * @param string $disk
+     * @param string $model
      */
     private function saveImages($item, $request, array $images, string $disk, string $model = ''): void
     {
+        $model = ($model) ? '.'.$model : '';
+
         foreach ($images as $requestName => $name) {
-            $properties = $request->input($requestName);
+            $properties = (is_numeric($requestName)) ? $request->get($name) : $request->input($requestName);
+
+            if (! $properties) {
+                continue;
+            }
 
             event(new UpdateImageEvent($item, $name));
 
-            if (isset($properties['images'])) {
+            if (isset($properties['has_images']) && ! isset($properties['images'])) {
+                $item->clearMediaCollection($name);
+            } elseif (isset($properties['images'])) {
                 $item->clearMediaCollectionExcept($name, $properties['images']);
 
                 foreach ($properties['images'] as $image) {
@@ -46,17 +55,18 @@ trait ImagesManipulationsTrait
                     }
 
                     $item->update([
-                        $name => str_replace($image['src'], $media->getFullUrl('content_front'), $item[$name]),
+                        $name => str_replace($image['src'], $media->getFullUrl($name.'_front'), $item[$name]),
                     ]);
                 }
             } else {
                 $manipulations = [];
 
-                if (isset($properties['crop']) and config($disk.'.images.conversions')) {
+                if (isset($properties['crop']) and config($disk.'.images.conversions'.$model)) {
                     foreach ($properties['crop'] as $key => $cropJSON) {
                         $cropData = json_decode($cropJSON, true);
 
-                        foreach (config($disk.'.images.conversions.'.$name.'.'.$key) as $conversion) {
+                        foreach (config($disk.'.images.conversions'.$model.'.'.$name.'.'.$key) as $conversion) {
+
                             event(new UpdateImageEvent($item, $conversion['name']));
 
                             $manipulations[$conversion['name']] = [
