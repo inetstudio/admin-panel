@@ -1,4 +1,5 @@
 @php
+    $name =  isset($attributes['field']['name']) ? $attributes['field']['name'] : $name;
     $transformName = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $name);
 @endphp
 

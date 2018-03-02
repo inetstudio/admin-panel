@@ -3,8 +3,11 @@
 namespace InetStudio\AdminPanel\Http\Controllers\Back\Traits;
 
 use Illuminate\Support\Facades\Storage;
-use InetStudio\AdminPanel\Events\Images\UpdateImageEvent;
+use InetStudio\AdminPanel\Events\Back\Images\UpdateImageEvent;
 
+/**
+ * Trait ImagesManipulationsTrait.
+ */
 trait ImagesManipulationsTrait
 {
     /**
@@ -15,10 +18,10 @@ trait ImagesManipulationsTrait
      * @param array $images
      * @param string $disk
      */
-    private function saveImages($item, $request, array $images, string $disk): void
+    private function saveImages($item, $request, array $images, string $disk, string $model = ''): void
     {
-        foreach ($images as $name) {
-            $properties = $request->get($name);
+        foreach ($images as $requestName => $name) {
+            $properties = $request->input($requestName);
 
             event(new UpdateImageEvent($item, $name));
 
@@ -54,7 +57,6 @@ trait ImagesManipulationsTrait
                         $cropData = json_decode($cropJSON, true);
 
                         foreach (config($disk.'.images.conversions.'.$name.'.'.$key) as $conversion) {
-
                             event(new UpdateImageEvent($item, $conversion['name']));
 
                             $manipulations[$conversion['name']] = [
@@ -69,7 +71,7 @@ trait ImagesManipulationsTrait
                     }
                 }
 
-                if (isset($properties['tempname']) && isset($properties['filename'])) {
+                if (isset($properties['tempname']) && isset($properties['filename']) && $properties['tempname'] <> "" && $properties['filename'] <> "") {
                     $image = $properties['tempname'];
                     $filename = $properties['filename'];
 

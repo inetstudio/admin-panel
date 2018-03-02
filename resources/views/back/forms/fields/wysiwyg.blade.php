@@ -1,4 +1,8 @@
 @php
+    $formName = $name;
+    $name = isset($attributes['field']['name']) ? $attributes['field']['name'] : $formName;
+    $attributes['field']['name'] = $name.'[text]';
+
     $transformName = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $name);
 
     $properties = (isset($attributes['images']['fields'])) ? $attributes['images']['fields'] : [];
@@ -15,7 +19,7 @@
 
     <div class="col-sm-10">
 
-        {!! Form::textarea($name.'[text]', $value, $attributes['field']) !!}
+        {!! Form::textarea('', $value, $attributes['field']) !!}
 
         @foreach ($errors->get($transformName) as $message)
             <span class="help-block m-b-none">{{ $message }}</span>
@@ -28,14 +32,14 @@
     @php
         $media = [];
 
-        if (old($name.'.images')) {
-            $media = old($name.'.images');
+        if (old($transformName.'.images')) {
+            $media = old($transformName.'.images');
         } else {
             foreach ($attributes['images']['media'] as $mediaItem) {
                 $data = [
                     'id' => $mediaItem->id,
                     'src' => url($mediaItem->getUrl()),
-                    'thumb' => ($mediaItem->getUrl($name.'_admin')) ? url($mediaItem->getUrl($name.'_admin')) : url($mediaItem->getUrl()),
+                    'thumb' => ($mediaItem->getUrl($formName.'_admin')) ? url($mediaItem->getUrl($formName.'_admin')) : url($mediaItem->getUrl()),
                     'properties' => $mediaItem->custom_properties,
                 ];
 
@@ -43,7 +47,8 @@
             }
         }
     @endphp
-    <div class="row" id="{{ $name }}_images" data-media="{{ json_encode($media) }}">
+    <div class="row" id="{{ (isset($attributes['field']['id'])) ? $attributes['field']['id'] : $name }}_images" data-media="{{ json_encode($media) }}">
+        <input name="{{ $name }}[has_images]" type="hidden" value="1">
         <div class="col-sm-2"></div>
         <div class="col-sm-10">
             <div class="file-box" style="width: 140px" v-for="(image, index) in images">

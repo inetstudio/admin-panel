@@ -16,7 +16,7 @@ class UploadsController extends Controller
      */
     public function upload(Request $request): array
     {
-        $transformName = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $request->get('fieldName'));
+        $transformName = str_replace(['.', '[]', '[', ']'], ['_', '.0', '.', ''], $request->get('fieldName'));
 
         return \Plupload::receive($transformName, function ($file) {
             $tempName = Storage::disk('temp')->putFile('', $file, 'public');

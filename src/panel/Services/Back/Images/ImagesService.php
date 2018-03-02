@@ -17,18 +17,27 @@ class ImagesService implements ImagesServiceContract
      * @param $item
      * @param array $images
      * @param string $disk
+     * @param string $model
      */
-    public function attachToObject($request, $item, array $images, string $disk): void
+    public function attachToObject($request, $item, array $images, string $disk, string $model = ''): void
     {
-        foreach ($images as $name) {
-            $properties = $request->get($name);
+        $model = ($model) ? '.'.$model : '';
+
+        foreach ($images as $requestName => $name) {
+            $properties = (is_numeric($requestName)) ? $request->get($name) : $request->input($requestName);
+
+            if (! $properties) {
+                continue;
+            }
 
             event(app()->makeWith('InetStudio\AdminPanel\Contracts\Events\Back\Images\UpdateImageEventContract', [
                 'object' => $item,
                 'name' => $name,
             ]));
 
-            if (isset($properties['images'])) {
+            if (isset($properties['has_images']) && ! isset($properties['images'])) {
+                $item->clearMediaCollection($name);
+            } elseif (isset($properties['images'])) {
                 $item->clearMediaCollectionExcept($name, $properties['images']);
 
                 foreach ($properties['images'] as $image) {
@@ -49,17 +58,17 @@ class ImagesService implements ImagesServiceContract
                     }
 
                     $item->update([
-                        $name => str_replace($image['src'], $media->getFullUrl('content_front'), $item[$name]),
+                        $name => str_replace($image['src'], $media->getFullUrl($name.'_front'), $item[$name]),
                     ]);
                 }
             } else {
                 $manipulations = [];
 
-                if (isset($properties['crop']) and config($disk.'.images.conversions')) {
+                if (isset($properties['crop']) and config($disk.'.images.conversions'.$model)) {
                     foreach ($properties['crop'] as $key => $cropJSON) {
                         $cropData = json_decode($cropJSON, true);
 
-                        foreach (config($disk.'.images.conversions.'.$name.'.'.$key) as $conversion) {
+                        foreach (config($disk.'.images.conversions'.$model.'.'.$name.'.'.$key) as $conversion) {
 
                             event(app()->makeWith('InetStudio\AdminPanel\Contracts\Events\Back\Images\UpdateImageEventContract', [
                                 'object' => $item,
@@ -78,7 +87,7 @@ class ImagesService implements ImagesServiceContract
                     }
                 }
 
-                if (isset($properties['tempname']) && isset($properties['filename'])) {
+                if (isset($properties['tempname']) && isset($properties['filename']) && $properties['tempname'] <> "" && $properties['filename'] <> "") {
                     $image = $properties['tempname'];
                     $filename = $properties['filename'];
 
@@ -110,5 +119,30 @@ class ImagesService implements ImagesServiceContract
                 }
             }
         }
+    }
+
+    /**
+     * Получаем первый кроп изображения.
+     *
+     * @param $item
+     * @param $collection
+     *
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     */
+    public function getFirstCropImageUrl($item, $collection)
+    {
+        $media = $item->getFirstMedia($collection);
+
+        if ($media) {
+            $crops = $media->getCustomProperty('crop');
+
+            foreach ($crops as $name => $cropData) {
+                return url($media->getUrl($collection.'_'.$name));
+            }
+
+            return url($media->getUrl());
+        }
+
+        return '';
     }
 }
