@@ -24,7 +24,6 @@ class FormBuilderServiceProvider extends ServiceProvider
         FormBuilder::component('datepicker', 'admin::back.forms.fields.datepicker', ['name', 'value', 'attributes']);
         FormBuilder::component('wysiwyg', 'admin::back.forms.fields.wysiwyg', ['name', 'value', 'attributes']);
         FormBuilder::component('dropdown', 'admin::back.forms.fields.dropdown', ['name', 'value', 'attributes']);
-        FormBuilder::component('crop', 'admin::back.forms.fields.crop', ['name', 'value', 'attributes']);
         FormBuilder::component('list', 'admin::back.forms.fields.list', ['name', 'value', 'attributes']);
     }
 

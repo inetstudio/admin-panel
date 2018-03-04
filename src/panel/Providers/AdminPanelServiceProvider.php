@@ -6,7 +6,6 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Laratrust\Middleware\LaratrustRole;
@@ -14,7 +13,6 @@ use Laratrust\Middleware\LaratrustAbility;
 use Laratrust\Middleware\LaratrustPermission;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 use InetStudio\AdminPanel\Console\Commands\SetupCommand;
-use InetStudio\AdminPanel\Events\Back\Images\UpdateImageEvent;
 use InetStudio\AdminPanel\Listeners\AttachUserRoleToUser;
 use InetStudio\AdminPanel\Services\Front\ACL\UsersService;
 use SocialiteProviders\VKontakte\VKontakteExtendSocialite;
@@ -23,8 +21,6 @@ use InetStudio\AdminPanel\Listeners\AttachSocialRoleToUser;
 use InetStudio\AdminPanel\Events\Auth\SocialRegisteredEvent;
 use InetStudio\AdminPanel\Events\Auth\UnactivatedLoginEvent;
 use InetStudio\AdminPanel\Console\Commands\CreateAdminCommand;
-use InetStudio\AdminPanel\Console\Commands\CreateFoldersCommand;
-use InetStudio\AdminPanel\Listeners\Images\ClearImageCacheListener;
 use InetStudio\AdminPanel\Http\Middleware\Back\Auth\AdminAuthenticate;
 use InetStudio\AdminPanel\Services\Front\Auth\UsersActivationsService;
 use JhaoDa\SocialiteProviders\Odnoklassniki\OdnoklassnikiExtendSocialite;
@@ -72,7 +68,6 @@ class AdminPanelServiceProvider extends ServiceProvider
             $this->commands([
                 SetupCommand::class,
                 CreateAdminCommand::class,
-                CreateFoldersCommand::class,
             ]);
         }
     }
@@ -91,10 +86,6 @@ class AdminPanelServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
         ], 'config');
-
-        $this->mergeConfigFrom(
-            __DIR__.'/../../../config/filesystems.php', 'filesystems.disks'
-        );
 
         if ($this->app->runningInConsole()) {
             if (! class_exists('CreateUsersTables')) {
@@ -162,7 +153,6 @@ class AdminPanelServiceProvider extends ServiceProvider
         Event::listen(Registered::class, SendActivateNotificationListener::class);
         Event::listen(Registered::class, AttachUserRoleToUser::class);
         Event::listen(UnactivatedLoginEvent::class, SendActivateNotificationListener::class);
-        Event::listen(UpdateImageEvent::class, ClearImageCacheListener::class);
         Event::listen(SocialiteWasCalled::class, VKontakteExtendSocialite::class);
         Event::listen(SocialiteWasCalled::class, OdnoklassnikiExtendSocialite::class);
         Event::listen(SocialActivatedEvent::class, SendActivateNotificationListener::class);
@@ -197,18 +187,7 @@ class AdminPanelServiceProvider extends ServiceProvider
      */
     public function registerBindings(): void
     {
-        $this->app->register('JildertMiedema\LaravelPlupload\LaravelPluploadServiceProvider');
-
-        $loader = AliasLoader::getInstance();
-        $loader->alias('Plupload', 'JildertMiedema\LaravelPlupload\Facades\Plupload');
-
         $this->app->bind('UsersActivationsService', UsersActivationsService::class);
         $this->app->singleton('UsersService', UsersService::class);
-
-        // Events
-        $this->app->bind('InetStudio\AdminPanel\Contracts\Events\Back\Images\UpdateImageEventContract', 'InetStudio\AdminPanel\Events\Back\Images\UpdateImageEvent');
-
-        // Services
-        $this->app->bind('InetStudio\AdminPanel\Contracts\Services\Back\Images\ImagesServiceContract', 'InetStudio\AdminPanel\Services\Back\Images\ImagesService');
     }
 }

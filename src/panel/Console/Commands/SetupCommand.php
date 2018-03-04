@@ -73,15 +73,6 @@ class SetupCommand extends Command
             ] : [],
             [
                 'type' => 'artisan',
-                'description' => 'Medialibrary setup',
-                'command' => 'vendor:publish',
-                'params' => [
-                    '--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider',
-                    '--tag' => 'migrations',
-                ],
-            ],
-            [
-                'type' => 'artisan',
                 'description' => 'Publish migrations',
                 'command' => 'vendor:publish',
                 'params' => [
@@ -101,6 +92,11 @@ class SetupCommand extends Command
             ],
             [
                 'type' => 'artisan',
+                'description' => 'Uploads setup',
+                'command' => 'inetstudio:uploads:setup',
+            ],
+            [
+                'type' => 'artisan',
                 'description' => 'Revisionable setup',
                 'command' => 'migrate',
                 'params' => [
@@ -111,11 +107,6 @@ class SetupCommand extends Command
                 'type' => 'artisan',
                 'description' => 'Create admin user',
                 'command' => 'inetstudio:panel:admin',
-            ],
-            [
-                'type' => 'artisan',
-                'description' => 'Create folders',
-                'command' => 'inetstudio:panel:folders',
             ],
             [
                 'type' => 'artisan',
@@ -133,15 +124,6 @@ class SetupCommand extends Command
                 'command' => 'vendor:publish',
                 'params' => [
                     '--provider' => 'InetStudio\AdminPanel\Providers\AdminPanelServiceProvider',
-                    '--tag' => 'config',
-                ],
-            ],
-            [
-                'type' => 'artisan',
-                'description' => 'Publish medialibrary config',
-                'command' => 'vendor:publish',
-                'params' => [
-                    '--provider' => 'Spatie\MediaLibrary\MediaLibraryServiceProvider',
                     '--tag' => 'config',
                 ],
             ],
