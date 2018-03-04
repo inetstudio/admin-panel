@@ -6,8 +6,7 @@ use App\Role;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Class RoleTransformer
- * @package InetStudio\AdminPanel\Transformers\Back\ACL
+ * Class RoleTransformer.
  */
 class RoleTransformer extends TransformerAbstract
 {

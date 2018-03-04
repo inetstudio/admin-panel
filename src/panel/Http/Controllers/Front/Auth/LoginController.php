@@ -75,8 +75,6 @@ class LoginController extends BaseLoginController
                 return $user;
             }
         }
-
-        return null;
     }
 
     /**

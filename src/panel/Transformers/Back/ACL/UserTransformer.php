@@ -6,8 +6,7 @@ use App\User;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Class UserTransformer
- * @package InetStudio\AdminPanel\Transformers\Back\ACL
+ * Class UserTransformer.
  */
 class UserTransformer extends TransformerAbstract
 {
