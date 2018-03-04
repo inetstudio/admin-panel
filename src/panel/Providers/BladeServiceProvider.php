@@ -75,7 +75,7 @@ class BladeServiceProvider extends ServiceProvider
         });
 
         Blade::if('withoutRole', function ($role) {
-            return (! app('laratrust')->hasRole($role));
+            return ! app('laratrust')->hasRole($role);
         });
     }
 

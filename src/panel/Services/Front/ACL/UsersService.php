@@ -3,9 +3,8 @@
 namespace InetStudio\AdminPanel\Services\Front\ACL;
 
 use App\User;
-use Illuminate\Http\Request;
-use InetStudio\AdminPanel\Models\ACL\UserSocialProfileModel;
 use InetStudio\AdminPanel\Events\Auth\SocialRegisteredEvent;
+use InetStudio\AdminPanel\Models\ACL\UserSocialProfileModel;
 
 class UsersService
 {
@@ -101,7 +100,7 @@ class UsersService
         $socialProfile = UserSocialProfileModel::where('provider', $providerName)->where('provider_id', $socialUser->getId())->first();
 
         if (! $email && ! $socialProfile) {
-            return null;
+            return;
         }
 
         if (! $socialProfile) {

@@ -6,8 +6,7 @@ use App\Permission;
 use League\Fractal\TransformerAbstract;
 
 /**
- * Class PermissionTransformer
- * @package InetStudio\AdminPanel\Transformers\Back\ACL
+ * Class PermissionTransformer.
  */
 class PermissionTransformer extends TransformerAbstract
 {
