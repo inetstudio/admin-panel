@@ -33,7 +33,6 @@ Admin.options.toastr = {
 };
 
 Admin.options.tinyMCE = {
-    selector: '.tinymce',
     height: 500,
     menubar: false,
     automatic_uploads: false,
@@ -268,7 +267,8 @@ $(document).ready(function () {
     }
 
     $('.nested-list').each(function () {
-        var orderURL = $(this).attr('data-order-url');
+        var orderURL = $(this).attr('data-order-url'),
+            orderDataTarget = $(this).attr('data-order-serialize');
 
         $(this).nestable({
             group: 1
@@ -278,6 +278,14 @@ $(document).ready(function () {
             var data = {
                 data: window.JSON.stringify(list.nestable('serialize'))
             };
+
+            if (typeof orderDataTarget !== 'undefined') {
+                $(orderDataTarget).val(data.data);
+            }
+
+            if (typeof orderURL === 'undefined') {
+                return true;
+            }
 
             $.ajax({
                 'url': orderURL,
@@ -615,4 +623,3 @@ function jq(selector) {
 function getTimestamp() {
     return new Date().getTime();
 }
-
