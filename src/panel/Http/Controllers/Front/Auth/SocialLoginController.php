@@ -17,7 +17,7 @@ class SocialLoginController extends Controller
     {
         $driver = Socialite::driver($provider);
 
-        if ($provider != 'twitter') {
+        if ($provider != 'twitter' && $provider != 'instagram') {
             $driver->stateless()->scopes(['email']);
         }
 
@@ -31,7 +31,7 @@ class SocialLoginController extends Controller
 
         $driverObj = Socialite::driver($provider);
 
-        if ($provider != 'twitter') {
+        if ($provider != 'twitter' && $provider != 'instagram') {
             $driverObj->stateless();
         }
 
