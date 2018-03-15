@@ -14,6 +14,7 @@ use Laratrust\Middleware\LaratrustPermission;
 use SocialiteProviders\Manager\SocialiteWasCalled;
 use InetStudio\AdminPanel\Console\Commands\SetupCommand;
 use InetStudio\AdminPanel\Listeners\AttachUserRoleToUser;
+use SocialiteProviders\Instagram\InstagramExtendSocialite;
 use InetStudio\AdminPanel\Services\Front\ACL\UsersService;
 use SocialiteProviders\VKontakte\VKontakteExtendSocialite;
 use InetStudio\AdminPanel\Events\Auth\SocialActivatedEvent;
@@ -155,6 +156,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         Event::listen(UnactivatedLoginEvent::class, SendActivateNotificationListener::class);
         Event::listen(SocialiteWasCalled::class, VKontakteExtendSocialite::class);
         Event::listen(SocialiteWasCalled::class, OdnoklassnikiExtendSocialite::class);
+        Event::listen(SocialiteWasCalled::class, InstagramExtendSocialite::class);
         Event::listen(SocialActivatedEvent::class, SendActivateNotificationListener::class);
         Event::listen(SocialRegisteredEvent::class, AttachSocialRoleToUser::class);
         Event::listen(SocialRegisteredEvent::class, AttachUserRoleToUser::class);

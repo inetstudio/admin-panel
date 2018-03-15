@@ -21,6 +21,7 @@
       "laravelista/ekko": "^1.4",
       "predis/predis": "^1.1",
       "santigarcor/laratrust": "^5.0",
+      "socialiteproviders/instagram": "^3.0",
       "socialiteproviders/vkontakte": "^3.0",
       "tamayo/laravel-scout-elastic": "^3.0",
       "tightenco/ziggy": "^0.6",
