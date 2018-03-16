@@ -4,6 +4,7 @@ namespace InetStudio\AdminPanel\Http\Controllers\Front\Auth;
 
 use App\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
 use InetStudio\AdminPanel\Http\Requests\Front\Auth\RegisterRequest;
 use App\Http\Controllers\Auth\RegisterController as BaseRegisterController;
@@ -39,7 +40,7 @@ class RegisterController extends BaseRegisterController
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => Hash::make($data['password']),
             'activated' => 0,
         ]);
     }

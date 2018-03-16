@@ -6,6 +6,7 @@ use App\Role;
 use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class CreateAdminCommand extends Command
 {
@@ -55,7 +56,7 @@ class CreateAdminCommand extends Command
         $user = ($user) ?: User::create([
             'name' => 'admin',
             'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
+            'password' => Hash::make('password'),
         ]);
 
         if (DB::table('role_user')->where('user_id', $user->id)->where('role_id', $adminRole->id)->where('user_type', get_class($user))->count() == 0) {

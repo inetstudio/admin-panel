@@ -3,6 +3,7 @@
 namespace InetStudio\AdminPanel\Services\Front\ACL;
 
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use InetStudio\AdminPanel\Events\Auth\SocialRegisteredEvent;
 use InetStudio\AdminPanel\Models\ACL\UserSocialProfileModel;
 
@@ -121,7 +122,7 @@ class UsersService
             $user = User::create([
                 'name' => $socialUser->getName(),
                 'email' => $socialProfile->provider_email,
-                'password' => bcrypt($socialUser->getName().config('app.key').$socialUser->getEmail()),
+                'password' => Hash::make($socialUser->getName().config('app.key').$socialUser->getEmail()),
                 'activated' => ($approveEmail) ? 0 : 1,
             ]);
 

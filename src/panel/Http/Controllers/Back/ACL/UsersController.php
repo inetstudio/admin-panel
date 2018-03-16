@@ -7,6 +7,7 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Session;
@@ -116,7 +117,7 @@ class UsersController extends Controller
         $item->name = trim(strip_tags($request->get('name')));
         $item->email = trim(strip_tags($request->get('email')));
         if ($request->filled('password')) {
-            $item->password = bcrypt(trim($request->get('password')));
+            $item->password = Hash::make(trim($request->get('password')));
         }
         $item->save();
 
