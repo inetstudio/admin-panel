@@ -28,13 +28,3 @@
 </div>
 
 <div class="hr-line-dashed"></div>
-
-@pushonce('styles:icheck')
-    <!-- iCheck -->
-    <link href="{!! asset('admin/css/plugins/iCheck/custom.css') !!}" rel="stylesheet">
-@endpushonce
-
-@pushonce('scripts:icheck')
-    <!-- iCheck -->
-    <script src="{!! asset('admin/js/plugins/iCheck/icheck.min.js') !!}"></script>
-@endpushonce

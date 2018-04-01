@@ -38,13 +38,3 @@
 </div>
 
 <div class="hr-line-dashed"></div>
-
-@pushonce('styles:datetimepicker')
-    <!-- DATETIMEPICKER -->
-    <link href="{!! asset('admin/css/plugins/datetimepicker/jquery.datetimepicker.css') !!}" rel="stylesheet">
-@endpushonce
-
-@pushonce('scripts:datetimepicker')
-    <!-- DATETIMEPICKER -->
-    <script src="{!! asset('admin/js/plugins/datetimepicker/jquery.datetimepicker.full.min.js') !!}"></script>
-@endpushonce

@@ -1,0 +1,104 @@
+.modal-open {
+    overflow: inherit;
+}
+
+// Autocomplete custom
+.autocomplete-suggestions {
+    border: 1px solid #999;
+    background: #FFF;
+    overflow: auto;
+
+    strong {
+        font-weight: normal;
+        color: #3399FF;
+    }
+}
+
+.autocomplete-suggestion {
+    padding: 2px 5px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.autocomplete-selected {
+    background: #F0F0F0;
+}
+
+.autocomplete-group {
+    padding: 2px 5px;
+
+    strong {
+        display: block;
+        border-bottom: 1px solid #000;
+    }
+}
+
+
+// Select2 Custom
+.select2-container.select2-container--default.select2-container--open  {
+    z-index: 5000;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container {
+    pointer-events: none;
+    touch-action: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection {
+    background: #eee;
+    box-shadow: none;
+}
+
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection__arrow,
+select[readonly].select2-hidden-accessible + .select2-container .select2-selection__clear {
+    display: none;
+}
+
+
+// TinyMCE Custom
+.mce-fullscreen {
+    z-index: 2039 !important;
+}
+
+#mce-modal-block {
+    background: #000;
+}
+
+
+// Toastr Custom
+#toast-container > .toast-warning:before {
+    content: "";
+}
+#toast-container > .toast-error:before {
+    content: "";
+}
+#toast-container > .toast-info:before {
+    content: "";
+}
+#toast-container > .toast-success:before {
+    content: "";
+}
+
+
+// SweetAlert Custom
+.swal2-popup {
+    font-size: 16px;
+}
+
+
+// DataTables Custom
+table.dataTable {
+    width: 100% !important;
+}
+
+
+// Fancybox custom
+.fancybox-video {
+    display: none;
+}
+
+.fancybox-nav {
+    top: 50%;
+    transform: translateY(-50%);
+    height: 40%;
+}

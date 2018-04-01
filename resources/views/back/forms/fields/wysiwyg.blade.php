@@ -23,11 +23,6 @@
     </div>
 </div>
 
-@pushonce('scripts:tinymce')
-    <!-- TINYMCE -->
-    <script src="{!! asset('admin/js/plugins/tinymce/tinymce.min.js') !!}"></script>
-@endpushonce
-
 @if (isset($attributes['images']))
     {!! Form::imagesStack($name, (isset($attributes['field']['id'])) ? $attributes['field']['id'] : $name, $attributes['images']) !!}
 @endif

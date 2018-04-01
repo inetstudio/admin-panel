@@ -27,7 +27,13 @@
 
     <div class="col-sm-10">
 
-        {!! Form::select($name, (isset($attributes['options']['values'])) ? $attributes['options']['values'] : [], $value, (isset($attributes['field'])) ? $attributes['field'] : [], (isset($attributes['options']['attributes'])) ? $attributes['options']['attributes'] : []) !!}
+        {!! Form::select(
+            $name,
+            (isset($attributes['options']['values'])) ? $attributes['options']['values'] : [],
+            $value,
+            (isset($attributes['field'])) ? $attributes['field'] : [],
+            (isset($attributes['options']['attributes'])) ? $attributes['options']['attributes'] : []
+        ) !!}
 
         @foreach ($errors->get($transformName) as $message)
             <span class="help-block m-b-none">{{ $message }}</span>
@@ -39,14 +45,3 @@
 @if (!(isset($attributes['hr']) && $attributes['hr']['show'] == false))
     <div class="hr-line-dashed"></div>
 @endif
-
-@pushonce('styles:select2')
-    <!-- SELECT2 -->
-    <link href="{!! asset('admin/css/plugins/select2/select2.min.css') !!}" rel="stylesheet">
-@endpushonce
-
-@pushonce('scripts:select2')
-    <!-- SELECT2 -->
-    <script src="{!! asset('admin/js/plugins/select2/select2.full.min.js') !!}"></script>
-    <script src="{!! asset('admin/js/plugins/select2/i18n/ru.js') !!}"></script>
-@endpushonce

@@ -59,8 +59,10 @@ trait DatatablesTrait
      */
     private function getTableParameters($entity, $type): array
     {
+        $i18n = trans('admin::datatables');
+
         $options = (config($entity.'.datatables.table.'.$type)) ? config($entity.'.datatables.table.'.$type) : ((config($entity.'.datatables.table.default')) ? config($entity.'.datatables.table.default') : []);
-        $options['language']['url'] = (isset($options['language']['url'])) ? asset($options['language']['url']) : '';
+        $options['language'] = $i18n;
 
         return $options;
     }

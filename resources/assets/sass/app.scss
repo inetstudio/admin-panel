@@ -1,0 +1,19 @@
+// Base
+@import "~bootstrap/dist/css/bootstrap";
+@import "~font-awesome/scss/font-awesome";
+@import "~animate.css/animate";
+
+// Plugins
+@import "~datatables.net-bs/css/dataTables.bootstrap";
+@import "~@fancyapps/fancybox/dist/jquery.fancybox";
+@import "./plugins/iCheck/icheck";
+@import "~jquery-datetimepicker/jquery.datetimepicker";
+@import "~select2/src/scss/core";
+@import "~sweetalert2/src/sweetalert2";
+@import "~switchery/switchery";
+@import "~tinymce/skins/lightgray/skin.min";
+@import "~toastr/toastr";
+
+// Admin
+@import "./package/inspinia/style";
+@import "./package/admin-panel";
