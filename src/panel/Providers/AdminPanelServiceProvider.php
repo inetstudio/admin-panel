@@ -81,10 +81,6 @@ class AdminPanelServiceProvider extends ServiceProvider
     protected function registerPublishes(): void
     {
         $this->publishes([
-            __DIR__.'/../../../public' => public_path(),
-        ], 'public');
-
-        $this->publishes([
             __DIR__.'/../../../config/admin.php' => config_path('admin.php'),
         ], 'config');
 

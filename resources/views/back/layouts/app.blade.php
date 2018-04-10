@@ -12,35 +12,37 @@
         <link href="{{ mix('admin/css/app.css') }}" rel="stylesheet">
     </head>
     <body>
-        <!-- Wrapper-->
-        <div id="wrapper">
+        <div id="app">
+            <!-- Wrapper-->
+            <div id="wrapper">
 
-            <!-- Navigation -->
-            @include('admin::back.includes.navigation')
+                <!-- Navigation -->
+                @include('admin::back.includes.navigation')
 
-            <!-- Page wraper -->
-            <div id="page-wrapper" class="gray-bg">
+                <!-- Page wraper -->
+                <div id="page-wrapper" class="gray-bg">
 
-                <!-- Page wrapper -->
-                @include('admin::back.includes.topnavbar')
+                    <!-- Page wrapper -->
+                    @include('admin::back.includes.topnavbar')
 
-                <!-- Breadcrumbs -->
-                @include('admin::back.partials.breadcrumbs')
+                    <!-- Breadcrumbs -->
+                    @include('admin::back.partials.breadcrumbs')
 
-                <!-- Main view  -->
-                @yield('content')
+                    <!-- Main view  -->
+                    @yield('content')
 
-                <!-- Footer -->
-                @include('admin::back.includes.footer')
+                    <!-- Footer -->
+                    @include('admin::back.includes.footer')
+
+                </div>
+                <!-- End page wrapper-->
 
             </div>
-            <!-- End page wrapper-->
+            <!-- End wrapper-->
 
+            <!-- Modals-->
+            @stack('modals')
         </div>
-        <!-- End wrapper-->
-
-        <!-- Modals-->
-        @stack('modals')
 
         <script src="{{ mix('admin/js/manifest.js') }}"></script>
         <script src="{{ mix('admin/js/vendor.js') }}"></script>

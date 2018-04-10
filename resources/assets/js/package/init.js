@@ -1,4 +1,5 @@
 window.Admin = window.Admin || {
+    stores:[],
     options: {},
     modals: {},
     containers: {
@@ -39,7 +40,7 @@ window.Admin.options.tinymce = {
     plugins: [
         'autolink lists link charmap print preview',
         'searchreplace visualblocks code fullscreen',
-        'insertdatetime media table contextmenu paste images polls quizzes'
+        'insertdatetime media table contextmenu paste images'
     ],
-    toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link | images | polls | add_quiz_widget | code'
+    toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link | images | code'
 };

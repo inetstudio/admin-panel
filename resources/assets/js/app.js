@@ -1,6 +1,10 @@
 window.$ = window.jQuery = require('jquery');
 global.$ = $;
 global.jQuery = jQuery;
+window._ = require('lodash');
+
+window.axios = require('axios');
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 let token = document.head.querySelector('meta[name="csrf-token"]');
 
@@ -10,6 +14,7 @@ if (token) {
             'X-CSRF-TOKEN': token.content
         }
     });
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
@@ -27,6 +32,25 @@ window.Sortable = require('sortablejs');
 window.toastr = require('toastr');
 window.UUID = require('uuidjs');
 window.Vue = require('vue');
+
+window.Vuex = require('vuex');
+window.Vue.use(window.Vuex);
+
+Vue.component('vue-block-buttons', function (resolve) {
+    require(['./components/blocks/ButtonsComponent'], resolve);
+});
+Vue.component('vue-block-info', function (resolve) {
+    require(['./components/blocks/InfoComponent'], resolve);
+});
+Vue.component('InputHidden', function (resolve) {
+    require(['./components/fields/BaseInputHidden'], resolve);
+});
+Vue.component('InputText', function (resolve) {
+    require(['./components/fields/BaseInputText'], resolve);
+});
+Vue.component('Dropdown', function (resolve) {
+    require(['./components/fields/BaseDropdown'], resolve);
+});
 
 window.tinymce = require('tinymce');
 require('tinymce-i18n/langs/ru');
