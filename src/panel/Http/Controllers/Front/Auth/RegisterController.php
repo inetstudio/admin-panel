@@ -6,18 +6,18 @@ use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
-use InetStudio\AdminPanel\Http\Requests\Front\Auth\RegisterRequest;
 use App\Http\Controllers\Auth\RegisterController as BaseRegisterController;
+use InetStudio\AdminPanel\Contracts\Http\Requests\Front\RegisterRequestContract;
 
 class RegisterController extends BaseRegisterController
 {
     /**
      * Регистрация пользователя.
      *
-     * @param RegisterRequest $request
+     * @param RegisterRequestContract $request
      * @return JsonResponse
      */
-    public function registerCustom(RegisterRequest $request): JsonResponse
+    public function registerCustom(RegisterRequestContract $request): JsonResponse
     {
         $user = $this->create($request->all());
 

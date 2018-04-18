@@ -3,15 +3,16 @@
 namespace InetStudio\AdminPanel\Http\Requests\Front\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
+use InetStudio\AdminPanel\Contracts\Http\Requests\Front\RegisterRequestContract;
 
-class RegisterRequest extends FormRequest
+class RegisterRequest extends FormRequest implements RegisterRequestContract
 {
     /**
      * Определить, авторизован ли пользователь для этого запроса.
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -34,7 +35,7 @@ class RegisterRequest extends FormRequest
 
             'password.required' => 'Поле «Пароль» обязательно для заполнения.',
             'password.confirmed' => 'Введенные пароли не совпадают.',
-            'password.min' => 'Поле «Новый пароль» должно содержать минимум 6 символов.',
+            'password.min' => 'Поле «Пароль» должно содержать минимум 6 символов.',
 
             'policy-agree.required' => 'Обязательно для заполнения.',
         ];

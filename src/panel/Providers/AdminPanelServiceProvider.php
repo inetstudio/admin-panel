@@ -187,5 +187,9 @@ class AdminPanelServiceProvider extends ServiceProvider
     {
         $this->app->bind('UsersActivationsService', UsersActivationsService::class);
         $this->app->singleton('UsersService', UsersService::class);
+
+        // Auth
+        // Requests
+        $this->app->bind('InetStudio\AdminPanel\Contracts\Http\Requests\Front\RegisterRequestContract', 'InetStudio\AdminPanel\Http\Requests\Front\Auth\RegisterRequest');
     }
 }
