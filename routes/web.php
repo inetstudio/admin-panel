@@ -39,10 +39,6 @@ Route::group(['middleware' => 'web'], function () {
     });
 
     Route::group(['namespace' => 'InetStudio\AdminPanel\Http\Controllers\Front'], function () {
-        Route::group(['namespace' => 'Images'], function () {
-            Route::get('img/{id}', 'ImagesController@getImage')->name('front.image.get');
-        });
-
         Route::group(['namespace' => 'Auth'], function () {
             Route::get('account/activate/{token?}', 'ActivateController@activate')->name('front.account.activate.get');
             Route::get('oauth/email', 'SocialLoginController@askEmail')->name('front.oauth.email');
