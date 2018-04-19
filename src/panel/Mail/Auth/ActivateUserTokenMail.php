@@ -29,7 +29,7 @@ class ActivateUserTokenMail extends Mailable
     public function build(): self
     {
         return $this->from(config('mail.from.address'), config('mail.from.name'))
-            ->subject('Активация аккаунта')
+            ->subject(config('mail.activation.subject') ?? 'Активация аккаунта')
             ->view('admin::mails.auth.activate_user_token', ['token' => $this->token]);
     }
 }

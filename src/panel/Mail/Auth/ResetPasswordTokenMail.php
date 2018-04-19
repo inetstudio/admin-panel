@@ -29,7 +29,7 @@ class ResetPasswordTokenMail extends Mailable
     public function build(): self
     {
         return $this->from(config('mail.from.address'), config('mail.from.name'))
-            ->subject('Сброс пароля')
+            ->subject(config('mail.password.reset') ?? 'Сброс пароля')
             ->view('admin::mails.auth.reset_password_token', ['token' => $this->token]);
     }
 }
