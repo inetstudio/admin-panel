@@ -9,7 +9,7 @@
 
         <link rel="icon" href="{!! asset('images/favicon.ico') !!}">
 
-        <link href="{{ mix('admin/css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset(mix('admin/css/app.css')) }}" rel="stylesheet">
     </head>
     <body>
         <div id="app">
@@ -44,9 +44,9 @@
             @stack('modals')
         </div>
 
-        <script src="{{ mix('admin/js/manifest.js') }}"></script>
-        <script src="{{ mix('admin/js/vendor.js') }}"></script>
-        <script src="{{ mix('admin/js/app.js') }}"></script>
+        <script src="{{ asset(mix('admin/js/manifest.js')) }}"></script>
+        <script src="{{ asset(mix('admin/js/vendor.js')) }}"></script>
+        <script src="{{ asset(mix('admin/js/app.js')) }}"></script>
 
         @stack('scripts')
 
