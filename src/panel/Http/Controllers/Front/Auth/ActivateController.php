@@ -5,6 +5,7 @@ namespace InetStudio\AdminPanel\Http\Controllers\Front\Auth;
 use App\User;
 use Illuminate\View\View;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use InetStudio\AdminPanel\Events\Auth\ActivatedEvent;
 use InetStudio\AdminPanel\Services\Front\Auth\UsersActivationsService;
 use InetStudio\Meta\Contracts\Services\Front\MetaServiceContract as FrontMetaServiceContract;
@@ -32,6 +33,10 @@ class ActivateController extends Controller
             $usersActivationsService->deleteActivation($token);
 
             event(new ActivatedEvent($user));
+
+            if (config('admin.login_after_activate')) {
+                Auth::login($user, true);
+            }
 
             $activation = [
                 'success' => true,
