@@ -60,4 +60,6 @@ return [
             ],
         ],
     ],
+
+    'release' => env('RELEASE_VERSION', ''),
 ];

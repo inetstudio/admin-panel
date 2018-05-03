@@ -10,7 +10,7 @@ if (! function_exists('static_asset')) {
 
         $static = config('app.static_url');
 
-        return static_path($static, $asset).(env('RELEASE_VERSION') ? '?v='.env('RELEASE_VERSION') : '');
+        return static_path($static, $asset).(config('admin.release') ? '?v='.config('admin.release') : '');
     }
 }
 
