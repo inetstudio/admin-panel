@@ -5,7 +5,8 @@ window.Admin = window.Admin || {
     containers: {
         images: [],
         lists: []
-    }
+    },
+    modules: {}
 };
 
 window.Admin.options.toastr = {
