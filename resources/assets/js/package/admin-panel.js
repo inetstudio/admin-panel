@@ -55,6 +55,10 @@ $(document).ready(function () {
                 options.tags = true;
             }
 
+            if ($this.parents('.modal').length > 0) {
+                options.dropdownParent = $this.parents('.modal').first();
+            }
+
             $(this).select2($.extend({
                 language: "ru",
                 ajax: {
