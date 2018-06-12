@@ -27,9 +27,6 @@
       "yajra/laravel-datatables-oracle": "^8.0"
     },
     "autoload": {
-      "classmap": [
-        "database/migrations"
-      ],
       "psr-4": {
         "InetStudio\\AdminPanel\\": "src"
       },
