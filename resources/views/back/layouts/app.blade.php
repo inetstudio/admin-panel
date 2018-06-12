@@ -26,7 +26,7 @@
                     @include('admin::back.includes.topnavbar')
 
                     <!-- Breadcrumbs -->
-                    @include('admin::back.partials.breadcrumbs')
+                    @include('admin::back.partials.breadcrumbs.app')
 
                     <!-- Main view  -->
                     @yield('content')
@@ -44,12 +44,12 @@
             @stack('modals')
         </div>
 
+        @routes('back')
+
         <script src="{{ asset(mix('admin/js/manifest.js')) }}"></script>
         <script src="{{ asset(mix('admin/js/vendor.js')) }}"></script>
         <script src="{{ asset(mix('admin/js/app.js')) }}"></script>
 
         @stack('scripts')
-
-        @routes('back')
     </body>
 </html>

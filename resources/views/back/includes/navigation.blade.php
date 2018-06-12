@@ -4,7 +4,6 @@
 
             @loadFromModules(back.includes.navigation)
 
-            @include('admin::back.includes.acl.navigation')
         </ul>
     </div>
 </nav>

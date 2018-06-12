@@ -1,1 +1,0 @@
-<a target="_blank" href="{{ route('front.password.reset.get', ['token' => $token]) }}">сбросить пароль</a>

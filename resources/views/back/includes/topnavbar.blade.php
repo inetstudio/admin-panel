@@ -29,10 +29,10 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{ url(route('back.logout')) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <a href="{{ url(route('back.acl.users.logout')) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fa fa-lg fa-sign-out"></i> Выйти
                             </a>
-                            <form id="logout-form" action="{{ url(route('back.logout')) }}" method="POST" style="display: none;">
+                            <form id="logout-form" action="{{ url(route('back.acl.users.logout')) }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
                             </form>
                         </li>

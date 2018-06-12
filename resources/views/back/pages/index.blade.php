@@ -2,7 +2,6 @@
 
 @php
     $title = 'Главная';
-    $text = "тест {{ (true) ? 'hello' : 'bye' }}";
 @endphp
 
 @section('title', $title)
