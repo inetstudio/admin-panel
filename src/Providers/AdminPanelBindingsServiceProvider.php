@@ -19,7 +19,7 @@ class AdminPanelBindingsServiceProvider extends ServiceProvider
         'InetStudio\AdminPanel\Contracts\Http\Responses\Back\IndexResponseContract' => 'InetStudio\AdminPanel\Http\Responses\Back\IndexResponse',
 
         // Serializers
-        'InetStudio\ACL\Passwords\Contracts\Services\Front\PasswordsServiceContract' => 'InetStudio\ACL\Passwords\Services\Front\PasswordsService',
+        'InetStudio\AdminPanel\Contracts\Serializers\SimpleDataArraySerializerContract' => 'InetStudio\AdminPanel\Serializers\SimpleDataArraySerializer',
     ];
 
     /**
