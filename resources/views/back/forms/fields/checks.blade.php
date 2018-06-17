@@ -1,5 +1,22 @@
 @php
     $transformName = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $name);
+
+    $oldValues = old($transformName);
+
+    if ($errors->count() > 0 && $oldValues) {
+        if (is_array($oldValues)) {
+            $correctValues = [];
+            foreach ($oldValues as $key => $value) {
+                $correctValues[$key] = (filter_var($value, FILTER_VALIDATE_INT)) ? intval($value) : $value;
+            }
+        } else {
+            $correctValues = (filter_var($oldValues, FILTER_VALIDATE_INT)) ? intval($oldValues) : $oldValues;
+        }
+
+        session(['_old_input.'.$transformName => $correctValues]);
+    } elseif ($errors->count() > 0 && ! $oldValues) {
+        $value = [];
+    }
 @endphp
 
 <div class="form-group @if ($errors->has($transformName)){!! "has-error" !!}@endif">
@@ -12,7 +29,7 @@
         @foreach ($attributes['checks'] as $check)
             @php
                 $checked = false;
-                if (in_array($check['value'], (array) $value)) {
+                if (in_array($check['value'], (array) $value) || in_array($check['value'], (array) old($transformName))) {
                     $checked = true;
                 }
             @endphp
