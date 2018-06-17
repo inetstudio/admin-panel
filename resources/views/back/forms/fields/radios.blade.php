@@ -28,7 +28,7 @@
     <div class="col-sm-10">
 
         @foreach ($attributes['radios'] as $radio)
-            <div><label> {!! Form::radio($name, $radio['value'], (! $value && $loop->first || $radio['value'] == $value || $radio['value'] == old($transformName)) ? true : false, (isset($radio['options'])) ? $radio['options'] : []) !!} {{ $radio['label'] }} </label></div>
+            <div><label> {!! Form::radio($name, $radio['value'], (! $value && $loop->first || $radio['value'] === (old($transformName) ? old($transformName) : $value)) ? true : false, (isset($radio['options'])) ? $radio['options'] : []) !!} {{ $radio['label'] }} </label></div>
         @endforeach
 
         @foreach ($errors->get($transformName) as $message)
