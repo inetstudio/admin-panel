@@ -41,7 +41,7 @@ window.Admin.options.tinymce = {
     plugins: [
         'autolink lists link charmap print preview',
         'searchreplace visualblocks code fullscreen',
-        'insertdatetime media table contextmenu paste images'
+        'insertdatetime media table contextmenu paste images widgets'
     ],
-    toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link | images | code'
+    toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link | images | code | add_embedded_widget'
 };
