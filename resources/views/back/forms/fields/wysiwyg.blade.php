@@ -24,7 +24,16 @@
 </div>
 
 @if (isset($attributes['images']))
-    {!! Form::imagesStack($name, (isset($attributes['field']['id'])) ? $attributes['field']['id'] : $name, $attributes['images']) !!}
+    {!! Form::imagesStack($name, (isset($attributes['field']['id'])) ? $attributes['field']['id'] : $name,
+        array_merge(
+            $attributes['images'],
+            [
+                'controls' => ['add', 'edit', 'remove']
+            ]
+        )
+    ) !!}
 @endif
 
 <div class="hr-line-dashed"></div>
+
+@include('admin.module.uploads::back.widgets.gallery_widget')

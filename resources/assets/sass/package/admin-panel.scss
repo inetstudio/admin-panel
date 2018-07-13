@@ -85,6 +85,10 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
     font-size: 16px;
 }
 
+.swal2-container {
+    z-index: 9999;
+}
+
 
 // DataTables Custom
 table.dataTable {
