@@ -28,5 +28,17 @@ class CarbonServiceProvider extends ServiceProvider
 
             return trim($day.' '.$month).', '.$time;
         });
+
+        Carbon::macro('formatDateToRus', function (string $strTime) {
+            $monthsNames = [1 => 'января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+
+            $carbonTime = self::parse($strTime);
+
+            $day = $carbonTime->day;
+            $month = (isset($monthsNames[$carbonTime->month])) ? $monthsNames[$carbonTime->month] : '';
+            $year = $carbonTime->year;
+
+            return trim($day.' '.$month).' '.$year;
+        });
     }
 }
