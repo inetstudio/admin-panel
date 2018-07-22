@@ -2,6 +2,10 @@
     overflow: inherit;
 }
 
+.modal {
+    overflow-y: scroll;
+}
+
 // Autocomplete custom
 .autocomplete-suggestions {
     border: 1px solid #999;
