@@ -4,10 +4,11 @@ use Symfony\Component\Finder\Finder;
 use Illuminate\Support\Facades\Blade;
 
 if (! function_exists('registerPackageBindings')) {
-    function registerPackageBindings($pathToContracts)
+    function getPackageBindings($pathToContracts)
     {
-        $app = app();
         $files = Finder::create()->files()->in($pathToContracts)->name('*.php');
+
+        $bindings = [];
 
         foreach ($files as $file) {
             $contents = $file->getContents();
@@ -18,8 +19,10 @@ if (! function_exists('registerPackageBindings')) {
             $contract = $matches[1].'\\'.$className;
             $implementation = str_replace(['Contracts\\', 'Contract'], ['', ''], $contract);
 
-            $app->bind($contract, $implementation);
+            $bindings[$contract] = $implementation;
         }
+
+        return $bindings;
     }
 }
 
