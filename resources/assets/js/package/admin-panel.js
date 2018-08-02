@@ -18,6 +18,17 @@ $(document).ready(function () {
         });
     }
 
+    $('.code').each(function () {
+        let element = $(this);
+
+        window.CodeMirror.fromTextArea(document.getElementById(element.attr('id')), {
+            lineNumbers: true,
+            matchBrackets: true,
+            styleActiveLine: true,
+            mode: 'htmlmixed'
+        });
+    });
+
     $('.autocomplete').each(function () {
         let field = $(this),
             url = field.attr('data-search'),

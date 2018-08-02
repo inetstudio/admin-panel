@@ -25,6 +25,7 @@ window.Pace = require('./plugins/pace/pace');
 window.Pace.start();
 
 window.Clipboard = require('clipboard');
+window.CodeMirror = require('codemirror/lib/codemirror');
 window.Holder = require('holderjs');
 window.LazyLoad = require('vanilla-lazyload');
 window.swal = require('sweetalert2/dist/sweetalert2');
@@ -83,6 +84,8 @@ require('select2/dist/js/select2.full');
 require('select2/dist/js/i18n/ru');
 
 require('devbridge-autocomplete');
+require('codemirror/mode/htmlmixed/htmlmixed');
+require('codemirror/addon/scroll/simplescrollbars');
 require('jquery-datetimepicker/build/jquery.datetimepicker.full');
 
 require('@fancyapps/fancybox/dist/jquery.fancybox');
