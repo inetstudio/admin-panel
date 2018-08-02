@@ -27,6 +27,8 @@ $(document).ready(function () {
             styleActiveLine: true,
             mode: 'htmlmixed'
         });
+
+        element.closest('.form-group').find('.collapse-link').click();
     });
 
     $('.autocomplete').each(function () {
