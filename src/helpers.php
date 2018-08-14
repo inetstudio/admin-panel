@@ -7,7 +7,9 @@ use Illuminate\Support\Facades\Cache;
 if (! function_exists('registerPackageBindings')) {
     function getPackageBindings($pathToContracts)
     {
-        return Cache::rememberForever(md5($pathToContracts), function () use ($pathToContracts) {
+        $cacheKey = 'packageBindings_'.md5($pathToContracts);
+
+        return Cache::rememberForever($cacheKey, function () use ($pathToContracts) {
             $files = Finder::create()->files()->in($pathToContracts)->name('*.php');
 
             $bindings = [];
