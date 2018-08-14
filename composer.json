@@ -29,10 +29,7 @@
     "autoload": {
       "psr-4": {
         "InetStudio\\AdminPanel\\": "src"
-      },
-      "files": [
-        "src/helpers.php"
-      ]
+      }
     },
     "extra": {
       "laravel": {
