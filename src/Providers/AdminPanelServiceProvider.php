@@ -20,6 +20,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         $this->registerRoutes();
         $this->registerViews();
         $this->registerTranslations();
+        $this->registerHelpers();
     }
 
     /**
@@ -64,5 +65,19 @@ class AdminPanelServiceProvider extends ServiceProvider
     protected function registerTranslations(): void
     {
         $this->loadTranslationsFrom(__DIR__.'/../../resources/lang', 'admin');
+    }
+
+    /**
+     * Регистрация хелперов.
+     *
+     * @return void
+     */
+    protected function registerHelpers(): void
+    {
+        $file = app_path(__DIR__.'/../../src/helpers.php');
+        
+        if (file_exists($file)) {
+            require_once($file);
+        }
     }
 }
