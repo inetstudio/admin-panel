@@ -1,30 +1,6 @@
 <?php
 
-use Symfony\Component\Finder\Finder;
 use Illuminate\Support\Facades\Blade;
-
-if (! function_exists('registerPackageBindings')) {
-    function getPackageBindings($pathToContracts)
-    {
-        $files = Finder::create()->files()->in($pathToContracts)->name('*.php');
-
-        $bindings = [];
-
-        foreach ($files as $file) {
-            $contents = $file->getContents();
-            $className = $file->getBasename('.php');
-
-            preg_match('#^namespace\s+(.+?);$#sm', $contents, $matches);
-
-            $contract = $matches[1] . '\\' . $className;
-            $implementation = str_replace(['Contracts\\', 'Contract'], ['', ''], $contract);
-
-            $bindings[$contract] = $implementation;
-        }
-
-        return $bindings;
-    }
-}
 
 if (! function_exists('static_asset')) {
     function static_asset($asset)

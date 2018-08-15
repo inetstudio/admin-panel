@@ -47,6 +47,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 'InetStudio\AdminPanel\Console\Commands\SetupCommand',
+                'InetStudio\AdminPanel\Console\Commands\Utilities\GenerateBindingsCommand',
             ]);
         }
     }
