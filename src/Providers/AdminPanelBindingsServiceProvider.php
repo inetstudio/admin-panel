@@ -3,6 +3,7 @@
 namespace InetStudio\AdminPanel\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Foundation\Application;
 
 /**
  * Class AdminPanelBindingsServiceProvider.
@@ -11,28 +12,27 @@ class AdminPanelBindingsServiceProvider extends ServiceProvider
 {
     protected $defer = true;
 
-    public $bindings = [
-        // Controllers
-        'InetStudio\AdminPanel\Contracts\Http\Controllers\Back\PagesControllerContract' => 'InetStudio\AdminPanel\Http\Controllers\Back\PagesController',
+    public $bindings = [];
 
-        // Responses
-        'InetStudio\AdminPanel\Contracts\Http\Responses\Back\IndexResponseContract' => 'InetStudio\AdminPanel\Http\Responses\Back\IndexResponse',
+    /**
+     * AdminPanelBindingsServiceProvider constructor.
+     *
+     * @param Application $app
+     */
+    public function __construct(Application $app)
+    {
+        parent::__construct($app);
 
-        // Serializers
-        'InetStudio\AdminPanel\Contracts\Serializers\SimpleDataArraySerializerContract' => 'InetStudio\AdminPanel\Serializers\SimpleDataArraySerializer',
-    ];
+        $this->bindings = \BindingsHelpers::getPackageBindings(__DIR__.'/../Contracts');
+    }
 
     /**
      * Получить сервисы от провайдера.
      *
      * @return array
      */
-    public function provides(): array
+    public function provides()
     {
-        return [
-            'InetStudio\AdminPanel\Contracts\Http\Controllers\Back\PagesControllerContract',
-            'InetStudio\AdminPanel\Contracts\Http\Responses\Back\IndexResponseContract',
-            'InetStudio\AdminPanel\Contracts\Serializers\SimpleDataArraySerializerContract',
-        ];
+        return array_keys($this->bindings);
     }
 }
