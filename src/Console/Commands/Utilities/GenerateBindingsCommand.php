@@ -38,7 +38,7 @@ class GenerateBindingsCommand extends Command
 
         $path = $this->ask('Path to file');
         $path = 'packages/inetstudio/'.$path.'/src/Providers';
-        
+
         $bindings = \BindingsHelpers::getPackageBindings(base_path($path).'/../Contracts');
 
         $data = view(
