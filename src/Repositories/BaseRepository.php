@@ -26,6 +26,11 @@ class BaseRepository implements BaseRepositoryContract
     public $relations = [];
 
     /**
+     * @var array
+     */
+    public $scopes = [];
+
+    /**
      * Получаем модель репозитория.
      *
      * @return mixed
@@ -175,6 +180,12 @@ class BaseRepository implements BaseRepositoryContract
             $skip = $params['paging']['page']*$params['paging']['limit'];
 
             $builder->skip($skip)->limit($params['paging']['limit']);
+        }
+
+        if (isset($params['scopes'])) {
+            foreach ($params['scopes'] as $scopeName) {
+                $builder->withGlobalScope($scopeName, $this->scopes[$scopeName]);
+            }
         }
 
         return $builder;
