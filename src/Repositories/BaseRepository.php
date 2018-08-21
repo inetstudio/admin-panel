@@ -162,9 +162,8 @@ class BaseRepository implements BaseRepositoryContract
     {
         $builder = $this->model::query();
 
-        if (isset($params['columns'])) {
-            $builder->select(array_merge($this->defaultColumns, $params['columns']));
-        }
+        $columns = isset($params['columns']) ? array_unique(array_merge($this->defaultColumns, $params['columns'])) : $this->defaultColumns;
+        $builder->select($columns);
 
         if (isset($params['relations'])) {
             $builder->with(array_intersect_key($this->relations, array_flip($params['relations'])));
@@ -184,7 +183,9 @@ class BaseRepository implements BaseRepositoryContract
 
         if (isset($params['scopes'])) {
             foreach ($params['scopes'] as $scopeName) {
-                $builder->withGlobalScope($scopeName, $this->scopes[$scopeName]);
+                if (isset($this->scopes[$scopeName])) {
+                    $builder->withGlobalScope($scopeName, $this->scopes[$scopeName]);
+                }
             }
         }
 
