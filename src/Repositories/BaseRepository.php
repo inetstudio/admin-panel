@@ -163,16 +163,16 @@ class BaseRepository implements BaseRepositoryContract
         $builder = $this->model::query();
 
         $columns = isset($params['columns']) ? array_unique(array_merge($this->defaultColumns, $params['columns'])) : $this->defaultColumns;
+        $columns = $this->prepareColumns($columns);
+
         $builder->select($columns);
 
         if (isset($params['relations'])) {
             $builder->with(array_intersect_key($this->relations, array_flip($params['relations'])));
         }
 
-        if (isset($params['order'])) {
-            foreach ($params['order'] as $column => $direction) {
-                $builder->orderBy($column, $direction);
-            }
+        foreach ($params['order'] ?? [] as $column => $direction) {
+            $builder->orderBy($column, $direction);
         }
 
         if (isset($params['paging'])) {
@@ -181,14 +181,32 @@ class BaseRepository implements BaseRepositoryContract
             $builder->skip($skip)->limit($params['paging']['limit']);
         }
 
-        if (isset($params['scopes'])) {
-            foreach ($params['scopes'] as $scopeName) {
-                if (isset($this->scopes[$scopeName])) {
-                    $builder->withGlobalScope($scopeName, $this->scopes[$scopeName]);
-                }
+        foreach ($params['scopes'] ?? [] as $scopeName) {
+            if (isset($this->scopes[$scopeName])) {
+                $builder->withGlobalScope($scopeName, $this->scopes[$scopeName]);
             }
         }
 
         return $builder;
+    }
+
+    /**
+     * Подготавливаем колонки.
+     *
+     * @param array $columns
+     *
+     * @return array
+     */
+    protected function prepareColumns(array $columns): array
+    {
+        $table = $this->model->getTable();
+
+        $preparedColumns = [];
+
+        foreach ($columns as $column) {
+            $preparedColumns[] = str_contains($column, '.') ? $column : implode('.', [$table, $column]);
+        }
+
+        return $preparedColumns;
     }
 }
