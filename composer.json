@@ -21,6 +21,7 @@
       "predis/predis": "^1.1",
       "tightenco/ziggy": "^0.6",
       "venturecraft/revisionable": "^1.28",
+      "yajra/laravel-datatables-buttons": "^3.0",
       "yajra/laravel-datatables-fractal": "^1.0",
       "yajra/laravel-datatables-html": "^3.1",
       "yajra/laravel-datatables-oracle": "^8.0"
