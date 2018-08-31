@@ -15,6 +15,10 @@
 
         {!! Form::text($name, $value, (isset($attributes['field'])) ? $attributes['field'] : ['class' => 'form-control']) !!}
 
+        @if (isset($attributes['field']['class']) && strpos($attributes['field']['class'], 'countable') !== false)
+            <span class="help-block m-b-none {{ $name }}-counter counter"></span>
+        @endif
+
         @foreach ($errors->get($transformName) as $message)
             <span class="help-block m-b-none">{{ $message }}</span>
         @endforeach

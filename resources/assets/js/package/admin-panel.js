@@ -31,6 +31,21 @@ $(document).ready(function () {
         element.closest('.form-group').find('.collapse-link').click();
     });
 
+    $('.countable').each(function () {
+        let countSymbols = function (element) {
+            let count = element.val().length,
+                inputName = element.attr('name');
+
+            $('.'+jq(inputName + '-counter')).text('символов - '+count);
+        };
+
+        countSymbols($(this));
+
+        $(this).on('input', function () {
+            countSymbols($(this));
+        });
+    });
+
     $('.autocomplete').each(function () {
         let field = $(this),
             url = field.attr('data-search'),
@@ -206,6 +221,14 @@ $(document).ready(function () {
         });
     });
 });
+
+/**
+ * Вспомогательная функция для использования служебных символов в селекторе
+ * @param selector
+ */
+function jq(selector) {
+    return selector.replace(/(:|\.|\[|\]|,|=|@)/g, "\\$1");
+}
 
 window.initTinyMCE = function (container) {
     $(container).find('.tinymce').each(function () {
