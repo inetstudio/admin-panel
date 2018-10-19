@@ -1,6 +1,6 @@
 {
   "name": "inetstudio-admin-panel",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "dependencies": {
     "@fancyapps/fancybox": "^3.2.5",
     "animate.css": "^3.6.1",
