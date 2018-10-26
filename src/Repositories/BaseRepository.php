@@ -162,6 +162,10 @@ class BaseRepository implements BaseRepositoryContract
     {
         $builder = $this->model::query();
 
+        if (isset($params['withTrashed']) && $params['withTrashed']) {
+            $builder->withTrashed();
+        }
+
         $columns = isset($params['columns']) ? array_unique(array_merge($this->defaultColumns, $params['columns'])) : $this->defaultColumns;
         $columns = $this->prepareColumns($columns);
 
