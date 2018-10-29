@@ -146,6 +146,7 @@ $(document).ready(function () {
         $('.slugify').on('change', function () {
             let $this = $(this);
             let val = $this.val(),
+                objectID = $('#object-id').val(),
                 url = $this.attr('data-slug-url'),
                 target = $this.attr('data-slug-target');
 
@@ -153,6 +154,7 @@ $(document).ready(function () {
                 url: url,
                 method: 'POST',
                 data: {
+                    id: objectID,
                     name: val
                 },
                 dataType: 'json',
