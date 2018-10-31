@@ -3,6 +3,7 @@
 namespace InetStudio\AdminPanel\Repositories;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Query\Expression;
 use InetStudio\AdminPanel\Contracts\Repositories\BaseRepositoryContract;
 
 /**
@@ -208,7 +209,7 @@ class BaseRepository implements BaseRepositoryContract
         $preparedColumns = [];
 
         foreach ($columns as $column) {
-            $preparedColumns[] = str_contains($column, '.') ? $column : implode('.', [$table, $column]);
+            $preparedColumns[] = (str_contains($column, '.') || ($column instanceof Expression)) ? $column : implode('.', [$table, $column]);
         }
 
         return $preparedColumns;
