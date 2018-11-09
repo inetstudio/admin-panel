@@ -176,6 +176,10 @@ class BaseRepository implements BaseRepositoryContract
             $builder->with(array_intersect_key($this->relations, array_flip($params['relations'])));
         }
 
+        foreach ($params['filter'] ?? [] as $filter) {
+            $builder = $filter($builder);
+        }
+
         foreach ($params['order'] ?? [] as $column => $direction) {
             $builder->orderBy($column, $direction);
         }
