@@ -180,8 +180,12 @@ class BaseRepository implements BaseRepositoryContract
             $builder = $filter($builder);
         }
 
-        foreach ($params['order'] ?? [] as $column => $direction) {
-            $builder->orderBy($column, $direction);
+        if (isset($params['random'])) {
+            $builder->orderByRaw('RAND()');
+        } else {
+            foreach ($params['order'] ?? [] as $column => $direction) {
+                $builder->orderBy($column, $direction);
+            }
         }
 
         if (isset($params['paging'])) {
