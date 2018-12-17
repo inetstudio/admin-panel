@@ -1,12 +1,17 @@
 <template>
     <div>
-        <div class="form-group ">
+        <div class="form-group" :class="{'has-error': hasError}">
             <label :for="name" class="col-sm-2 control-label">{{ label }}</label>
             <div class="col-sm-10">
                 <select :id="name" :name="name" v-model="selected" class="form-control" v-bind="attributes" ref="select" style="width: 100%">
                     <option value=""></option>
                     <option :value="option.value" v-bind="option.attributes" v-for="option in options">{{ option.text }}</option>
                 </select>
+
+                <span class="help-block m-b-none"
+                      v-for = "(error, index) in fieldErrors"
+                      :key = index
+                >{{ error}}</span>
             </div>
         </div>
         <div class="hr-line-dashed"></div>
@@ -15,7 +20,7 @@
 
 <script>
     export default {
-        name: 'dropdown',
+        name: 'BaseDropdown',
         props: {
             label: {
                 type: String,
@@ -42,21 +47,22 @@
         mounted() {
             let component = this;
 
-            $(document).ready(function () {
+            this.$nextTick(function () {
                 let select = $(component.$refs.select);
+
+                let options = {
+                    language: "ru"
+                };
 
                 if (select.attr('data-source')) {
                     let url = select.attr('data-source'),
                         exclude = (typeof select.attr('data-exclude') !== 'undefined') ? select.attr('data-exclude').split('|').map(Number) : [];
 
-                    let options = {};
-
                     if (select.attr('data-create') === '1') {
                         options.tags = true;
                     }
 
-                    select.select2($.extend({
-                        language: "ru",
+                    options = $.extend({
                         ajax: {
                             url: url,
                             method: 'POST',
@@ -82,28 +88,16 @@
                             cache: true
                         },
                         minimumInputLength: 3
-                    }, options))
-                    .on('change', function () {
-                        component.$emit('update:selected', this.value)
-                    });
-                } else {
-                    select.select2({
-                        language: "ru"
-                    })
-                    .on('change', function () {
-                        component.$emit('update:selected', this.value)
-                    });
+                    }, options);
                 }
 
-                component.initComplete();
+                select.select2(options).on('change', function () {
+                    component.$emit('update:selected', this.value)
+                });
             });
         },
-        methods: {
-            initComplete() {
-                this.$emit('initComplete', {
-                    selector: '#'+this.name,
-                });
-            }
-        }
+        mixins: [
+            window.Admin.vue.mixins['errors']
+        ]
     }
 </script>

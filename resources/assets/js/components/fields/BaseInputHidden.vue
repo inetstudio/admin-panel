@@ -4,7 +4,7 @@
 
 <script>
     export default {
-        name: 'input-hidden',
+        name: 'BaseInputHidden',
         props: {
             name: {
                 type: String,

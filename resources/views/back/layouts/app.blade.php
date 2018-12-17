@@ -44,6 +44,17 @@
             @stack('modals')
         </div>
 
+        <div id="modules-components">
+            <div :id="moduleName+'_components'" v-for="(module, moduleName) in modules" :key="moduleName">
+                <component
+                    :is="component.name"
+                    v-for="component in module.components"
+                    :key="component.name" :ref="moduleName+'_'+component.name"
+                    v-bind="component.data"
+                />
+            </div>
+        </div>
+
         @routes('back')
 
         <script src="{{ asset(mix('admin/js/manifest.js')) }}"></script>

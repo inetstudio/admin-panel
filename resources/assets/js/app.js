@@ -26,6 +26,7 @@ window.Pace.start();
 
 window.Clipboard = require('clipboard');
 window.CodeMirror = require('codemirror/lib/codemirror');
+window.hash = require('object-hash');
 window.Holder = require('holderjs');
 window.LazyLoad = require('vanilla-lazyload');
 window.swal = require('sweetalert2/dist/sweetalert2');
@@ -43,13 +44,19 @@ Vue.component('vue-block-buttons', function (resolve) {
 Vue.component('vue-block-info', function (resolve) {
     require(['./components/blocks/InfoComponent'], resolve);
 });
-Vue.component('InputHidden', function (resolve) {
+Vue.component('BaseInputHidden', function (resolve) {
     require(['./components/fields/BaseInputHidden'], resolve);
 });
-Vue.component('InputText', function (resolve) {
+Vue.component('BaseInputText', function (resolve) {
     require(['./components/fields/BaseInputText'], resolve);
 });
-Vue.component('Dropdown', function (resolve) {
+Vue.component('BaseCheckboxes', function (resolve) {
+    require(['./components/fields/BaseCheckboxes'], resolve);
+});
+Vue.component('BaseAutocomplete', function (resolve) {
+    require(['./components/fields/BaseAutocomplete'], resolve);
+});
+Vue.component('BaseDropdown', function (resolve) {
     require(['./components/fields/BaseDropdown'], resolve);
 });
 
@@ -104,3 +111,4 @@ requireFromPackages(require.context('../../../../', true, /\app\.js/));
 
 require('./package/inspinia.js');
 require('./package/admin-panel.js');
+require('./mixins/errors');

@@ -6,7 +6,17 @@ window.Admin = window.Admin || {
         images: [],
         lists: []
     },
-    modules: {}
+    modules: {},
+    vue: {
+        stores: [],
+        mixins: [],
+        modulesComponents: new Vue({
+            el: '#modules-components',
+            data: {
+                modules: {}
+            },
+        })
+    }
 };
 
 window.Admin.options.toastr = {
@@ -39,9 +49,9 @@ window.Admin.options.tinymce = {
     remove_script_host: false,
     language: 'ru',
     plugins: [
-        'autolink lists link charmap print preview',
+        'autolink lists links charmap print preview',
         'searchreplace visualblocks code fullscreen',
         'insertdatetime media table contextmenu paste images widgets'
     ],
-    toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | link | images | code | add_embedded_widget'
+    toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | add_link | images | code | add_embedded_widget'
 };

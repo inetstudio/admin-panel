@@ -3,7 +3,7 @@
         <div class="form-group" :class="{'has-error': hasError}">
             <label :for="name" class="col-sm-2 control-label">{{ label }}</label>
             <div class="col-sm-10">
-                <input :name="name" type="text" :value="value" :id="name" class="form-control" v-bind="attributes" @input="$emit('update:value', $event.target.value)">
+                <input :name="name" type="text" :value="value" :id="name" class="form-control" v-bind="attributes" @input="$emit('update:value', $event.target.value)" ref="autocomplete">
 
                 <span class="help-block m-b-none"
                       v-for = "(error, index) in fieldErrors"
@@ -17,7 +17,7 @@
 
 <script>
     export default {
-        name: 'BaseInputText',
+        name: 'BaseAutocomplete',
         props: {
             label: {
                 type: String,
@@ -34,6 +34,25 @@
                     return {};
                 }
             }
+        },
+        mounted() {
+            let component = this;
+
+            component.$nextTick(function () {
+                $(component.$refs.autocomplete).autocomplete({
+                    type: 'POST',
+                    paramName: 'q',
+                    params: {
+                        type: 'autocomplete'
+                    },
+                    minChars: 2,
+                    onSelect: function (suggestion) {
+                        component.$emit('select', {
+                            data: suggestion.data
+                        });
+                    }
+                });
+            });
         },
         mixins: [
             window.Admin.vue.mixins['errors']

@@ -232,6 +232,16 @@ function jq(selector) {
     return selector.replace(/(:|\.|\[|\]|,|=|@)/g, "\\$1");
 }
 
+window.waitForElement = function(selector, callback) {
+    if ($(selector).length) {
+        callback();
+    } else {
+        setTimeout(function() {
+            window.waitForElement(selector, callback);
+        }, 100);
+    }
+};
+
 window.initTinyMCE = function (container) {
     $(container).find('.tinymce').each(function () {
         window.Admin.options.tinymce.target = $(this).get(0);
