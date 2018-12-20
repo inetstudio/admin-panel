@@ -1,3 +1,13 @@
+const requireFromPackages = function(r){
+    r.keys().forEach(function (key) {
+        if (! key.includes('admin-panel')) {
+            r(key);
+        }
+    });
+};
+
+require('./package/init.js');
+
 window.$ = window.jQuery = require('jquery');
 global.$ = $;
 global.jQuery = jQuery;
@@ -19,7 +29,7 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-require('bootstrap');
+require('bootstrap-sass');
 
 window.Pace = require('./plugins/pace/pace');
 window.Pace.start();
@@ -33,32 +43,35 @@ window.swal = require('sweetalert2/dist/sweetalert2');
 window.Sortable = require('sortablejs');
 window.toastr = require('toastr');
 window.UUID = require('uuidjs');
-window.Vue = require('vue');
 
+
+/* VUE ===================================================================== */
+window.Vue = require('vue');
 window.Vuex = require('vuex');
 window.Vue.use(window.Vuex);
 
-Vue.component('vue-block-buttons', function (resolve) {
-    require(['./components/blocks/ButtonsComponent'], resolve);
-});
-Vue.component('vue-block-info', function (resolve) {
-    require(['./components/blocks/InfoComponent'], resolve);
-});
-Vue.component('BaseInputHidden', function (resolve) {
-    require(['./components/fields/BaseInputHidden'], resolve);
-});
-Vue.component('BaseInputText', function (resolve) {
-    require(['./components/fields/BaseInputText'], resolve);
-});
-Vue.component('BaseCheckboxes', function (resolve) {
-    require(['./components/fields/BaseCheckboxes'], resolve);
-});
-Vue.component('BaseAutocomplete', function (resolve) {
-    require(['./components/fields/BaseAutocomplete'], resolve);
-});
-Vue.component('BaseDropdown', function (resolve) {
-    require(['./components/fields/BaseDropdown'], resolve);
-});
+window.Admin.vue = {
+    stores: [],
+    mixins: [],
+    modulesComponents: new Vue({
+        el: '#modules-components',
+        data: {
+            modules: {}
+        },
+    })
+};
+
+require('./mixins/errors');
+
+Vue.component('vue-block-buttons', require('./components/blocks/ButtonsComponent.vue').default);
+Vue.component('vue-block-info', require('./components/blocks/InfoComponent.vue').default);
+Vue.component('BaseInputHidden', require('./components/fields/BaseInputHidden.vue').default);
+Vue.component('BaseInputText', require('./components/fields/BaseInputText.vue').default);
+Vue.component('BaseCheckboxes', require('./components/fields/BaseCheckboxes.vue').default);
+Vue.component('BaseAutocomplete', require('./components/fields/BaseAutocomplete.vue').default);
+Vue.component('BaseDropdown', require('./components/fields/BaseDropdown.vue').default);
+/* VUE ===================================================================== */
+
 
 window.tinymce = require('tinymce');
 require('tinymce-i18n/langs/ru');
@@ -97,18 +110,7 @@ require('jquery-datetimepicker/build/jquery.datetimepicker.full');
 
 require('@fancyapps/fancybox/dist/jquery.fancybox');
 
-require('./package/init.js');
-
-const requireFromPackages = function(r){
-    r.keys().forEach(function (key) {
-        if (! key.includes('admin-panel')) {
-            r(key);
-        }
-    });
-};
-
 requireFromPackages(require.context('../../../../', true, /\app\.js/));
 
 require('./package/inspinia.js');
 require('./package/admin-panel.js');
-require('./mixins/errors');

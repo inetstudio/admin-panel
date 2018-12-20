@@ -1,6 +1,12 @@
+@import "./package/support";
+
 // Base
-@import "~bootstrap/dist/css/bootstrap";
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+@import "~bootstrap-sass/assets/stylesheets/_bootstrap";
+
+$fa-font-path: "~font-awesome/fonts/";
 @import "~font-awesome/scss/font-awesome";
+
 @import "~animate.css/animate";
 
 // Plugins

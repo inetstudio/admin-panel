@@ -6,17 +6,7 @@ window.Admin = window.Admin || {
         images: [],
         lists: []
     },
-    modules: {},
-    vue: {
-        stores: [],
-        mixins: [],
-        modulesComponents: new Vue({
-            el: '#modules-components',
-            data: {
-                modules: {}
-            },
-        })
-    }
+    modules: {}
 };
 
 window.Admin.options.toastr = {
