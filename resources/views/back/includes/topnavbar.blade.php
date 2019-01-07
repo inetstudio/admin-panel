@@ -25,12 +25,12 @@
                     <ul class="dropdown-menu dropdown-messages">
                         <li>
                             <a href="{{ url(route('back.acl.users.edit', \Auth::user()->id)) }}">
-                                <i class="fa fa-lg fa-pencil-square-o"></i> Редактировать профиль
+                                <i class="fa fa-lg fa-pen-square"></i> Редактировать профиль
                             </a>
                         </li>
                         <li>
                             <a href="{{ url(route('back.acl.users.logout')) }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="fa fa-lg fa-sign-out"></i> Выйти
+                                <i class="fa fa-lg fa-sign-out-alt"></i> Выйти
                             </a>
                             <form id="logout-form" action="{{ url(route('back.acl.users.logout')) }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}

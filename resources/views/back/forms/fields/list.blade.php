@@ -34,7 +34,7 @@
                     <li v-for="(item, index) in items">
                         <span class="m-l-xs">@{{ itemTitles[index] }}</span>
                         <div class="btn-group pull-right">
-                            <a href="#" class="btn btn-xs btn-default m-r-xs" @click.prevent="edit(index)"><i class="fa fa-pencil"></i></a>
+                            <a href="#" class="btn btn-xs btn-default m-r-xs" @click.prevent="edit(index)"><i class="fa fa-pencil-alt"></i></a>
                             <a href="#" class="btn btn-xs btn-danger delete" @click.prevent="remove(index)"><i class="fa fa-times"></i></a>
                         </div>
                         <input :name="'{{ $name }}[' + index + '][id]'" type="hidden" :value="item.id">
