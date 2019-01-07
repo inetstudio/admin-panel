@@ -4,8 +4,11 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import "~bootstrap-sass/assets/stylesheets/_bootstrap";
 
-$fa-font-path: "~font-awesome/fonts/";
-@import "~font-awesome/scss/font-awesome";
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import '~@fortawesome/fontawesome-free/scss/brands';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
 
 @import "~animate.css/animate";
 
