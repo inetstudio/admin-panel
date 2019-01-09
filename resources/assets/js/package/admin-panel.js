@@ -113,7 +113,7 @@ $(document).ready(function () {
                     },
                     cache: true
                 },
-                minimumInputLength: 3
+                minimumInputLength: 1
             }, options));
         } else {
             $(this).select2({
