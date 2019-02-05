@@ -206,7 +206,7 @@ class AdminPanelServiceProvider extends ServiceProvider
 
             foreach ($keys as $key) {
                 $sums[$key] = array_reduce($arrays, function ($sum, $arr) use ($key) {
-                    return $sum + @$arr[$key];
+                    return $sum + (isset($arr[$key])) ? $arr[$key] : 0;
                 });
             }
 
