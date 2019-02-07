@@ -6,6 +6,12 @@ $(document).on('show.bs.modal', '.modal', function () {
     }, 0);
 });
 
+$(document).on('focusin', function(e) {
+    if ($(e.target).closest(".mce-window").length) {
+        e.stopImmediatePropagation();
+    }
+});
+
 $(document).ready(function () {
     $('.json-data').each(function () {
         let json = JSON.parse($(this).text());
@@ -13,7 +19,7 @@ $(document).ready(function () {
     });
 
     if ($('[data-src]:not([class*=placeholder])').length > 0) {
-        new LazyLoad({
+        new window.LazyLoad({
             elements_selector: '[data-src]:not([class*=placeholder])'
         });
     }
