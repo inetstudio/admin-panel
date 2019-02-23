@@ -12,6 +12,8 @@ class CommonService
      */
     public $repository;
 
+    public $model;
+
     /**
      * CommonService constructor.
      *

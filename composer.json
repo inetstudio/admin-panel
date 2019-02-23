@@ -28,7 +28,8 @@
     },
     "autoload": {
       "psr-4": {
-        "InetStudio\\AdminPanel\\": "src"
+        "InetStudio\\AdminPanel\\": "src",
+        "InetStudio\\AdminPanel\\Base\\": "entities/base/src"
       },
       "files": [
         "src/helpers.php"

@@ -191,6 +191,8 @@ $(document).ready(function () {
         event.preventDefault();
 
         let $button = $(this);
+        let $table = $button.closest('.dataTable');
+
 
         swal({
             title: "Вы уверены?",
@@ -211,7 +213,7 @@ $(document).ready(function () {
                     },
                     success: function (data) {
                         if (data.success === true) {
-                            $button.closest('tr, .dd3-item').remove();
+                            $table.DataTable().ajax.reload(null, false);
                             swal({
                                 title: "Запись удалена",
                                 type: "success"
