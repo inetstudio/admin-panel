@@ -46,4 +46,23 @@ class CommonService
     {
         return $this->model::buildQuery($params);
     }
+
+
+    /**
+     * Сохраняем модель.
+     *
+     * @param array $data
+     * @param int $id
+     *
+     * @return mixed
+     */
+    public function saveModel(array $data, int $id = 0)
+    {
+        $item = $this->model::updateOrCreate(
+            ['id' => $id],
+            $data
+        );
+
+        return $item;
+    }
 }
