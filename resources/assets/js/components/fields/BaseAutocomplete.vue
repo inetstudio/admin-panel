@@ -39,7 +39,9 @@
             let component = this;
 
             component.$nextTick(function () {
-                $(component.$refs.autocomplete).autocomplete({
+                let $field = $(component.$refs.autocomplete);
+
+                let options = {
                     type: 'POST',
                     paramName: 'q',
                     params: {
@@ -51,7 +53,14 @@
                             data: suggestion.data
                         });
                     }
-                });
+                };
+
+                let url = $field.attr('data-search');
+                if (url) {
+                    options.serviceUrl = url;
+                }
+
+                $field.autocomplete(options);
             });
         },
         mixins: [
