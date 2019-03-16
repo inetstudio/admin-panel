@@ -2,7 +2,7 @@
 
 namespace InetStudio\AdminPanel\Base\Services\Front;
 
-use InetStudio\AdminPanel\Base\Services\CommonService;
+use InetStudio\AdminPanel\Base\Services\BaseService as CommonService;
 
 /**
  * Class BaseService.

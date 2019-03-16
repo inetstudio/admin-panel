@@ -3,9 +3,9 @@
 namespace InetStudio\AdminPanel\Base\Services;
 
 /**
- * Class CommonService.
+ * Class BaseService.
  */
-class CommonService
+class BaseService
 {
     /**
      * @var
@@ -47,7 +47,6 @@ class CommonService
         return $this->model::buildQuery($params);
     }
 
-
     /**
      * Сохраняем модель.
      *
@@ -64,5 +63,17 @@ class CommonService
         );
 
         return $item;
+    }
+
+    /**
+     * Удаляем модель.
+     *
+     * @param mixed $id
+     *
+     * @return bool|null
+     */
+    public function destroy($id): ?bool
+    {
+        return $this->model::destroy($id);
     }
 }
