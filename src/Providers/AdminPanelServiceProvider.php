@@ -3,6 +3,7 @@
 namespace InetStudio\AdminPanel\Providers;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Collective\Html\FormBuilder;
 use Illuminate\Support\Collection;
@@ -29,6 +30,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         $this->registerFormComponents();
         $this->registerBladeDirectives();
         $this->registerArrMacroses();
+        $this->registerStrMacroses();
         $this->registerCarbonMacroses();
         $this->registerCollectionMacroses();
     }
@@ -210,6 +212,28 @@ class AdminPanelServiceProvider extends ServiceProvider
             }
 
             return $sums;
+        });
+    }
+
+    /**
+     * Регистрация макросов Str.
+     */
+    protected function registerStrMacroses()
+    {
+        Str::macro('hideEmail', function ($value) {
+            $partials = explode("@", $value);
+            $service = array_pop($partials);
+
+            $name = implode($partials, '@');
+            $nameLen = strlen($name);
+
+            $startHidePos = floor($nameLen*0.33);
+            $endHidePos = floor($nameLen*0.66);
+
+            return (($nameLen == 1) ? '*' : (substr($name,0, $startHidePos)
+                .str_repeat('*', ($endHidePos-$startHidePos))
+                .substr($name,$endHidePos, $nameLen)))
+                .'@'.$service;
         });
     }
 
