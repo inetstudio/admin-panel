@@ -2,10 +2,13 @@
 
 namespace InetStudio\AdminPanel\Base\Services;
 
+use Illuminate\Database\Query\Builder;
+use InetStudio\AdminPanel\Base\Contracts\Services\BaseServiceContract;
+
 /**
  * Class BaseService.
  */
-class BaseService
+class BaseService implements BaseServiceContract
 {
     /**
      * @var
@@ -13,7 +16,7 @@ class BaseService
     public $model;
 
     /**
-     * CommonService constructor.
+     * BaseService constructor.
      *
      * @param $model
      */
@@ -40,9 +43,9 @@ class BaseService
      *
      * @param array $params
      *
-     * @return mixed
+     * @return Builder
      */
-    public function getAllItems(array $params = [])
+    public function getAllItems(array $params = []): Builder
     {
         return $this->model::buildQuery($params);
     }
