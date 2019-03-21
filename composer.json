@@ -38,6 +38,7 @@
     "extra": {
       "laravel": {
         "providers": [
+          "InetStudio\\AdminPanel\\Base\\Providers\\BindingsServiceProvider",
           "InetStudio\\AdminPanel\\Providers\\AdminPanelBindingsServiceProvider",
           "InetStudio\\AdminPanel\\Providers\\AdminPanelServiceProvider"
         ]
