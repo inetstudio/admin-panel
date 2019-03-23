@@ -2,6 +2,7 @@
 
 namespace InetStudio\AdminPanel\Base\Models\Traits\Scopes;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Query\Expression;
 
@@ -82,7 +83,7 @@ trait BuildQueryScopeTrait
         $preparedColumns = [];
 
         foreach ($columns as $column) {
-            $preparedColumns[] = (str_contains($column, '.') || ($column instanceof Expression)) ? $column : implode('.', [$table, $column]);
+            $preparedColumns[] = (Str::contains($column, '.') || ($column instanceof Expression)) ? $column : implode('.', [$table, $column]);
         }
 
         return $preparedColumns;

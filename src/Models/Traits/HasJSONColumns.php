@@ -2,6 +2,8 @@
 
 namespace InetStudio\AdminPanel\Models\Traits;
 
+use Illuminate\Support\Arr;
+
 /**
  * Trait HasJSONColumns.
  */
@@ -17,7 +19,7 @@ trait HasJSONColumns
      */
     public function hasJSONData(string $field, string $propertyName): bool
     {
-        return array_has($this[$field], $propertyName);
+        return Arr::has($this[$field], $propertyName);
     }
 
     /**
@@ -31,7 +33,7 @@ trait HasJSONColumns
      */
     public function getJSONData(string $field, string $propertyName, $default = null)
     {
-        return array_get($this[$field], $propertyName, $default);
+        return Arr::get($this[$field], $propertyName, $default);
     }
 
     /**
@@ -47,7 +49,7 @@ trait HasJSONColumns
     {
         $data = $this[$field];
 
-        array_set($data, $name, $value);
+        Arr::set($data, $name, $value);
 
         $this[$field] = $data;
 
@@ -66,7 +68,7 @@ trait HasJSONColumns
     {
         $data = $this[$field];
 
-        array_forget($data, $name);
+        Arr::forget($data, $name);
 
         $this[$field] = $data;
 

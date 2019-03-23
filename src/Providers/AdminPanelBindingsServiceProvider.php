@@ -3,17 +3,13 @@
 namespace InetStudio\AdminPanel\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
 /**
  * Class AdminPanelBindingsServiceProvider.
  */
-class AdminPanelBindingsServiceProvider extends ServiceProvider
+class AdminPanelBindingsServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    /**
-    * @var  bool
-    */
-    protected $defer = true;
-
     /**
     * @var  array
     */

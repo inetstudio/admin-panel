@@ -10,21 +10,22 @@
       }
     ],
     "require": {
-      "cviebrock/eloquent-sluggable": "^4.6",
-      "inetstudio/acl": "1.7.*",
-      "inetstudio/meta": "1.7.*",
-      "inetstudio/search": "1.7.*",
-      "inetstudio/simple-counters": "1.7.*",
-      "inetstudio/uploads": "1.7.*",
-      "laravelcollective/html": "^5.7",
+      "php": ">=7.2",
+      "cviebrock/eloquent-sluggable": "^4.8",
+      "inetstudio/acl": "1.8.*",
+      "inetstudio/meta": "1.8.*",
+      "inetstudio/search": "1.8.*",
+      "inetstudio/simple-counters": "1.8.*",
+      "inetstudio/uploads": "1.8.*",
+      "laravelcollective/html": "^5.8",
       "laravelista/ekko": "^1.5",
+      "owen-it/laravel-auditing": "^9.0",
       "predis/predis": "^1.1",
       "tightenco/ziggy": "^0.6",
-      "venturecraft/revisionable": "^1.28",
-      "yajra/laravel-datatables-buttons": "^4.4",
-      "yajra/laravel-datatables-fractal": "^1.2",
-      "yajra/laravel-datatables-html": "^3.8",
-      "yajra/laravel-datatables-oracle": "^8.9"
+      "yajra/laravel-datatables-buttons": "^4.6",
+      "yajra/laravel-datatables-fractal": "^1.4",
+      "yajra/laravel-datatables-html": "^4.4",
+      "yajra/laravel-datatables-oracle": "^9.0"
     },
     "autoload": {
       "psr-4": {

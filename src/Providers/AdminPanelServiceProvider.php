@@ -130,7 +130,7 @@ class AdminPanelServiceProvider extends ServiceProvider
                     $fullExpression = $namespace.'::'.$expression;
 
                     $result .= "<?php 
-                        if (\$__env->exists('{$fullExpression}')) echo \$__env->make('{$fullExpression}', array_except(get_defined_vars(), array('__data', '__path')))->render();
+                        if (\$__env->exists('{$fullExpression}')) echo \$__env->make('{$fullExpression}', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render();
                      ?>\r\n";
                 }
             }
@@ -169,13 +169,13 @@ class AdminPanelServiceProvider extends ServiceProvider
                         '('.static_asset('assets/fonts'),
                     ], file_get_contents(public_path().{$expression})); ?>\n";
 
-            if (ends_with($expression, ".html'")) {
+            if (Str::endsWith($expression, ".html'")) {
                 return $include;
             }
-            if (ends_with($expression, ".css'")) {
+            if (Str::endsWith($expression, ".css'")) {
                 return "<style>\n".$include.'</style>';
             }
-            if (ends_with($expression, ".js'")) {
+            if (Str::endsWith($expression, ".js'")) {
                 return "<script>\n".$include.'</script>';
             }
         });

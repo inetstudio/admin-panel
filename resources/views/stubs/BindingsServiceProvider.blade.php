@@ -4,17 +4,13 @@
 namespace {{ $namespace }};
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
 /**
  * Class {{ $className }}.
  */
-class {{ $className }} extends ServiceProvider
+class {{ $className }} extends ServiceProvider implements DeferrableProvider
 {
-    /**
-    * @var bool
-    */
-    protected $defer = true;
-
     /**
     * @var array
     */

@@ -46,16 +46,26 @@ class SetupCommand extends BaseSetupCommand
             ],
             [
                 'type' => 'artisan',
-                'description' => 'Revisionable setup',
-                'command' => 'migrate',
+                'description' => 'Audit setup config',
+                'command' => 'vendor:publish',
                 'params' => [
-                    '--path' => 'vendor/venturecraft/revisionable/src/migrations',
+                    '--provider' => 'OwenIt\Auditing\AuditingServiceProvider',
+                    '--tag' => 'config',
                 ],
             ],
             [
-                'type' => 'cli',
-                'description' => 'Composer dump',
-                'command' => 'composer dump-autoload',
+                'type' => 'artisan',
+                'description' => 'Audit setup migrations',
+                'command' => 'vendor:publish',
+                'params' => [
+                    '--provider' => 'OwenIt\Auditing\AuditingServiceProvider',
+                    '--tag' => 'migrations',
+                ],
+            ],
+            [
+                'type' => 'artisan',
+                'description' => 'Migration',
+                'command' => 'migrate',
             ],
         ];
     }
