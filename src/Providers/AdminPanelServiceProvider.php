@@ -163,10 +163,10 @@ class AdminPanelServiceProvider extends ServiceProvider
                         '(/assets/img',
                         '(/assets/fonts',
                     ], [
-                        '('.static_asset('assets/img'),
-                        '('.static_asset('assets/fonts'),
-                        '('.static_asset('assets/img'),
-                        '('.static_asset('assets/fonts'),
+                        '('.asset('assets/img'),
+                        '('.asset('assets/fonts'),
+                        '('.asset('assets/img'),
+                        '('.asset('assets/fonts'),
                     ], file_get_contents(public_path().{$expression})); ?>\n";
 
             if (Str::endsWith($expression, ".html'")) {
