@@ -1,6 +1,14 @@
 @php
     $name =  isset($attributes['field']['name']) ? $attributes['field']['name'] : $name;
     $transformName = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $name);
+
+    $fieldAttributes = [
+        'class' => 'form-control',
+    ];
+
+    if (isset($attributes['field'])) {
+        $fieldAttributes = array_merge($fieldAttributes, $attributes['field']);
+    }
 @endphp
 
 <div class="form-group row @if ($errors->has($transformName)){!! "has-error" !!}@endif">
@@ -13,7 +21,7 @@
 
     <div class="col-sm-10">
 
-        {!! Form::text($name, $value, (isset($attributes['field'])) ? $attributes['field'] : ['class' => 'form-control']) !!}
+        {!! Form::text($name, $value, $fieldAttributes) !!}
 
         @if (isset($attributes['field']['class']) && strpos($attributes['field']['class'], 'countable') !== false)
             <span class="form-text m-b-none {{ $name }}-counter counter"></span>

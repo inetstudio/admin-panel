@@ -4,6 +4,14 @@
 
     $transformName = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $name);
     $transformNameText = str_replace(['.', '[]', '[', ']'], ['_', '', '.', ''], $attributes['field']['name']);
+
+    $fieldAttributes = [
+        'class' => 'form-control',
+    ];
+
+    if (isset($attributes['field'])) {
+        $fieldAttributes = array_merge($fieldAttributes, $attributes['field']);
+    }
 @endphp
 
 <div class="form-group row @if ($errors->has($transformNameText)){!! "has-error" !!}@endif">
@@ -14,7 +22,7 @@
 
     <div class="col-sm-10">
 
-        {!! Form::textarea('', old($transformNameText) ? old($transformNameText) : $value, (isset($attributes['field'])) ? $attributes['field'] : ['class' => 'form-control']) !!}
+        {!! Form::textarea('', old($transformNameText) ? old($transformNameText) : $value, $fieldAttributes) !!}
 
         @foreach ($errors->get($transformNameText) as $message)
             <span class="form-text m-b-none">{{ $message }}</span>
