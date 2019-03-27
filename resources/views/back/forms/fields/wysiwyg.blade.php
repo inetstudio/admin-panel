@@ -14,7 +14,7 @@
 
     <div class="col-sm-10">
 
-        {!! Form::textarea('', old($transformNameText) ? old($transformNameText) : $value, $attributes['field']) !!}
+        {!! Form::textarea('', old($transformNameText) ? old($transformNameText) : $value, (isset($attributes['field'])) ? $attributes['field'] : ['class' => 'form-control']) !!}
 
         @foreach ($errors->get($transformNameText) as $message)
             <span class="form-text m-b-none">{{ $message }}</span>
