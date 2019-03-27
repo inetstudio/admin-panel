@@ -2,7 +2,7 @@
   #page-wrapper {
     position: inherit;
     margin: 0 0 0 $sidebar-width;
-    min-height: 1200px;
+    min-height: 100vh;
   }
 
   .navbar-static-side {
@@ -23,7 +23,7 @@
   #page-wrapper {
     position: inherit;
     margin: 0 0 0 0;
-    min-height: 1000px;
+    min-height: 100vh;
   }
 
   .body-small .navbar-static-side {
@@ -79,7 +79,9 @@
     display: block;
   }
 
-  .navbar-static-side { display: none; }
+  .navbar-static-side {
+    display: none;
+  }
 
   body:not(.mini-navbar) {
     -webkit-transition: background-color 500ms linear;
@@ -130,3 +132,4 @@
   }
 
 }
+

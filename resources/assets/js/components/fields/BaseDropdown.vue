@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div class="form-group" :class="{'has-error': hasError}">
-            <label :for="name" class="col-sm-2 control-label">{{ label }}</label>
+        <div class="form-group row" :class="{'has-error': hasError}">
+            <label :for="name" class="col-sm-2 col-form-label">{{ label }}</label>
             <div class="col-sm-10">
                 <select :id="name" :name="name" v-model="selected" class="form-control" v-bind="attributes" ref="select" style="width: 100%">
                     <option value=""></option>
                     <option :value="option.value" v-bind="option.attributes" v-for="option in options">{{ option.text }}</option>
                 </select>
 
-                <span class="help-block m-b-none"
+                <span class="form-text m-b-none"
                       v-for = "(error, index) in fieldErrors"
                       :key = index
                 >{{ error}}</span>

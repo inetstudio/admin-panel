@@ -1,5 +1,5 @@
 $(document).on('show.bs.modal', '.modal', function () {
-    let zIndex = 2040 + (10 * $('.modal.fade.in').length);
+    let zIndex = 2050 + (10 * $('.modal.fade.show').length);
     $(this).css('z-index', zIndex);
     setTimeout(function() {
         $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');

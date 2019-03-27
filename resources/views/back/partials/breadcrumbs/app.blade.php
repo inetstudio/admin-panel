@@ -1,22 +1,22 @@
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-sm-12">
+    <div class="col-lg-10">
         <h2>
             @yield('title')
         </h2>
 
         <ol class="breadcrumb">
             @if (isActiveRoute('back'))
-                <li>
+                <li class="breadcrumb-item">
                     <strong>Главная</strong>
                 </li>
             @else
-                <li>
+                <li class="breadcrumb-item">
                     <a href="{{ route('back') }}">Главная</a>
                 </li>
 
                 @stack('breadcrumbs')
 
-                <li class="active">
+                <li class="breadcrumb-item active">
                     <strong>
                         {{ $title }}
                     </strong>

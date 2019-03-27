@@ -12,6 +12,7 @@ window.$ = window.jQuery = require('jquery');
 global.$ = $;
 global.jQuery = jQuery;
 window._ = require('lodash');
+window.Popper = require('popper.js').default;
 
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -29,7 +30,7 @@ if (token) {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-require('bootstrap-sass');
+require('bootstrap');
 
 window.Pace = require('./plugins/pace/pace');
 window.Pace.start();
@@ -92,7 +93,7 @@ require('tinymce/plugins/table');
 require('tinymce/plugins/contextmenu');
 require('tinymce/plugins/paste');
 
-require( 'datatables.net-bs');
+require( 'datatables.net-bs4');
 
 require('metismenu');
 require('jquery-slimscroll');

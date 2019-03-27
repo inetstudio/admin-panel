@@ -3,10 +3,10 @@
     $names = (array) $name;
 @endphp
 
-<div class="form-group @if ($errors->hasAny($transformName)){!! "has-error" !!}@endif">
+<div class="form-group row @if ($errors->hasAny($transformName)){!! "has-error" !!}@endif">
 
     @if (isset($attributes['label']['title']))
-        {!! Form::label($names[0], $attributes['label']['title'], (isset($attributes['label']['options'])) ? $attributes['label']['options'] : ['class' => 'col-sm-2 control-label']) !!}
+        {!! Form::label($names[0], $attributes['label']['title'], (isset($attributes['label']['options'])) ? $attributes['label']['options'] : ['class' => 'col-sm-2 col-form-label font-bold']) !!}
     @endif
 
     <div class="col-sm-10">
@@ -30,7 +30,7 @@
 
         @foreach ($transformName as $field)
             @foreach ($errors->get($field) as $message)
-                <span class="help-block m-b-none">{{ $message }}</span>
+                <span class="form-text m-b-none">{{ $message }}</span>
             @endforeach
         @endforeach
 

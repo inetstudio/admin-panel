@@ -1,11 +1,11 @@
 <template>
     <div>
-        <div class="form-group" :class="{'has-error': hasError}">
-            <label :for="name" class="col-sm-2 control-label">{{ label }}</label>
+        <div class="form-group row" :class="{'has-error': hasError}">
+            <label :for="name" class="col-sm-2 col-form-label">{{ label }}</label>
             <div class="col-sm-10">
                 <input :name="name" type="text" :value="value" :id="name" class="form-control" v-bind="attributes" @input="$emit('update:value', $event.target.value)" ref="autocomplete">
 
-                <span class="help-block m-b-none"
+                <span class="form-text m-b-none"
                       v-for = "(error, index) in fieldErrors"
                       :key = index
                 >{{ error}}</span>

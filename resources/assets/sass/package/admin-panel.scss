@@ -6,7 +6,7 @@
     overflow-y: scroll;
 }
 
-.help-block.counter {
+.form-text.counter {
     color: #737373;
 }
 
@@ -110,4 +110,82 @@ table.dataTable {
 // Codemirror custom
 .CodeMirror {
     height: 300px;
+}
+
+// Calendar
+.calendar {
+    .fc-event-container a.fc-event.btn-default {
+        color: #000;
+    }
+
+    .btn-primary {
+        background-color: $navy;
+        border-color: $navy;
+        color: #FFFFFF;
+
+        &:hover {
+            background-color: darken($navy, 3%);
+            border-color: darken($navy, 3%);
+            color: #FFFFFF;
+        }
+    }
+
+    .btn-success {
+        background-color: $blue;
+        border-color: $blue;
+        color: #FFFFFF;
+
+        &:hover {
+            background-color: darken($blue, 3%);
+            border-color: darken($blue, 3%);
+            color: #FFFFFF;
+        }
+    }
+
+    .btn-info {
+        background-color: $lazur;
+        border-color: $lazur;
+        color: #FFFFFF;
+
+        &:hover {
+            background-color: darken($lazur, 3%);
+            border-color: darken($lazur, 3%);
+            color: #FFFFFF;
+        }
+    }
+
+    .btn-warning {
+        background-color: $yellow;
+        border-color: $yellow;
+        color: #FFFFFF;
+
+        &:hover {
+            background-color: darken($yellow, 3%);
+            border-color: darken($yellow, 3%);
+            color: #FFFFFF;
+        }
+    }
+
+    .btn-danger {
+        background-color: $red;
+        border-color: $red;
+        color: #FFFFFF;
+
+        &:hover {
+            background-color: darken($red, 3%);
+            border-color: darken($red, 3%);
+            color: #FFFFFF;
+        }
+    }
+
+    .btn-default {
+        color: inherit;
+        background: white;
+        border: 1px solid $border-color;
+
+        &:hover {
+            color: inherit;
+            border: 1px solid #d2d2d2;
+        }
+    }
 }

@@ -1,8 +1,7 @@
 @import "./package/support";
 
 // Base
-$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
-@import "~bootstrap-sass/assets/stylesheets/_bootstrap";
+@import "~bootstrap/scss/bootstrap";
 
 $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import '~@fortawesome/fontawesome-free/scss/brands';
@@ -13,7 +12,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~animate.css/animate";
 
 // Plugins
-@import "~datatables.net-bs/css/dataTables.bootstrap";
+@import "~datatables.net-bs4/css/dataTables.bootstrap4";
 @import "~@fancyapps/fancybox/dist/jquery.fancybox";
 @import "./plugins/iCheck/icheck";
 @import "~jquery-datetimepicker/jquery.datetimepicker";
