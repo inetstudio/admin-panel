@@ -13,7 +13,7 @@ class BaseService implements BaseServiceContract
     /**
      * @var
      */
-    public $model;
+    protected $model;
 
     /**
      * BaseService constructor.
@@ -23,6 +23,16 @@ class BaseService implements BaseServiceContract
     public function __construct($model)
     {
         $this->model = $model;
+    }
+
+    /**
+     * Возвращаем модель.
+     *
+     * @return mixed
+     */
+    public function getModel()
+    {
+        return $this->model;
     }
 
     /**

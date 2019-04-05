@@ -10,6 +10,13 @@ use Illuminate\Database\Query\Builder;
 interface BaseServiceContract
 {
     /**
+     * Возвращаем модель.
+     *
+     * @return mixed
+     */
+    public function getModel();
+
+    /**
      * Получаем объект по id.
      *
      * @param mixed $id
