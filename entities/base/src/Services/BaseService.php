@@ -2,7 +2,7 @@
 
 namespace InetStudio\AdminPanel\Base\Services;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 use InetStudio\AdminPanel\Base\Contracts\Services\BaseServiceContract;
 
 /**

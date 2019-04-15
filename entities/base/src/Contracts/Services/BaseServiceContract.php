@@ -2,7 +2,7 @@
 
 namespace InetStudio\AdminPanel\Base\Contracts\Services;
 
-use Illuminate\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Interface BaseServiceContract.
