@@ -45,7 +45,13 @@ class BaseService implements BaseServiceContract
      */
     public function getItemById($id = 0, array $params = [])
     {
-        return $this->model::buildQuery($params)->find($id) ?? new $this->model;
+        $query = $this->model->newQuery();
+
+        if (! empty($params)) {
+            $query = $query->buildQuery($params);
+        }
+
+        return $query->find($id) ?? new $this->model;
     }
 
     /**
