@@ -17,6 +17,6 @@ trait SlugsServiceTrait
      */
     public function getItemBySlug(string $slug, array $params = [])
     {
-        return $this->model->itemBySlug($slug, $params)->first();
+        return $this->model->buildQuery($params)->whereSlug($slug)->first();
     }
 }

@@ -3,7 +3,6 @@
 namespace InetStudio\AdminPanel\Base\Models\Traits;
 
 use Cocur\Slugify\Slugify;
-use Illuminate\Database\Eloquent\Builder;
 use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 
 /**
@@ -12,20 +11,6 @@ use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 trait SluggableTrait
 {
     use SluggableScopeHelpers;
-
-    /**
-     * Выборка объекта по slug.
-     *
-     * @param  Builder  $query
-     * @param string $slug
-     * @param array $params
-     *
-     * @return mixed
-     */
-    public function scopeItemBySlug(Builder $query, string $slug, array $params = []): Builder
-    {
-        return $query->buildQuery($params)->whereSlug($slug);
-    }
 
     /**
      * Правила для транслита.
