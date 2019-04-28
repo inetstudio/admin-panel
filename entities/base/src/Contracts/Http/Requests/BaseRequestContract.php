@@ -56,7 +56,6 @@ interface BaseRequestContract
      */
     public function get($key, $default = null);
 
-
     /**
      * Retrieve an input item from the request.
      *

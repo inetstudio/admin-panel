@@ -11,7 +11,7 @@ use Illuminate\Database\Query\Expression;
  */
 trait BuildQueryScopeTrait
 {
-    private static $buildQueryScopeDefaults = [
+    protected static $buildQueryScopeDefaults = [
         'columns' => [],
         'relations' => [],
         'scopes' => [],
