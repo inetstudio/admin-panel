@@ -38,8 +38,8 @@ class BaseService implements BaseServiceContract
     /**
      * Получаем объект по id.
      *
-     * @param mixed $id
-     * @param array $params
+     * @param  mixed  $id
+     * @param  array  $params
      *
      * @return mixed
      */
@@ -57,7 +57,7 @@ class BaseService implements BaseServiceContract
     /**
      * Получаем все объекты.
      *
-     * @param array $params
+     * @param  array  $params
      *
      * @return Builder
      */
@@ -69,8 +69,8 @@ class BaseService implements BaseServiceContract
     /**
      * Сохраняем модель.
      *
-     * @param array $data
-     * @param int $id
+     * @param  array  $data
+     * @param  int  $id
      *
      * @return mixed
      */
@@ -87,7 +87,7 @@ class BaseService implements BaseServiceContract
     /**
      * Удаляем модель.
      *
-     * @param mixed $id
+     * @param  mixed  $id
      *
      * @return bool|null
      */

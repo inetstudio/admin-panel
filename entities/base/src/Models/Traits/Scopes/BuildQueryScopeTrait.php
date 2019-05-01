@@ -61,7 +61,7 @@ trait BuildQueryScopeTrait
         }
 
         foreach ($params['scopes'] ?? [] as $scopeName) {
-            if (isset($this->buildQueryScopeDefaults['scopes'][$scopeName])) {
+            if (isset(self::$buildQueryScopeDefaults['scopes'][$scopeName])) {
                 $query->withGlobalScope($scopeName, self::$buildQueryScopeDefaults['scopes'][$scopeName]);
             }
         }
