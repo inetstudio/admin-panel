@@ -2,8 +2,6 @@
 
 namespace InetStudio\AdminPanel\Base\Contracts\Services;
 
-use Illuminate\Database\Eloquent\Builder;
-
 /**
  * Interface BaseServiceContract.
  */
@@ -33,7 +31,7 @@ interface BaseServiceContract
      *
      * @return mixed
      */
-    public function getAllItems(array $params = []): Builder;
+    public function getAllItems(array $params = []);
 
     /**
      * Сохраняем модель.
