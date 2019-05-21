@@ -18,6 +18,22 @@ trait BuildQueryScopeTrait
     ];
 
     /**
+     * Устанавливаем параметры для построения запросов.
+     *
+     * @param  array  $params
+     */
+    public function setBuildQueryScopeParams(array $params = []): void
+    {
+        foreach ($params as $type => $param) {
+            if ($type == 'columns') {
+                self::$buildQueryScopeDefaults[$type] = array_merge(self::$buildQueryScopeDefaults[$type], $param);
+            } else {
+                self::$buildQueryScopeDefaults[$type] = array_replace_recursive(self::$buildQueryScopeDefaults[$type] ?? [], $param);
+            }
+        }
+    }
+
+    /**
      * Возвращаем запрос на получение объектов.
      *
      * @param Builder $query
