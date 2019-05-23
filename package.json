@@ -14,7 +14,7 @@
     "find": "^0.2.9",
     "holderjs": "^2.9.4",
     "icheck": "^1.0.2",
-    "jquery": "3.3.1",
+    "jquery": "^3.4.1",
     "jquery-datetimepicker": "^2.5.20",
     "jquery-serializejson": "^2.8.1",
     "jquery-slimscroll": "^1.3.8",
