@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-group row" :class="{'has-error': hasError}">
-            <label :for="name" class="col-sm-2 col-form-label">{{ label }}</label>
+            <label :for="name" class="col-sm-2 col-form-label font-bold">{{ label }}</label>
             <div class="col-sm-10">
                 <select :id="name" :name="name" v-model="selected" class="form-control" v-bind="attributes" ref="select" style="width: 100%">
                     <option value=""></option>

@@ -71,6 +71,7 @@ Vue.component('BaseInputText', require('./components/fields/BaseInputText.vue').
 Vue.component('BaseCheckboxes', require('./components/fields/BaseCheckboxes.vue').default);
 Vue.component('BaseAutocomplete', require('./components/fields/BaseAutocomplete.vue').default);
 Vue.component('BaseDropdown', require('./components/fields/BaseDropdown.vue').default);
+Vue.component('BaseDate', require('./components/fields/BaseDate.vue').default);
 /* VUE ===================================================================== */
 
 
@@ -108,6 +109,8 @@ require('devbridge-autocomplete');
 require('codemirror/mode/htmlmixed/htmlmixed');
 require('codemirror/addon/scroll/simplescrollbars');
 require('jquery-datetimepicker/build/jquery.datetimepicker.full');
+require('flatpickr');
+require('flatpickr/dist/l10n/ru.js');
 
 require('@fancyapps/fancybox/dist/jquery.fancybox');
 

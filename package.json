@@ -12,6 +12,7 @@
     "datatables.net-bs4": "^1.10.19",
     "devbridge-autocomplete": "^1.4.7",
     "find": "^0.2.9",
+    "flatpickr": "^4.5.7",
     "holderjs": "^2.9.4",
     "icheck": "^1.0.2",
     "jquery": "^3.4.1",

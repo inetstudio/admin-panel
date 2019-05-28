@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-group row" v-bind:class="{'has-error': hasError}" ref="group">
-            <label v-bind:for="name" class="col-sm-2 col-form-label">{{ label }}</label>
+            <label v-bind:for="name" class="col-sm-2 col-form-label font-bold">{{ label }}</label>
             <div class="col-sm-10">
                 <div class="i-checks"
                      v-for = "(checkbox, index) in checkboxes"
