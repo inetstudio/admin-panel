@@ -7,7 +7,8 @@
 
         <title>Admin | @yield('title') </title>
 
-        <link rel="icon" href="{!! asset('images/favicon.ico') !!}">
+        <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
 
         <link href="{{ asset(mix('admin/css/app.css')) }}" rel="stylesheet">
     </head>

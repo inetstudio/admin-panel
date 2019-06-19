@@ -14,7 +14,6 @@
       "cviebrock/eloquent-sluggable": "^4.8",
       "inetstudio/acl": "1.8.*",
       "inetstudio/search": "1.8.*",
-      "inetstudio/simple-counters": "1.8.*",
       "inetstudio/uploads": "1.8.*",
       "laravelcollective/html": "^5.8",
       "laravelista/ekko": "^1.5",
