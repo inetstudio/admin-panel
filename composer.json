@@ -38,6 +38,7 @@
       "laravel": {
         "providers": [
           "InetStudio\\AdminPanel\\Base\\Providers\\BindingsServiceProvider",
+          "InetStudio\\AdminPanel\\Base\\Providers\\ServiceProvider",
           "InetStudio\\AdminPanel\\Providers\\AdminPanelBindingsServiceProvider",
           "InetStudio\\AdminPanel\\Providers\\AdminPanelServiceProvider"
         ]
