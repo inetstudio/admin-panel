@@ -77,7 +77,7 @@ $(document).ready(function () {
 
     initTinyMCE('form');
 
-    $('.select2').each(function () {
+    $('.select2-drop').each(function () {
         let $this = $(this);
         if ($this.attr('data-source')) {
             let url = $this.attr('data-source'),

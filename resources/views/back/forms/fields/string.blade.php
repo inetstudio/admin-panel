@@ -16,7 +16,7 @@
     @if (isset($attributes['label']['title']) && $attributes['label']['title'] == '')
         <label for="{{ $name }}" class="col-sm-2 col-form-label font-bold"></label>
     @elseif (isset($attributes['label']['title']))
-        {!! Form::label($name, $attributes['label']['title'], (isset($attributes['label']['options'])) ? $attributes['label']['options'] : ['class' => 'col-sm-2 col-form-label font-bold font-bold']) !!}
+        {!! Form::label($name, $attributes['label']['title'], (isset($attributes['label']['options'])) ? $attributes['label']['options'] : ['class' => 'col-sm-2 col-form-label font-bold']) !!}
     @endif
 
     <div class="col-sm-10">
