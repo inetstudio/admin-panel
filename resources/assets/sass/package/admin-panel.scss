@@ -80,6 +80,18 @@ select[readonly].select2-hidden-accessible + .select2-container .select2-selecti
     background: #000;
 }
 
+.mce-ico.mce-i-fa {
+    display: inline-block;
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    font-size: inherit;
+}
+
 
 // Toastr Custom
 #toast-container > .toast-warning:before {
