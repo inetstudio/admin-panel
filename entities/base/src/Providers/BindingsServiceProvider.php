@@ -14,6 +14,7 @@ class BindingsServiceProvider extends ServiceProvider implements DeferrableProvi
     * @var array
     */
     public $bindings = [
+        'InetStudio\AdminPanel\Base\Contracts\Http\Controllers\Front\ViewsControllerContract' => 'InetStudio\AdminPanel\Base\Http\Controllers\Front\ViewsController',
         'InetStudio\AdminPanel\Base\Contracts\Serializers\SimpleDataArraySerializerContract' => 'InetStudio\AdminPanel\Base\Serializers\SimpleDataArraySerializer',
     ];
 

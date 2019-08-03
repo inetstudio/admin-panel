@@ -31,6 +31,21 @@ class SetupCommand extends BaseSetupCommand
         $this->calls = [
             [
                 'type' => 'artisan',
+                'description' => 'Notifications migrations',
+                'command' => 'notifications:table',
+            ],
+            [
+                'type' => 'artisan',
+                'description' => 'Jobs migrations',
+                'command' => 'queue:table',
+            ],
+            [
+                'type' => 'artisan',
+                'description' => 'Failed jobs migrations',
+                'command' => 'queue:failed-table',
+            ],
+            [
+                'type' => 'artisan',
                 'description' => 'ACL setup',
                 'command' => 'inetstudio:acl:setup',
             ],

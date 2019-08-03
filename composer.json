@@ -13,6 +13,7 @@
       "php": ">=7.2",
       "cviebrock/eloquent-sluggable": "^4.8",
       "inetstudio/acl": "1.8.*",
+      "inetstudio/cache": "1.8.*",
       "inetstudio/search": "1.8.*",
       "inetstudio/uploads": "1.8.*",
       "laravelcollective/html": "^5.8",

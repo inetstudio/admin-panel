@@ -15,6 +15,7 @@ class ServiceProvider extends BaseServiceProvider
     public function boot(): void
     {
         $this->registerConsoleCommands();
+        $this->registerRoutes();
     }
 
     /**
@@ -27,5 +28,13 @@ class ServiceProvider extends BaseServiceProvider
                 'InetStudio\AdminPanel\Base\Console\Commands\RoutesCache',
             ]);
         }
+    }
+
+    /**
+     * Регистрация путей.
+     */
+    protected function registerRoutes(): void
+    {
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
     }
 }
