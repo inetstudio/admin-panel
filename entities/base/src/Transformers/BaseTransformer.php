@@ -36,7 +36,7 @@ class BaseTransformer extends TransformerAbstract
     public function cache($item): void
     {
         $groupCacheKey = 'cacheKeys_'.md5(get_class($item).$item->id);
-        app()->make('CacheService')->addKeysToCacheGroup($groupCacheKey, $this->cacheKeys);
+        app()->make('InetStudio\CachePackage\Cache\Contracts\Services\Front\CacheServiceContract')->addKeysToCacheGroup($groupCacheKey, $this->cacheKeys);
     }
 
     /**
