@@ -2,7 +2,7 @@
 
 namespace InetStudio\AdminPanel\Http\Controllers\Back;
 
-use App\Http\Controllers\Controller;
+use InetStudio\AdminPanel\Base\Http\Controllers\Controller;
 use InetStudio\AdminPanel\Contracts\Http\Responses\Back\ConfigResponseContract;
 use InetStudio\AdminPanel\Contracts\Http\Controllers\Back\UtilitiesControllerContract;
 
