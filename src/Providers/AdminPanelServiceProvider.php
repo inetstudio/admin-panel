@@ -155,6 +155,13 @@ class AdminPanelServiceProvider extends ServiceProvider
             return app()->environment($env);
         });
 
+        Blade::if('monitoring', function () {
+            $monitoringStop = \Carbon\Carbon::createFromTimestamp(config('app.release_time', time()), config('app.timezone'))->addDays(3);
+            $now = Carbon::now();
+
+            return $monitoringStop->greaterThan($now);
+        });
+
         Blade::directive('inline', function ($expression) {
             $include = "//  {$expression}\n".
                 "<?php echo str_replace([
