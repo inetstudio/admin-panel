@@ -17,6 +17,29 @@ class BaseTransformer extends TransformerAbstract
     protected $cacheKeys = [];
 
     /**
+     * @var array
+     */
+    protected $includeTransformers = [];
+
+    /**
+     * Сохраняем используемые трансформеры.
+     *
+     * @param $key
+     *
+     * @return mixed
+     *
+     * @throws BindingResolutionException
+     */
+    public function getTransformer($key)
+    {
+        if (! isset($this->includeTransformers[$key])) {
+            $this->includeTransformers[$key] = app()->make($key);
+        }
+
+        return $this->includeTransformers[$key];
+    }
+
+    /**
      * Ключи кэша.
      *
      * @param array $cacheKeys
