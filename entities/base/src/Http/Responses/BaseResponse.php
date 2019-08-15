@@ -2,6 +2,7 @@
 
 namespace InetStudio\AdminPanel\Base\Http\Responses;
 
+use Throwable;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Responsable;
 
@@ -11,30 +12,46 @@ use Illuminate\Contracts\Support\Responsable;
 abstract class BaseResponse implements Responsable
 {
     /**
+     * @var bool
+     */
+    protected $abortOnEmptyData = false;
+
+    /**
+     * @var bool
+     */
+    protected $render = false;
+
+    /**
      * @var string
      */
     protected $view;
 
     /**
-     * Prepare response data.
+     * @param $request
      *
      * @return array
      */
-    abstract protected function prepare() : array;
+    abstract protected function prepare($request): array;
 
     /**
      * @param  Request  $request
      *
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response|void
+     *
+     * @throws Throwable
      */
     public function toResponse($request)
     {
-        $data = $this->prepare();
+        $data = $this->prepare($request);
 
-        if (request()->ajax()) {
+        if ($request->ajax() && ! $this->render) {
             return response()->json($data);
+        } elseif ($this->render) {
+            $content = view($this->view, $data)->render();
+
+            return response($content);
         } else {
-            return response()->view($this->view, $data);
+            return (empty($data) && $this->abortOnEmptyData) ? abort(404) : response()->view($this->view, $data);
         }
     }
 }
