@@ -27,6 +27,11 @@ abstract class BaseResponse implements Responsable
     protected $view;
 
     /**
+     * @var array
+     */
+    protected $cookies = [];
+
+    /**
      * @param $request
      *
      * @return array
@@ -36,7 +41,7 @@ abstract class BaseResponse implements Responsable
     /**
      * @param  Request  $request
      *
-     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response|void
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response|null
      *
      * @throws Throwable
      */
@@ -44,14 +49,26 @@ abstract class BaseResponse implements Responsable
     {
         $data = $this->prepare($request);
 
+        $response = response();
+
         if ($request->ajax() && ! $this->render) {
-            return response()->json($data);
+            $response = $response->json($data);
         } elseif ($this->render) {
             $content = view($this->view, $data)->render();
 
-            return response($content);
+            $response = $response->make($content);
         } else {
-            return (empty($data) && $this->abortOnEmptyData) ? abort(404) : response()->view($this->view, $data);
+            $response = (empty($data) && $this->abortOnEmptyData) ? null : $response->view($this->view, $data);
         }
+
+        if (! $response) {
+            abort(404);
+        }
+
+        foreach ($this->cookies ?? [] as $name => $value) {
+            $response->cookie($name, $value);
+        }
+
+        return $response;
     }
 }

@@ -163,7 +163,11 @@ class AdminPanelServiceProvider extends ServiceProvider
         });
 
         Blade::directive('inline', function ($expression) {
-            $include = "//  {$expression}\n".
+            if (! file_exists(public_path($expression))) {
+                return '';
+            }
+
+            $include =
                 "<?php echo str_replace([
                         '(../assets/img',
                         '(../assets/fonts',
