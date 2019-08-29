@@ -163,7 +163,7 @@ class AdminPanelServiceProvider extends ServiceProvider
         });
 
         Blade::directive('inline', function ($expression) {
-            if (! file_exists(public_path($expression))) {
+            if (! file_exists(public_path(str_replace("'", '', $expression)))) {
                 return '';
             }
 
