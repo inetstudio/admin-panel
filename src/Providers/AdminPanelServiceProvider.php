@@ -217,9 +217,11 @@ class AdminPanelServiceProvider extends ServiceProvider
             $sums = [];
 
             foreach ($keys as $key) {
-                $sums[$key] = array_reduce($arrays, function ($sum, $arr) use ($key) {
-                    return $sum + (isset($arr[$key])) ? $arr[$key] : 0;
-                });
+                $sums[$key] = 0;
+
+                foreach ($arrays as $arr) {
+                    $sums[$key] = $sums[$key] + ((isset($arr[$key])) ? $arr[$key] : 0);
+                }
             }
 
             return $sums;
