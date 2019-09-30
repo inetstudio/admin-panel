@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 
 $uri = trim($this->app->request->getRequestUri(), '/');
 
-if (Str::startsWith($uri, config('app.url_prefix').'/back')) {
+if (Str::startsWith($uri, trim(config('app.url_prefix').'/back', '/'))) {
     app('router')->setRoutes(
         unserialize(base64_decode('{{backRoutes}}'))
     );
