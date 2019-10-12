@@ -19,6 +19,14 @@ class ServiceProvider extends BaseServiceProvider
     }
 
     /**
+     * Service Provider Registration.
+     */
+    public function register(): void
+    {
+        \Ekko::enableGlobalHelpers();
+    }
+
+    /**
      * Регистрация команд.
      */
     protected function registerConsoleCommands(): void

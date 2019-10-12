@@ -68,13 +68,19 @@ class RoutesCache extends Command
 
             $params = $route->action;
             if (isset($params['as']) && Str::startsWith($params['as'], 'back')) {
-                if ($params['as'] == 'back' || Str::contains($params['as'], '.edit')) {
+                if ($params['as'] == 'back') {
                     $frontRoutes->add($route);
                 }
             } elseif (isset($params['as']) && Str::startsWith($params['as'], 'front')) {
                 $frontRoutes->add($route);
             } else {
-                $frontRoutes->add($route);
+                if (isset($params['prefix']) && (Str::startsWith($params['prefix'], '_ignition') || Str::startsWith($params['prefix'], '_debugbar'))) {
+                    if (config('debug')) {
+                        $frontRoutes->add($route);
+                    }
+                } else {
+                    $frontRoutes->add($route);
+                }
             }
 
             $backRoutes->add($route);
