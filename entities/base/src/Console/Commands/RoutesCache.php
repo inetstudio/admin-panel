@@ -75,7 +75,7 @@ class RoutesCache extends Command
                 $frontRoutes->add($route);
             } else {
                 if (isset($params['prefix']) && (Str::startsWith($params['prefix'], '_ignition') || Str::startsWith($params['prefix'], '_debugbar'))) {
-                    if (config('debug')) {
+                    if (config('app.debug')) {
                         $frontRoutes->add($route);
                     }
                 } else {
