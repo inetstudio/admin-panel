@@ -27,7 +27,7 @@ $(document).ready(function () {
     });
 
     // Collapse ibox function
-    $('.collapse-link').on('click', function (e) {
+    $(document).on('click', '.collapse-link', function (e) {
         e.preventDefault();
         var ibox = $(this).closest('div.ibox');
         var button = $(this).find('i');
@@ -42,7 +42,7 @@ $(document).ready(function () {
     });
 
     // Close ibox function
-    $('.close-link').on('click', function (e) {
+    $(document).on('click', 'close-link', function (e) {
         e.preventDefault();
         var content = $(this).closest('div.ibox');
         content.remove();
