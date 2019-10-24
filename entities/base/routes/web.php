@@ -8,6 +8,6 @@ Route::group(
         'middleware' => ['web'],
     ],
     function () {
-        Route::post('/view/{view}', 'ViewsControllerContract@getView')->name('front.view.get');
+        Route::post('/view/{view?}', 'ViewsControllerContract@getView')->name('front.view.get');
     }
 );
