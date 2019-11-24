@@ -39,10 +39,11 @@ class BaseService implements BaseServiceContract
      *
      * @param  mixed  $id
      * @param  array  $params
+     * @param  bool  $returnNew
      *
      * @return mixed
      */
-    public function getItemById($id = 0, array $params = [])
+    public function getItemById($id = 0, array $params = [], bool $returnNew = true)
     {
         $query = $this->model->newQuery();
 
@@ -50,7 +51,7 @@ class BaseService implements BaseServiceContract
             $query = $query->buildQuery($params);
         }
 
-        return $query->find($id) ?? new $this->model;
+        return $query->find($id) ?? (($returnNew) ? new $this->model : null);
     }
 
     /**
