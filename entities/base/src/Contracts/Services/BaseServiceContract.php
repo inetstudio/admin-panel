@@ -37,11 +37,11 @@ interface BaseServiceContract
      * Сохраняем модель.
      *
      * @param array $data
-     * @param int $id
+     * @param $id
      *
      * @return mixed
      */
-    public function saveModel(array $data, int $id = 0);
+    public function saveModel(array $data, $id = 0);
 
     /**
      * Удаляем модель.
