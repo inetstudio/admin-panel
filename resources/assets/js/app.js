@@ -72,6 +72,7 @@ Vue.component('BaseCheckboxes', require('./components/fields/BaseCheckboxes.vue'
 Vue.component('BaseAutocomplete', require('./components/fields/BaseAutocomplete.vue').default);
 Vue.component('BaseDropdown', require('./components/fields/BaseDropdown.vue').default);
 Vue.component('BaseDate', require('./components/fields/BaseDate.vue').default);
+Vue.component('BaseWysiwyg', require('./components/fields/BaseWysiwyg.vue').default);
 /* VUE ===================================================================== */
 
 

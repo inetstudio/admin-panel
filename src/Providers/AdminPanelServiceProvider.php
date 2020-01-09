@@ -18,8 +18,6 @@ class AdminPanelServiceProvider extends ServiceProvider
 {
     /**
      * Загрузка сервиса.
-     *
-     * @return void
      */
     public function boot(): void
     {
@@ -37,8 +35,6 @@ class AdminPanelServiceProvider extends ServiceProvider
 
     /**
      * Регистрация привязки в контейнере.
-     *
-     * @return void
      */
     public function register()
     {
@@ -51,8 +47,6 @@ class AdminPanelServiceProvider extends ServiceProvider
 
     /**
      * Регистрация команд.
-     *
-     * @return void
      */
     protected function registerConsoleCommands(): void
     {
@@ -66,8 +60,6 @@ class AdminPanelServiceProvider extends ServiceProvider
 
     /**
      * Регистрация путей.
-     *
-     * @return void
      */
     protected function registerRoutes(): void
     {
@@ -76,8 +68,6 @@ class AdminPanelServiceProvider extends ServiceProvider
 
     /**
      * Регистрация представлений.
-     *
-     * @return void
      */
     protected function registerViews(): void
     {
@@ -86,8 +76,6 @@ class AdminPanelServiceProvider extends ServiceProvider
 
     /**
      * Регистрация переводов.
-     *
-     * @return void
      */
     protected function registerTranslations(): void
     {
@@ -96,8 +84,6 @@ class AdminPanelServiceProvider extends ServiceProvider
 
     /**
      * Регистрация компонентов форм.
-     *
-     * @return void
      */
     protected function registerFormComponents()
     {
@@ -115,8 +101,7 @@ class AdminPanelServiceProvider extends ServiceProvider
 
     /**
      * Регистрация директив blade.
-     *
-     * @return void
+
      */
     protected function registerBladeDirectives()
     {

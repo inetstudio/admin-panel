@@ -19,8 +19,6 @@ class BaseSetupCommand extends Command
 
     /**
      * Запуск команды.
-     *
-     * @return void
      */
     public function handle(): void
     {
@@ -56,8 +54,6 @@ class BaseSetupCommand extends Command
 
     /**
      * Инициализация команд.
-     *
-     * @return void
      */
     protected function initCommands(): void
     {

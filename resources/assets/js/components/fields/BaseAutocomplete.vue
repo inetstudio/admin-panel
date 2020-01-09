@@ -8,7 +8,7 @@
                 <span class="form-text m-b-none"
                       v-for = "(error, index) in fieldErrors"
                       :key = index
-                >{{ error}}</span>
+                >{{ error }}</span>
             </div>
         </div>
         <div class="hr-line-dashed"></div>
@@ -68,7 +68,3 @@
         ]
     }
 </script>
-
-<style scoped>
-
-</style>

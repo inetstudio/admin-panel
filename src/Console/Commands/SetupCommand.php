@@ -23,8 +23,6 @@ class SetupCommand extends BaseSetupCommand
 
     /**
      * Инициализация команд.
-     *
-     * @return void
      */
     protected function initCommands(): void
     {
