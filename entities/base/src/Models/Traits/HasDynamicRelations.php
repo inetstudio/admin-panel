@@ -15,7 +15,7 @@ trait HasDynamicRelations
      *
      * @var array
      */
-    private static $dynamicRelations = [];
+    protected static $dynamicRelations = [];
 
     /**
      * Add a new relation
@@ -25,7 +25,7 @@ trait HasDynamicRelations
      */
     public static function addDynamicRelation($name, $closure)
     {
-        static::$dynamicRelations[$name] = $closure;
+        self::$dynamicRelations[$name] = $closure;
     }
 
     /**
@@ -37,7 +37,7 @@ trait HasDynamicRelations
      */
     public static function hasDynamicRelation($name): bool
     {
-        return array_key_exists($name, static::$dynamicRelations);
+        return array_key_exists($name, self::$dynamicRelations);
     }
 
     /**
@@ -50,7 +50,7 @@ trait HasDynamicRelations
      */
     public function __call($method, $parameters) {
         if (static::hasDynamicRelation($method)) {
-            return call_user_func(static::$dynamicRelations[$method], $this);
+            return call_user_func(self::$dynamicRelations[$method], $this);
         }
 
         return parent::__call($method, $parameters);
@@ -65,7 +65,7 @@ trait HasDynamicRelations
      */
     public function getAttribute($key)
     {
-        if (static::hasDynamicRelation($key)) {
+        if (self::hasDynamicRelation($key)) {
             $this->getRelationValue($key);
         }
 
@@ -81,7 +81,7 @@ trait HasDynamicRelations
      */
     public function getRelationValue($key)
     {
-        if (static::hasDynamicRelation($key)) {
+        if (self::hasDynamicRelation($key)) {
             if ($this->relationLoaded($key)) {
                 return $this->relations[$key];
             }
