@@ -49,8 +49,12 @@
 
             let options = {
               setup: function(editor) {
-                editor.on('change', function (event) {
-                  component.$emit('update:value', editor.getContent());
+                editor.on('Paste Change input Undo Redo', function (event) {
+                  if (component.simple) {
+                    component.$emit('update:value', editor.getContent({format: 'text'}));
+                  } else {
+                    component.$emit('update:value', editor.getContent());
+                  }
                 });
               }
             };
