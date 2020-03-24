@@ -222,7 +222,7 @@ class AdminPanelServiceProvider extends ServiceProvider
             $partials = explode("@", $value);
             $service = array_pop($partials);
 
-            $name = implode($partials, '@');
+            $name = implode('@', $partials);
             $nameLen = strlen($name);
 
             $startHidePos = floor($nameLen*0.33);

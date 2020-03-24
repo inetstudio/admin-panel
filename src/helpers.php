@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 
 if (! function_exists('blade_string')) {
@@ -40,5 +41,14 @@ if (! function_exists('get_correct_word')) {
                 return $variants[2];
             }
         }
+    }
+}
+
+if (! function_exists('isActiveRoute')) {
+    function isActiveRoute($routesNames, string $output = 'active'): string
+    {
+        $routesNames = Arr::wrap($routesNames);
+
+        return request()->routeIs(...$routesNames) ? $output : '';
     }
 }

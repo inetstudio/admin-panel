@@ -23,7 +23,6 @@ class ServiceProvider extends BaseServiceProvider
      */
     public function register(): void
     {
-        \Ekko::enableGlobalHelpers();
     }
 
     /**
