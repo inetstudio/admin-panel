@@ -2,6 +2,8 @@
 
 namespace InetStudio\AdminPanel\Console\Commands;
 
+use InetStudio\AdminPanel\Base\Console\Commands\BaseSetupCommand;
+
 /**
  * Class SetupCommand.
  */
