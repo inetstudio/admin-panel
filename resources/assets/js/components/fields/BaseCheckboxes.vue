@@ -9,9 +9,9 @@
                 >
                     <label>
                         <input
-                                type="checkbox"
-                                v-bind:value="checkbox.value"
-                                v-bind="attributes"
+                            type="checkbox"
+                            v-bind:value="checkbox.value"
+                            v-bind="attributes"
                         /> {{ checkbox.label}}
                     </label>
                 </div>
@@ -45,7 +45,7 @@
         }
       },
       selected: {
-        type: Array,
+        type: [Array, Number, String],
         default() {
           return [];
         }
@@ -58,15 +58,27 @@
       }
     },
     watch: {
-      selected: function (newValues, oldValues) {
+      selected: {
+        immediate: true,
+        handler (newValues, oldValues) {
+          this.check(newValues);
+        }
+      }
+    },
+    methods: {
+      check: function(values) {
+        if (! Array.isArray(values)) {
+          values = [String(values)];
+        }
+
         let checkboxes = $(this.$refs.group).find('.vue-checks input');
 
         checkboxes.filter(function () {
-          return ! _.includes(newValues, $(this).val());
+          return ! _.includes(values, $(this).val());
         }).iCheck('uncheck');
 
         checkboxes.filter(function () {
-          return _.includes(newValues, $(this).val());
+          return _.includes(values, $(this).val());
         }).iCheck('check');
       }
     },
@@ -80,6 +92,8 @@
           checkboxClass: 'icheckbox_square-green',
           radioClass: 'iradio_square-green'
         });
+
+        component.check(component.selected);
 
         checkboxes.find('input').on('ifToggled', function () {
           let selected = $(component.$refs.group).find('input:checked').map(function() {

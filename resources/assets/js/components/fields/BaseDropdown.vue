@@ -1,12 +1,24 @@
 <template>
     <div>
         <div class="form-group row" :class="{'has-error': hasError}">
-            <label :for="name" class="col-sm-2 col-form-label font-bold">{{ label }}</label>
+            <label class="col-sm-2 col-form-label font-bold">{{ label }}</label>
             <div class="col-sm-10">
-                <select :id="name" :name="name" v-model="selected" class="form-control" v-bind="attributes" ref="select" style="width: 100%">
-                    <option value=""></option>
-                    <option :value="option.value" v-bind="option.attributes" v-for="option in options">{{ option.text }}</option>
-                </select>
+                <v-select
+                    class="dropdown-style"
+                    v-bind="attributes"
+                    label="text"
+                    :options="preparedOptions"
+                    :value="selected"
+                    v-on="(source.url !== '') ? {search: onSearch} : {}"
+                    @input="onSelect"
+                >
+                    <div slot="no-options">Совпадений не найдено</div>
+                    <template #open-indicator="{ attributes }">
+                        <span v-bind="attributes">
+                            <b role="presentation"></b>
+                        </span>
+                    </template>
+                </v-select>
 
                 <span class="form-text m-b-none"
                       v-for = "(error, index) in fieldErrors"
@@ -19,6 +31,9 @@
 </template>
 
 <script>
+    import vSelect from 'vue-select'
+    import 'vue-select/dist/vue-select.css';
+
     export default {
         name: 'BaseDropdown',
         props: {
@@ -26,78 +41,110 @@
                 type: String,
                 default: ''
             },
-            name: {
-                type: String,
-                required: true
-            },
             options: {
                 type: Array,
                 default() {
                     return [];
                 }
             },
-            selected: [String, Array],
+            selected: [Array, Number, String],
             attributes: {
                 type: Object,
                 default() {
                     return {};
                 }
+            },
+            source: {
+              type: Object,
+              default() {
+                return {
+                  url: '',
+                  transformation: function (item) {
+                    return item;
+                  }
+                }
+              }
             }
         },
-        mounted() {
-            let component = this;
+        data() {
+          return {
+            preparedOptions: []
+          };
+        },
+        watch: {
+          options: {
+            immediate: true,
+            handler(newValues, oldValues) {
+              let component = this;
 
-            this.$nextTick(function () {
-                let select = $(component.$refs.select);
+              component.preparedOptions = newValues;
+            }
+          }
+        },
+        components: {
+          vSelect
+        },
+        methods: {
+            onSelect(selected) {
+              let component = this;
 
-                let options = {
-                    language: "ru"
-                };
+              component.$emit('update:selected', selected);
+            },
+            onSearch(search, loading) {
+                loading(true);
 
-                if (select.attr('data-source')) {
-                    let url = select.attr('data-source'),
-                        exclude = (typeof select.attr('data-exclude') !== 'undefined') ? select.attr('data-exclude').split('|').map(Number) : [];
-
-                    if (select.attr('data-create') === '1') {
-                        options.tags = true;
+                this.search(loading, search, this);
+            },
+            search: _.debounce((loading, search, component) => {
+              axios.post(component.source.url, {q: search})
+                  .then(response => {
+                    if (response.status !== 200) {
+                      throw new Error(response.statusText);
                     }
 
-                    options = $.extend({
-                        ajax: {
-                            url: url,
-                            method: 'POST',
-                            dataType: 'json',
-                            delay: 250,
-                            data: function (params) {
-                                return {
-                                    q: params.term
-                                };
-                            },
-                            processResults: function (data) {
-                                return {
-                                    results: $.map(data.items, function (item) {
-                                        if (exclude.indexOf(item.id) === -1) {
-                                            return {
-                                                text: item.name,
-                                                id: item.id
-                                            }
-                                        }
-                                    })
-                                };
-                            },
-                            cache: true
-                        },
-                        minimumInputLength: 3
-                    }, options);
-                }
+                    component.preparedOptions =  _.map(response.data.items, item => component.source.transformation(item));
 
-                select.select2(options).on('change', function () {
-                    component.$emit('update:selected', this.value)
-                });
-            });
+                    loading(false);
+                  })
+                  .catch(error => {
+                    swal.fire({
+                      title: 'Ошибка',
+                      text: 'При загрузке результатов произошла ошибка',
+                      type: 'error'
+                    });
+                  });
+            }, 350)
         },
         mixins: [
             window.Admin.vue.mixins['errors']
         ]
     }
 </script>
+
+<style>
+    .dropdown-style .vs__dropdown-option--highlight {
+        background: #1ab394;
+        color: #fff
+    }
+
+    .dropdown-style .vs__open-indicator {
+        height: 26px;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        width: 20px;
+    }
+
+    .dropdown-style .vs__open-indicator b {
+        border-color: #888 transparent transparent;
+        border-style: solid;
+        border-width: 5px 4px 0;
+        height: 0;
+        left: 50%;
+        margin-left: -4px;
+        margin-top: -2px;
+        position: absolute;
+        top: 50%;
+        width: 0;
+    }
+</style>

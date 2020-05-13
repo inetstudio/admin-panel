@@ -1,21 +1,29 @@
 <template>
     <div>
         <div class="form-group row" :class="{'has-error': hasError}" ref="date">
-            <label :for="name" class="col-sm-2 col-form-label">{{ label }}</label>
-            <div class="col-sm-10">
-                <div class="input-group">
-                    <div class="input-group m-b">
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input :name="name[0]" type="text" :value="value[0]" :id="name[0]" class="form-control" v-bind="attributes" autocomplete="off">
-                        <span class="input-group-addon"> - </span>
-                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                        <input :name="name[1]" type="text" :value="value[1]" :id="name[1]" class="form-control" v-bind="attributes" autocomplete="off">
+            <label class="col-sm-2 col-form-label">{{ label }}</label>
+            <div class="col-sm-10 form-inline">
+                <div class="input-group m-b" v-for="(date, index) in dates" :key="date.name">
+                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                    <flat-pickr
+                        v-model="date.value"
+                        v-bind:config="config"
+                        v-bind:id="date.name"
+                        v-bind:name="date.name"
+                        v-on:on-change="onChange"
+                        class="form-control"
+                        autocomplete="off"
+                    >
+                    </flat-pickr>
+                    <div class="input-group-append">
+                        <button class="btn btn-default" type="button" title="Очистить" data-clear=""><i class="fa fa-times"></i></button>
                     </div>
+                    <span v-if="index !== (dates.length - 1)" class="input-group-addon"> - </span>
                 </div>
 
                 <span class="form-text m-b-none"
-                      v-for = "(error, index) in fieldErrors"
-                      :key = index
+                  v-for = "(error, index) in fieldErrors"
+                  :key = index
                 >{{ error}}</span>
             </div>
         </div>
@@ -24,6 +32,9 @@
 </template>
 
 <script>
+  import flatPickr from 'vue-flatpickr-component';
+  import {Russian as ruLocale} from 'flatpickr/dist/l10n/ru.js';
+
   export default {
     name: 'BaseDate',
     props: {
@@ -31,45 +42,46 @@
         type: String,
         default: ''
       },
-      name: {
-        type: [String, Array],
-        required: true
+      dates: {
+        type: Array,
+        default() {
+          return [
+            {
+              name: 'date',
+              value: new Date()
+            }
+          ];
+        }
       },
-      value: {
-        type: [String, Array],
-        required: true
-      },
-      attributes: {
+      options: {
         type: Object,
         default() {
           return {};
         }
       }
     },
-    mounted() {
-      let component = this;
+    data() {
+      return {
+        config: _.merge(
+            {
+              wrap: true,
+              static: true,
+              dateFormat: 'd.m.Y H:i',
+              locale: ruLocale
+            },
+            this.options
+        )
+      }
+    },
+    components: {
+      flatPickr
+    },
+    methods: {
+      onChange(selectedDates, dateStr, instance) {
+        let component = this;
 
-      this.$nextTick(function() {
-        let dateWrapper = $(component.$refs.date);
-
-        dateWrapper.find('input').each(function () {
-          let fieldName = $(this).attr('name');
-          let fieldOptions = $(this).attr('data-options');
-          let extOptions = (typeof fieldOptions === 'undefined') ? {} : JSON.parse(fieldOptions);
-
-          let options = $.extend({
-            locale: 'ru',
-            allowInput: true,
-            static: true,
-            dateFormat: 'd.m.Y H:i',
-            onChange: function(selectedDates, dateStr, instance) {
-              component.$emit('update:'+fieldName, dateStr);
-            }
-          }, extOptions);
-
-          $(this).flatpickr(options);
-        });
-      })
+        component.$emit('update:'+instance.input.name, dateStr);
+      }
     },
     mixins: [
       window.Admin.vue.mixins['errors']
@@ -78,4 +90,8 @@
 </script>
 
 <style scoped>
+    .form-control:disabled, .form-control[readonly]
+    {
+        background-color: #ffffff;
+    }
 </style>

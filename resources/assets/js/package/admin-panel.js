@@ -111,7 +111,8 @@ $(document).ready(function () {
                                 if (exclude.indexOf(item.id) === -1) {
                                     return {
                                         text: item.name,
-                                        id: item.id
+                                        id: item.id,
+                                        extra: _.get(item, 'extra', [])
                                     }
                                 }
                             })

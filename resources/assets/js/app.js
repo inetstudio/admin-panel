@@ -54,12 +54,52 @@ window.Vue.use(window.Vuex);
 window.Admin.vue = {
     stores: [],
     mixins: [],
-    modulesComponents: new Vue({
-        el: '#modules-components',
-        data: {
-            modules: {}
+    modulesComponents: document.getElementById('modules-components')
+        ? new Vue({
+            el: '#modules-components',
+            data: {
+                modules: {}
+            },
+        })
+        : null,
+    helpers: {
+        initVueModule: function (moduleName) {
+            if (window.Admin.vue.modulesComponents && ! window.Admin.vue.modulesComponents.modules.hasOwnProperty(moduleName)) {
+                let moduleComponents = {};
+                moduleComponents[moduleName] = {
+                    components: []
+                };
+
+                window.Admin.vue.modulesComponents.modules = Object.assign(
+                    {},
+                    window.Admin.vue.modulesComponents.modules,
+                    moduleComponents
+                );
+            }
         },
-    })
+        initComponent: function (moduleName, componentName, data) {
+            this.initVueModule(moduleName);
+
+            if (window.Admin.vue.modulesComponents && typeof window.Admin.vue.modulesComponents.$refs[moduleName + '_' + componentName] == 'undefined') {
+                window.Admin.vue.modulesComponents.modules[moduleName].components = _.union(
+                    window.Admin.vue.modulesComponents.modules[moduleName].components,
+                    [
+                        {
+                            name: componentName,
+                            data: data,
+                        }
+                    ]
+                );
+            }
+        },
+        getVueComponent: function (moduleName, componentName) {
+            if (typeof window.Admin.vue.modulesComponents.$refs[moduleName + '_' + componentName] == 'undefined') {
+                return null;
+            }
+
+            return window.Admin.vue.modulesComponents.$refs[moduleName + '_' + componentName][0];
+        }
+    }
 };
 
 require('./mixins/errors');
@@ -111,8 +151,6 @@ require('devbridge-autocomplete');
 require('codemirror/mode/htmlmixed/htmlmixed');
 require('codemirror/addon/scroll/simplescrollbars');
 require('jquery-datetimepicker/build/jquery.datetimepicker.full');
-require('flatpickr');
-require('flatpickr/dist/l10n/ru.js');
 
 require('@fancyapps/fancybox/dist/jquery.fancybox');
 
