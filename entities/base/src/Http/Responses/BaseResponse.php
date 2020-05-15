@@ -58,7 +58,15 @@ abstract class BaseResponse implements Responsable
 
             $response = $response->make($content);
         } else {
-            $response = (empty($data) && $this->abortOnEmptyData) ? null : $response->view($this->view, $data);
+            if (empty($data) && $this->abortOnEmptyData) {
+                $response = null;
+            } else {
+                if (view()->exists($this->view)) {
+                    $response = $response->view($this->view, $data);
+                } else {
+                    $response = $response->json($data);
+                }
+            }
         }
 
         if (! $response) {
