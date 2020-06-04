@@ -6,9 +6,8 @@
                 <v-select
                     class="dropdown-style"
                     v-bind="attributes"
-                    label="text"
                     :options="preparedOptions"
-                    :value="selected"
+                    :value="preparedSelected"
                     v-on="(source.url !== '') ? {search: onSearch} : {}"
                     @input="onSelect"
                 >
@@ -68,7 +67,8 @@
         },
         data() {
           return {
-            preparedOptions: []
+            preparedOptions: [],
+            preparedSelected: null
           };
         },
         watch: {
@@ -78,6 +78,14 @@
               let component = this;
 
               component.preparedOptions = newValues;
+            }
+          },
+          selected: {
+            immediate: true,
+            handler(newValues, oldValues) {
+              let component = this;
+
+              component.preparedSelected = newValues;
             }
           }
         },
