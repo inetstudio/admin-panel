@@ -18,11 +18,11 @@
                             <b role="presentation"></b>
                         </span>
                     </template>
-                    <template #option="{group, text}">
-                        <div v-if="group" class="group">
-                            {{ group }}
+                    <template v-slot:option="option">
+                        <div v-if="option.hasOwnProperty('group')" class="group">
+                            {{ option.group }}
                         </div>
-                        {{ text }}
+                        {{ option[attributes.label] }}
                     </template>
                 </v-select>
 
