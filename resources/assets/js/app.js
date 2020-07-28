@@ -114,7 +114,18 @@ Vue.component('BaseDropdown', require('./components/fields/BaseDropdown.vue').de
 Vue.component('BaseDate', require('./components/fields/BaseDate.vue').default);
 Vue.component('BaseWysiwyg', require('./components/fields/BaseWysiwyg.vue').default);
 Vue.component('BaseCode', require('./components/fields/BaseCode.vue').default);
+
 /* VUE ===================================================================== */
+window.Admin.helpers = {
+    documentReady: function(callback) {
+        if (document.readyState !== "loading") {
+            callback();
+        } else {
+            document.addEventListener("DOMContentLoaded", callback);
+        }
+    }
+};
+
 
 
 window.tinymce = require('tinymce');

@@ -8,6 +8,7 @@
                     v-bind="attributes"
                     :options="preparedOptions"
                     :value="preparedSelected"
+                    :selectable="option => !option.hasOwnProperty('group')"
                     v-on="(source.url !== '') ? {search: onSearch} : {}"
                     @input="onSelect"
                 >
@@ -16,6 +17,12 @@
                         <span v-bind="attributes">
                             <b role="presentation"></b>
                         </span>
+                    </template>
+                    <template #option="{group, text}">
+                        <div v-if="group" class="group">
+                            {{ group }}
+                        </div>
+                        {{ text }}
                     </template>
                 </v-select>
 
@@ -130,6 +137,13 @@
 </script>
 
 <style>
+    .dropdown-style .vs__dropdown-option--disabled .group {
+        font-weight: bold;
+        margin-left: -10px;
+        background: #ededed;
+        color: #3b3b3b;
+    }
+
     .dropdown-style .vs__dropdown-option--highlight {
         background: #1ab394;
         color: #fff

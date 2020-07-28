@@ -11,7 +11,7 @@
                 >{{ error}}</span>
             </div>
         </div>
-        <div class="hr-line-dashed"></div>
+        <div v-if="showHr" class="hr-line-dashed"></div>
     </div>
 </template>
 
@@ -26,6 +26,10 @@
             name: {
                 type: String,
                 required: true
+            },
+            showHr: {
+                type: Boolean,
+                default: true
             },
             value: [String, Number],
             attributes: {
