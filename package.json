@@ -33,7 +33,8 @@
     "vanilla-lazyload": "^10.5.2",
     "vue": "^2.5.17",
     "vue-flatpickr-component": "^8.1.5",
+    "vue-js-modal": "^2.0.0-rc.6",
     "vue-select": "^3.10.3",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
   }
 }
