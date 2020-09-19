@@ -60,6 +60,9 @@
             };
 
             component.$nextTick(function () {
+                let id = component.getId();
+                window.tinymce.remove('#'+id);
+
                 if (component.simple) {
                   window.tinymce.init(_.merge({
                     skin: false,
