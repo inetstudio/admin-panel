@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-group row" :class="{'has-error': hasError}" ref="date">
-            <label class="col-sm-2 col-form-label">{{ label }}</label>
+            <label class="col-sm-2 col-form-label font-bold">{{ label }}</label>
             <div class="col-sm-10 form-inline">
                 <div class="input-group m-b" v-for="(date, index) in dates" :key="date.name">
                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
