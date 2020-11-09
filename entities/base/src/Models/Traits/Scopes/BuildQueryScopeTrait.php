@@ -55,7 +55,17 @@ trait BuildQueryScopeTrait
         $query->select($columns);
 
         if (isset($params['relations'])) {
-            $query->with(array_intersect_key(self::$buildQueryScopeDefaults['relations'], array_flip($params['relations'])));
+            foreach ($params['relations'] ?? [] as $key => $val) {
+                if (is_string($val) && isset(self::$buildQueryScopeDefaults['relations'][$val])) {
+                    $query->with($val, self::$buildQueryScopeDefaults['relations'][$val]);
+                } elseif (is_string($val)) {
+                    $query->with($val);
+                }
+
+                if (is_callable($val)) {
+                    $query->with($key, $val);
+                }
+            }
         }
 
         foreach ($params['filter'] ?? [] as $filter) {
