@@ -62,7 +62,7 @@ trait BuildQueryScopeTrait
                     $query->with($val);
                 }
 
-                if (is_callable($val)) {
+                if (! is_string($val) && is_callable($val)) {
                     $query->with($key, $val);
                 }
             }
