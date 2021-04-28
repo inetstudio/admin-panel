@@ -81,7 +81,7 @@ $(document).ready(function () {
         let $this = $(this);
         if ($this.attr('data-source')) {
             let url = $this.attr('data-source'),
-                exclude = (typeof $this.attr('data-exclude') !== 'undefined') ? $this.attr('data-exclude').split('|').map(Number) : [];
+                exclude = (typeof $this.attr('data-exclude') !== 'undefined') ? $this.attr('data-exclude').split('|') : [];
 
             let options = {};
 
@@ -102,18 +102,17 @@ $(document).ready(function () {
                     delay: 250,
                     data: function (params) {
                         return {
-                            q: params.term
+                            q: params.term,
+                            exclude: exclude
                         };
                     },
                     processResults: function (data) {
                         return {
                             results: $.map(data.items, function (item) {
-                                if (exclude.indexOf(item.id) === -1) {
-                                    return {
-                                        text: item.name,
-                                        id: item.id,
-                                        extra: _.get(item, 'extra', [])
-                                    }
+                                return {
+                                    text: item.name,
+                                    id: item.id,
+                                    extra: _.get(item, 'extra', [])
                                 }
                             })
                         };
