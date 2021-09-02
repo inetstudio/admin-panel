@@ -46,6 +46,7 @@ class BaseSetupCommand extends Command
                     break;
                 case 'cli':
                     $process = new Process($info['command']);
+                    $process->setTimeout(240);
                     $process->run();
                     break;
             }

@@ -20,7 +20,7 @@
       "maatwebsite/excel": "^3.0",
       "owen-it/laravel-auditing": "^12.0",
       "spatie/data-transfer-object": "^3.0",
-      "tightenco/ziggy": "^0.9",
+      "tightenco/ziggy": "^1.1",
       "yajra/laravel-datatables-buttons": "^4.9",
       "yajra/laravel-datatables-fractal": "^1.5",
       "yajra/laravel-datatables-html": "^4.23",

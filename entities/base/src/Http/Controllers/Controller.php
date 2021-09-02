@@ -8,25 +8,22 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-/**
- * Class Controller.
- */
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    /**
-     * @var Application
-     */
-    public $app;
+    public function __construct(
+        public Application $app
+    ) {}
 
-    /**
-     * Controller constructor.
-     *
-     * @param Application $app
-     */
-    public function __construct(Application $app)
+    protected function process($request, $operation, $response)
     {
-        $this->app = $app;
+        $data = $request->getDataObject();
+
+        $result = $operation->execute($data);
+
+        $response->setResult($result);
+
+        return $response;
     }
 }

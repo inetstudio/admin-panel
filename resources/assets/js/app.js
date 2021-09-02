@@ -47,10 +47,12 @@ window.UUID = require('uuidjs');
 
 
 /* VUE ===================================================================== */
-window.Vue = require('vue');
-window.Vuex = require('vuex');
-window.Vue.use(window.Vuex);
-window.Vue.use(require('vue-js-modal').default)
+import Vue from 'vue';
+import Vuex from 'vuex';
+import * as VueJSModal from 'vue-js-modal';
+
+Vue.use(Vuex);
+Vue.use(VueJSModal)
 
 window.Admin.vue = {
     stores: [],
