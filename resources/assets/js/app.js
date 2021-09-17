@@ -51,14 +51,16 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as VueJSModal from 'vue-js-modal';
 
-Vue.use(Vuex);
-Vue.use(VueJSModal)
+window.Vue = Vue;
+window.Vuex = Vuex;
+window.Vue.use(window.Vuex);
+window.Vue.use(VueJSModal);
 
 window.Admin.vue = {
     stores: [],
     mixins: [],
     modulesComponents: document.getElementById('modules-components')
-        ? new Vue({
+        ? new window.Vue({
             el: '#modules-components',
             data: {
                 modules: {}
@@ -107,16 +109,16 @@ window.Admin.vue = {
 
 require('./mixins/errors');
 
-Vue.component('vue-block-buttons', require('./components/blocks/ButtonsComponent.vue').default);
-Vue.component('vue-block-info', require('./components/blocks/InfoComponent.vue').default);
-Vue.component('BaseInputHidden', require('./components/fields/BaseInputHidden.vue').default);
-Vue.component('BaseInputText', require('./components/fields/BaseInputText.vue').default);
-Vue.component('BaseCheckboxes', require('./components/fields/BaseCheckboxes.vue').default);
-Vue.component('BaseAutocomplete', require('./components/fields/BaseAutocomplete.vue').default);
-Vue.component('BaseDropdown', require('./components/fields/BaseDropdown.vue').default);
-Vue.component('BaseDate', require('./components/fields/BaseDate.vue').default);
-Vue.component('BaseWysiwyg', require('./components/fields/BaseWysiwyg.vue').default);
-Vue.component('BaseCode', require('./components/fields/BaseCode.vue').default);
+window.Vue.component('vue-block-buttons', require('./components/blocks/ButtonsComponent.vue').default);
+window.Vue.component('vue-block-info', require('./components/blocks/InfoComponent.vue').default);
+window.Vue.component('BaseInputHidden', require('./components/fields/BaseInputHidden.vue').default);
+window.Vue.component('BaseInputText', require('./components/fields/BaseInputText.vue').default);
+window.Vue.component('BaseCheckboxes', require('./components/fields/BaseCheckboxes.vue').default);
+window.Vue.component('BaseAutocomplete', require('./components/fields/BaseAutocomplete.vue').default);
+window.Vue.component('BaseDropdown', require('./components/fields/BaseDropdown.vue').default);
+window.Vue.component('BaseDate', require('./components/fields/BaseDate.vue').default);
+window.Vue.component('BaseWysiwyg', require('./components/fields/BaseWysiwyg.vue').default);
+window.Vue.component('BaseCode', require('./components/fields/BaseCode.vue').default);
 
 /* VUE ===================================================================== */
 window.Admin.helpers = {
