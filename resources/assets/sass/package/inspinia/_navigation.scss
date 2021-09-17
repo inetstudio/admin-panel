@@ -20,7 +20,7 @@
   color: #999c9e;
 }
 
-.nav > li.active > a {
+.nav > li.mm-active > a {
   color: #ffffff;
 }
 
@@ -201,12 +201,12 @@ ul.nav-second-level {
   background: darken($nav-bg, 3%);
 }
 
-.nav > li.active {
+.nav > li.mm-active {
   border-left: 4px solid darken($navy, 2%);
   background: darken($nav-bg, 3%);
 }
 
-.nav.nav-second-level > li.active {
+.nav.nav-second-level > li.mm-active {
   border: none;
 }
 

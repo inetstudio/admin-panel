@@ -1,12 +1,3 @@
-/*
- * metismenu - v2.0.2
- * A jQuery menu plugin
- * https://github.com/onokumus/metisMenu
- *
- * Made by Osman Nuri Okumus
- * Under MIT License
- */
-
 .metismenu .plus-minus, .metismenu .plus-times {
   float: right
 }
@@ -20,7 +11,7 @@
   content: "\e079"
 }
 
-.metismenu .active > a > .glyphicon.arrow:before {
+.metismenu .mm-active > a > .glyphicon.arrow:before {
   content: "\e114"
 }
 
@@ -28,7 +19,7 @@
   content: "\f104"
 }
 
-.metismenu .active > a > .fa.arrow:before {
+.metismenu .mm-active > a > .fa.arrow:before {
   content: "\f107"
 }
 
@@ -36,7 +27,7 @@
   content: "\f3d2"
 }
 
-.metismenu .active > a > .ion.arrow:before {
+.metismenu .mm-active > a > .ion.arrow:before {
   content: "\f3d0"
 }
 
@@ -44,25 +35,25 @@
   content: "\f067"
 }
 
-.metismenu .active > a > .fa.plus-times {
+.metismenu .mm-active > a > .fa.plus-times {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg)
 }
 
-.metismenu .active > a > .fa.plus-minus:before {
+.metismenu .mm-active > a > .fa.plus-minus:before {
   content: "\f068"
 }
 
-.metismenu .collapse {
+.metismenu .mm-collapse {
   display: none
 }
 
-.metismenu .collapse.in {
+.metismenu .mm-collapse.mm-show {
   display: block
 }
 
-.metismenu .collapsing {
+.metismenu .mm-collapsing {
   position: relative;
   height: 0;
   overflow: hidden;
@@ -75,23 +66,16 @@
 }
 
 .mini-navbar {
-  .metismenu .collapse {
+  .metismenu .mm-collapse {
     opacity: 0;
   }
-  .metismenu .collapse.in {
+  .metismenu .mm-collapse.mm-show {
     opacity: 1;
   }
-  .metismenu .collapse a {
+  .metismenu .mm-collapse a {
     display: none
   }
-  .metismenu .collapse.in a {
+  .metismenu .mm-collapse.mm-show a {
     display: block
   }
 }
-
-
-
-
-
-
-

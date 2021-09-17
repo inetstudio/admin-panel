@@ -154,7 +154,6 @@ require('tinymce/plugins/paste');
 
 require( 'datatables.net-bs4');
 
-require('metismenu');
 require('jquery-slimscroll');
 require('jquery-serializejson');
 
