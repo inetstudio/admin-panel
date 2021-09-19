@@ -19,11 +19,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~codemirror/lib/codemirror.css";
 @import "~codemirror/addon/scroll/simplescrollbars.css";
 @import "~select2/src/scss/core";
-@import "~sweetalert2/src/sweetalert2";
 @import "../css/plugins/tinymce/skins/lightgray/skin.min";
-@import "~toastr/toastr";
-@import "~flatpickr/dist/flatpickr";
-@import "~flatpickr/dist/themes/material_green";
 
 // Admin
 @import "./package/inspinia/style";

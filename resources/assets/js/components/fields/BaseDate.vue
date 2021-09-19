@@ -35,6 +35,9 @@
   import flatPickr from 'vue-flatpickr-component';
   import {Russian as ruLocale} from 'flatpickr/dist/l10n/ru.js';
 
+  import "flatpickr/dist/flatpickr.css";
+  import "flatpickr/dist/themes/material_green.css";
+
   export default {
     name: 'BaseDate',
     props: {

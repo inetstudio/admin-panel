@@ -37,6 +37,7 @@
 </template>
 
 <script>
+    import Swal from 'sweetalert2';
     import vSelect from 'vue-select'
     import 'vue-select/dist/vue-select.css';
 
@@ -122,10 +123,10 @@
                     loading(false);
                   })
                   .catch(error => {
-                    swal.fire({
+                    Swal.fire({
                       title: 'Ошибка',
                       text: 'При загрузке результатов произошла ошибка',
-                      type: 'error'
+                      icon: 'error'
                     });
                   });
             }, 350)

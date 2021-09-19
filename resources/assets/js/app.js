@@ -32,19 +32,13 @@ if (token) {
 
 require('bootstrap');
 
-window.Pace = require('./plugins/pace/pace');
+import Pace from 'pace-js'
+
+window.Pace = Pace;
 window.Pace.start();
 
-window.Clipboard = require('clipboard');
 window.CodeMirror = require('codemirror/lib/codemirror');
-window.hash = require('object-hash');
-window.Holder = require('holderjs');
 window.LazyLoad = require('vanilla-lazyload');
-window.swal = require('sweetalert2/dist/sweetalert2');
-window.Sortable = require('sortablejs');
-window.toastr = require('toastr');
-window.UUID = require('uuidjs');
-
 
 /* VUE ===================================================================== */
 import Vue from 'vue';
@@ -109,16 +103,16 @@ window.Admin.vue = {
 
 require('./mixins/errors');
 
-window.Vue.component('vue-block-buttons', require('./components/blocks/ButtonsComponent.vue').default);
-window.Vue.component('vue-block-info', require('./components/blocks/InfoComponent.vue').default);
-window.Vue.component('BaseInputHidden', require('./components/fields/BaseInputHidden.vue').default);
-window.Vue.component('BaseInputText', require('./components/fields/BaseInputText.vue').default);
-window.Vue.component('BaseCheckboxes', require('./components/fields/BaseCheckboxes.vue').default);
-window.Vue.component('BaseAutocomplete', require('./components/fields/BaseAutocomplete.vue').default);
-window.Vue.component('BaseDropdown', require('./components/fields/BaseDropdown.vue').default);
-window.Vue.component('BaseDate', require('./components/fields/BaseDate.vue').default);
-window.Vue.component('BaseWysiwyg', require('./components/fields/BaseWysiwyg.vue').default);
-window.Vue.component('BaseCode', require('./components/fields/BaseCode.vue').default);
+window.Vue.component('vue-block-buttons', () => import('./components/blocks/ButtonsComponent.vue'));
+window.Vue.component('vue-block-info', () => import('./components/blocks/InfoComponent.vue'));
+window.Vue.component('BaseInputHidden', () => import('./components/fields/BaseInputHidden.vue'));
+window.Vue.component('BaseInputText', () => import('./components/fields/BaseInputText.vue'));
+window.Vue.component('BaseCheckboxes', () => import('./components/fields/BaseCheckboxes.vue'));
+window.Vue.component('BaseAutocomplete', () => import('./components/fields/BaseAutocomplete.vue'));
+window.Vue.component('BaseDropdown', () => import('./components/fields/BaseDropdown.vue'));
+window.Vue.component('BaseDate', () => import('./components/fields/BaseDate.vue'));
+window.Vue.component('BaseWysiwyg', () => import('./components/fields/BaseWysiwyg.vue'));
+window.Vue.component('BaseCode', () => import('./components/fields/BaseCode.vue'));
 
 /* VUE ===================================================================== */
 window.Admin.helpers = {
