@@ -206,7 +206,7 @@ ul.nav-second-level {
   background: darken($nav-bg, 3%);
 }
 
-.nav.nav-second-level > li.mm-active {
+.nav.nav-second-level > li.mm-active, .nav.nav-third-level > li.mm-active {
   border: none;
 }
 
