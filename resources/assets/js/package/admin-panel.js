@@ -3,9 +3,6 @@ import CodeMirror from 'codemirror/lib/codemirror';
 import LazyLoad from 'vanilla-lazyload';
 import Swal from 'sweetalert2';
 
-import "codemirror/lib/codemirror.css";
-import "codemirror/addon/scroll/simplescrollbars.css";
-
 $(document).on('show.bs.modal', '.modal', function () {
     let zIndex = 2050 + (10 * $('.modal.fade.show').length);
     $(this).css('z-index', zIndex);
