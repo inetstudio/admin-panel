@@ -37,9 +37,6 @@ import Pace from 'pace-js'
 window.Pace = Pace;
 window.Pace.start();
 
-window.CodeMirror = require('codemirror/lib/codemirror');
-window.LazyLoad = require('vanilla-lazyload');
-
 /* VUE ===================================================================== */
 import Vue from 'vue';
 import Vuex from 'vuex';

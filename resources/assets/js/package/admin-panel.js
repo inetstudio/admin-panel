@@ -1,5 +1,10 @@
 import ClipboardJS from 'clipboard';
+import CodeMirror from 'codemirror/lib/codemirror';
+import LazyLoad from 'vanilla-lazyload';
 import Swal from 'sweetalert2';
+
+import "codemirror/lib/codemirror.css";
+import "codemirror/addon/scroll/simplescrollbars.css";
 
 $(document).on('show.bs.modal', '.modal', function () {
     let zIndex = 2050 + (10 * $('.modal.fade.show').length);
@@ -28,7 +33,7 @@ $(document).ready(function () {
     });
 
     if ($('[data-src]:not([class*=placeholder])').length > 0) {
-        new window.LazyLoad({
+        new LazyLoad({
             elements_selector: '[data-src]:not([class*=placeholder])'
         });
     }
@@ -36,7 +41,7 @@ $(document).ready(function () {
     $('.code').each(function () {
         let element = $(this);
 
-        window.CodeMirror.fromTextArea(document.getElementById(element.attr('id')), {
+        CodeMirror.fromTextArea(document.getElementById(element.attr('id')), {
             lineNumbers: true,
             matchBrackets: true,
             styleActiveLine: true,

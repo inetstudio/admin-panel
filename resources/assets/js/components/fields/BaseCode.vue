@@ -16,6 +16,11 @@
 </template>
 
 <script>
+    import CodeMirror from 'codemirror/lib/codemirror';
+
+    import "codemirror/lib/codemirror.css";
+    import "codemirror/addon/scroll/simplescrollbars.css";
+
     export default {
         name: 'BaseCode',
         props: {
@@ -44,7 +49,7 @@
             let component = this;
 
             component.$nextTick(function () {
-              let codeMirror = window.CodeMirror.fromTextArea(component.$refs.editor, {
+              let codeMirror = CodeMirror.fromTextArea(component.$refs.editor, {
                 lineNumbers: true,
                 matchBrackets: true,
                 styleActiveLine: true,
