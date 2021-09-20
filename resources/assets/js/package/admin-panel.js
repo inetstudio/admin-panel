@@ -1,3 +1,6 @@
+import ClipboardJS from 'clipboard';
+import Swal from 'sweetalert2';
+
 $(document).on('show.bs.modal', '.modal', function () {
     let zIndex = 2050 + (10 * $('.modal.fade.show').length);
     $(this).css('z-index', zIndex);
@@ -13,6 +16,12 @@ $(document).on('focusin', function(e) {
 });
 
 $(document).ready(function () {
+    document.querySelectorAll('.vue-wysiwyg-field').forEach(function (element) {
+        new window.Vue({
+            el: element
+        });
+    });
+
     $('.json-data').each(function () {
         let json = JSON.parse($(this).text());
         $(this).text(JSON.stringify(json, null, '\t'));
@@ -184,7 +193,7 @@ $(document).ready(function () {
     }
 
     if ($('.clipboard').length > 0) {
-        new Clipboard('.clipboard');
+        new ClipboardJS('.clipboard');
     }
 
     $('.table, .dd-list').on('click', '.delete', function (event) {
@@ -194,14 +203,13 @@ $(document).ready(function () {
         let $table = $button.closest('.dataTable');
 
 
-        swal({
+        Swal.fire({
             title: "Вы уверены?",
-            type: "warning",
+            icon: "warning",
             showCancelButton: true,
             cancelButtonText: "Отмена",
             confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Да, удалить",
-            closeOnConfirm: true
+            confirmButtonText: "Да, удалить"
         }).then((result) => {
             if (result.value) {
                 $.ajax({
@@ -214,15 +222,15 @@ $(document).ready(function () {
                     success: function (data) {
                         if (data.success === true) {
                             $table.DataTable().ajax.reload(null, false);
-                            swal({
+                            Swal.fire({
                                 title: "Запись удалена",
-                                type: "success"
+                                icon: "success"
                             });
                         } else {
-                            swal({
+                            Swal.fire({
                                 title: "Ошибка",
                                 text: "При удалении произошла ошибка",
-                                type: "error"
+                                icon: "error"
                             });
                         }
                     }

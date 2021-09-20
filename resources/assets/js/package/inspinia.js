@@ -15,7 +15,10 @@ $(document).ready(function () {
     }
 
     // MetisMenu
-    MetisMenu.attach('#side-menu', {})
+    let menu = document.getElementById('side-menu');
+    if (typeof menu !== 'undefined' && menu !== null) {
+        MetisMenu.attach(menu, {})
+    }
 
     // Collapse ibox function
     $(document).on('click', '.collapse-link', function (e) {
