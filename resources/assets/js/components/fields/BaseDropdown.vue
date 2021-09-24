@@ -152,6 +152,10 @@ export default {
   padding-right: 10px;
 }
 
+.dropdown-style .vs__open-indicator {
+  cursor: pointer;
+}
+
 .dropdown-style .vs__dropdown-option--disabled .group {
   font-weight: bold;
   margin-left: -10px;
