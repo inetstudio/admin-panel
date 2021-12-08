@@ -141,7 +141,7 @@ video {
 }
 
 /* MODAL */
-.modal-content {
+.vue-modal-content, .modal-content {
   background-clip: padding-box;
   background-color: #FFFFFF;
   border: 1px solid rgba(0, 0, 0, 0);
@@ -151,19 +151,19 @@ video {
   position: relative;
 }
 
-.modal-dialog {
+.vue-modal-dialog, .modal-dialog {
   z-index: 2200;
 }
 
-.modal-body {
+.vue-modal-body, .modal-body {
   padding: 20px 30px 30px 30px;
 }
 
-.inmodal .modal-body {
+.vue-inmodal .vue-modal-body, .inmodal .modal-body {
   background: #f8fafb;
 }
 
-.inmodal .modal-header {
+.vue-inmodal .vue-modal-header, .inmodal .modal-header {
   padding: 30px 15px;
   text-align: center;
   display: block;
@@ -176,16 +176,16 @@ video {
   transform: none;
 }
 
-.inmodal .modal-title {
+.vue-inmodal .vue-modal-title, .inmodal .modal-title {
   font-size: 26px;
 }
 
-.inmodal .modal-icon {
+.vue-inmodal .vue-modal-icon, .inmodal .modal-icon {
   font-size: 84px;
   color: #e2e3e3;
 }
 
-.modal-footer {
+.vue-modal-footer, .modal-footer {
   margin-top: 0;
 }
 
@@ -1000,7 +1000,7 @@ a.close-canvas-menu:hover {
   z-index: 2040 !important;
 }
 
-.modal {
+.vue-modal, .modal {
   //z-index: 2050 !important;
 }
 
