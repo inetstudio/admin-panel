@@ -111,7 +111,7 @@ class AdminPanelServiceProvider extends ServiceProvider
             $result = '';
 
             foreach ($namespaces as $namespace => $paths) {
-                if (strpos($namespace, 'admin.module') !== false) {
+                if (strpos($namespace, 'admin.module') !== false || strpos($namespace, 'inetstudio.') !== false) {
                     $fullExpression = $namespace.'::'.$expression;
 
                     $result .= "<?php 

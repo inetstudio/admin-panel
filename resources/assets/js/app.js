@@ -37,15 +37,17 @@ import Pace from 'pace-js'
 window.Pace = Pace;
 window.Pace.start();
 
+window.hash = require('object-hash');
+
 /* VUE ===================================================================== */
 import Vue from 'vue';
 import Vuex from 'vuex';
-import * as VueJSModal from 'vue-js-modal';
+import VModal from 'vue-js-modal'
 
 window.Vue = Vue;
 window.Vuex = Vuex;
 window.Vue.use(window.Vuex);
-window.Vue.use(VueJSModal);
+window.Vue.use(VModal);
 
 window.Admin.vue = {
     stores: [],
