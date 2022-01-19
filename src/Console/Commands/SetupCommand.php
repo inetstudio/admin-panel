@@ -41,11 +41,6 @@ class SetupCommand extends BaseSetupCommand
             ],
             [
                 'type' => 'artisan',
-                'description' => 'Failed jobs migrations',
-                'command' => 'queue:failed-table',
-            ],
-            [
-                'type' => 'artisan',
                 'description' => 'ACL setup',
                 'command' => 'inetstudio:acl:setup',
             ],
