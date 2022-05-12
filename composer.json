@@ -11,20 +11,20 @@
     ],
     "require": {
       "php": ">=7.3",
-      "cviebrock/eloquent-sluggable": "^8.0",
-      "inetstudio/acl": "^8.0",
-      "inetstudio/cache": "^8.0",
-      "inetstudio/search": "^8.0",
-      "inetstudio/uploads": "^8.0",
+      "cviebrock/eloquent-sluggable": "^9.0",
+      "inetstudio/acl": "^9.0",
+      "inetstudio/cache": "^9.0",
+      "inetstudio/search": "^9.0",
+      "inetstudio/uploads": "^9.0",
       "laravelcollective/html": "^6.0",
       "maatwebsite/excel": "^3.0",
-      "owen-it/laravel-auditing": "^12.0",
+      "owen-it/laravel-auditing": "^13.0",
       "spatie/data-transfer-object": "^3.0",
       "tightenco/ziggy": "^1.1",
-      "yajra/laravel-datatables-buttons": "^4.9",
-      "yajra/laravel-datatables-fractal": "^1.5",
-      "yajra/laravel-datatables-html": "^4.23",
-      "yajra/laravel-datatables-oracle": "^9.9"
+      "yajra/laravel-datatables-buttons": "^9.0",
+      "yajra/laravel-datatables-fractal": "^9.0",
+      "yajra/laravel-datatables-html": "^9.0",
+      "yajra/laravel-datatables-oracle": "^10.0"
     },
     "autoload": {
       "psr-4": {
