@@ -15,15 +15,20 @@
         >
           <div slot="no-options">Совпадений не найдено</div>
           <template #open-indicator="{ attributes }">
-                        <span v-bind="attributes">
-                            <b role="presentation"></b>
-                        </span>
+            <span v-bind="attributes">
+                <b role="presentation"></b>
+            </span>
           </template>
           <template v-slot:option="option">
             <div v-if="option.hasOwnProperty('group')" class="group">
               {{ option.group }}
             </div>
-            {{ option[attributes.label] }}
+            <span v-html="option[attributes.label]" />
+          </template>
+          <template #selected-option="{ text }">
+            <div style="display: flex; align-items: baseline">
+              <span v-html="text" />
+            </div>
           </template>
         </v-select>
 
