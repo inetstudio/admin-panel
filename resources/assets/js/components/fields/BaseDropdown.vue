@@ -25,9 +25,9 @@
             </div>
             <span v-html="option[attributes.label]" />
           </template>
-          <template #selected-option="{ text }">
+          <template v-slot:selected-option="option">
             <div style="display: flex; align-items: baseline">
-              <span v-html="text" />
+              <span v-html="option[attributes.label]" />
             </div>
           </template>
         </v-select>
