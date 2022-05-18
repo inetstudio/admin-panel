@@ -122,6 +122,10 @@ export default {
       component.$emit('update:selected', created.text);
     },
     onSearch(search, loading) {
+      if (! search) {
+        return;
+      }
+
       loading(true);
 
       this.search(loading, search, this);
