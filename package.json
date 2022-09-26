@@ -25,7 +25,7 @@
     "popper.js": "^1.16.1",
     "select2": "^4.0.5",
     "sortablejs": "^1.14.0",
-    "sweetalert2": "^11.1.6",
+    "sweetalert2": "11.4.8",
     "tinymce": "^4.7.9",
     "tinymce-i18n": "^18.2.15",
     "uuid": "^8.3.2",
