@@ -11,37 +11,25 @@ use InetStudio\AdminPanel\Base\Contracts\Serializers\SimpleDataArraySerializerCo
 class SimpleDataArraySerializer extends DataArraySerializer implements SimpleDataArraySerializerContract
 {
     /**
-     * Serialize a collection.
-     *
-     * @param string $resourceKey
-     * @param array $data
-     *
-     * @return array
+     * {@inheritDoc}
      */
-    public function collection($resourceKey, array $data)
+    public function collection(?string $resourceKey, array $data): array
     {
         return $data;
     }
 
     /**
-     * Serialize an item.
-     *
-     * @param string $resourceKey
-     * @param array $data
-     *
-     * @return array
+     * {@inheritDoc}
      */
-    public function item($resourceKey, array $data)
+    public function item(?string $resourceKey, array $data): array
     {
         return $data;
     }
 
     /**
-     * Serialize null resource.
-     *
-     * @return array
+     * {@inheritDoc}
      */
-    public function null()
+    public function null(): ?array
     {
         return [];
     }
