@@ -12,7 +12,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~animate.css/animate";
 
 // Plugins
-@import "~datatables.net-bs4/css/dataTables.bootstrap4";
+// @import "~datatables.net-bs4/css/dataTables.bootstrap4";
 @import "~@fancyapps/fancybox/dist/jquery.fancybox";
 @import "./plugins/iCheck/icheck";
 @import "~jquery-datetimepicker/jquery.datetimepicker";
@@ -20,6 +20,7 @@ $fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
 @import "~codemirror/addon/scroll/simplescrollbars.css";
 @import "~select2/src/scss/core";
 @import "../css/plugins/tinymce/skins/lightgray/skin.min";
+@import "./plugins/data-tables-bootstrap4/dataTables.bootstrap4";
 
 // Admin
 @import "./package/inspinia/style";
