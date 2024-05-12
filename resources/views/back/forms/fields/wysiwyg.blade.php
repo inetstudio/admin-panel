@@ -24,6 +24,10 @@
 
         {!! Form::textarea('', old($transformNameText) ? old($transformNameText) : $value, $fieldAttributes) !!}
 
+        @if (isset($attributes['field']['class']) && strpos($attributes['field']['class'], 'countable') !== false)
+            <span class="form-text m-b-none {{ $name }}-counter counter"></span>
+        @endif
+        
         @foreach ($errors->get($transformNameText) as $message)
             <span class="form-text m-b-none">{{ $message }}</span>
         @endforeach
