@@ -274,7 +274,16 @@ window.initTinyMCE = function (container) {
             height: 300,
             menubar: false,
             toolbar: false,
-            statusbar: false
+            statusbar: false,
+            init_instance_callback: function (editor) {
+                if ($(editor.getElement()).hasClass('countable')) {
+                    editor.on('keyup', function (e) {
+                        let length = editor.contentDocument.body.innerText.length;
+
+                        $('.' + jq(editor.id + '-counter')).text('символов - ' + length);
+                    });
+                }
+            }
         });
     });
 };
