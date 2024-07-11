@@ -18,7 +18,7 @@ class SimpleDataArraySerializer extends DataArraySerializer implements SimpleDat
      *
      * @return array
      */
-    public function collection($resourceKey, array $data)
+    public function collection(?string $resourceKey, array $data): array
     {
         return $data;
     }
@@ -31,7 +31,7 @@ class SimpleDataArraySerializer extends DataArraySerializer implements SimpleDat
      *
      * @return array
      */
-    public function item($resourceKey, array $data)
+    public function item(?string $resourceKey, array $data): array
     {
         return $data;
     }
@@ -41,7 +41,7 @@ class SimpleDataArraySerializer extends DataArraySerializer implements SimpleDat
      *
      * @return array
      */
-    public function null()
+    public function null(): ?array
     {
         return [];
     }
